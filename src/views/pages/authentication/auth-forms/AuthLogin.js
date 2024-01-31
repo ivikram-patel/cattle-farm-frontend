@@ -32,6 +32,8 @@ import AnimateButton from 'ui-component/extended/AnimateButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
+import axiosInstance from 'custom-axios';
 
 // import Google from 'assets/images/icons/social-google.svg';
 
@@ -57,6 +59,15 @@ const FirebaseLogin = ({ ...others }) => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  const fetchApi = () => {
+    const response = axiosInstance.get('api/test-api');
+    console.log(response);
+  };
+
+  useEffect(() => {
+    fetchApi();
+  }, []);
 
   return (
     <>

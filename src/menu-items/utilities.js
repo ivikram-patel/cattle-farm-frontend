@@ -18,17 +18,17 @@ const utilities = {
   children: [
     {
       id: 'util-typography',
-      title: 'Typography',
+      title: 'દૂધ ઉત્પાદન',
       type: 'item',
-      url: '/utils/util-typography',
+      url: 'milk-production',
       icon: icons.IconTypography,
       breadcrumbs: false
     },
     {
       id: 'util-color',
-      title: 'Color',
+      title: 'ખોરાક',
       type: 'item',
-      url: '/utils/util-color',
+      url: '/util-color',
       icon: icons.IconPalette,
       breadcrumbs: false
     },
@@ -36,7 +36,7 @@ const utilities = {
       id: 'util-shadow',
       title: 'Shadow',
       type: 'item',
-      url: '/utils/util-shadow',
+      url: '/util-shadow',
       icon: icons.IconShadow,
       breadcrumbs: false
     },
