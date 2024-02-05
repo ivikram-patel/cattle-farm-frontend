@@ -48,7 +48,7 @@ const MainRoutes = {
       path: '',
       children: [
         {
-          path: 'admin/milk-productions',
+          path: 'milk-productions',
           element: <MilkProductions />
         }
       ]
@@ -80,7 +80,7 @@ const MainRoutes = {
       children: [{ path: 'cattle-details', element: <CattleDetails /> }]
     },
     {
-      path: 'icons',
+      path: '',
       children: [{ path: 'milk-production', element: <MilkProduction /> }]
     },
     {

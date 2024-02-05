@@ -20,7 +20,15 @@ const utilities = {
       id: 'milk_productions',
       title: 'દૂધ ઉત્પાદન',
       type: 'item',
-      url: 'admin/milk-productions',
+      url: 'milk-productions',
+      icon: icons.IconTypography,
+      breadcrumbs: false
+    },
+    {
+      id: 'milk_production',
+      title: 'દૂધ ઉત્પાદન',
+      type: 'item',
+      url: 'milk-production',
       icon: icons.IconTypography,
       breadcrumbs: false
     },
