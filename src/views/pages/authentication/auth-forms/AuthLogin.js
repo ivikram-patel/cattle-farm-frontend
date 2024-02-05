@@ -45,7 +45,7 @@ const FirebaseLogin = ({ ...others }) => {
   // const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   // const customization = useSelector((state) => state.customization);
   const [checked, setChecked] = useState(true);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // const googleHandler = async () => {
   //   console.error('Login');
@@ -132,8 +132,8 @@ const FirebaseLogin = ({ ...others }) => {
 
       <Formik
         initialValues={{
-          email: 'info@codedthemes.com',
-          password: '123456',
+          email: '',
+          password: '',
           submit: null
         }}
         validationSchema={Yup.object().shape({
@@ -146,8 +146,7 @@ const FirebaseLogin = ({ ...others }) => {
             if (scriptedRef.current) {
               setStatus({ success: true });
               setSubmitting(false);
-              navigate('/dashboard');
-
+              navigate('/milk-productions');
               console.log(values);
             }
           } catch (err) {

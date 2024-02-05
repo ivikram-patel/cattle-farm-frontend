@@ -17,52 +17,52 @@ const utilities = {
   type: 'group',
   children: [
     {
-      id: 'util-typography',
+      id: 'milk_productions',
       title: 'દૂધ ઉત્પાદન',
       type: 'item',
-      url: 'milk-production',
+      url: 'admin/milk-productions',
       icon: icons.IconTypography,
       breadcrumbs: false
     },
     {
-      id: 'util-color',
+      id: 'cattle_food',
       title: 'ખોરાક',
       type: 'item',
-      url: '/util-color',
+      url: '/cattle-food',
       icon: icons.IconPalette,
       breadcrumbs: false
     },
     {
-      id: 'util-shadow',
-      title: 'Shadow',
+      id: 'expense',
+      title: 'ખર્ચ',
       type: 'item',
-      url: '/util-shadow',
+      url: '/expense',
+      icon: icons.IconPalette,
+      breadcrumbs: false
+    },
+    {
+      id: 'cattle_details',
+      title: 'ભેંસની વિગતો',
+      type: 'item',
+      url: '/cattle-details',
       icon: icons.IconShadow,
       breadcrumbs: false
     },
     {
-      id: 'icons',
-      title: 'Icons',
-      type: 'collapse',
-      icon: icons.IconWindmill,
-      children: [
-        {
-          id: 'tabler-icons',
-          title: 'Tabler Icons',
-          type: 'item',
-          url: '/icons/tabler-icons',
-          breadcrumbs: false
-        },
-        {
-          id: 'material-icons',
-          title: 'Material Icons',
-          type: 'item',
-          external: true,
-          target: '_blank',
-          url: 'https://mui.com/material-ui/material-icons/',
-          breadcrumbs: false
-        }
-      ]
+      id: 'add_details',
+      title: 'વિગતો',
+      type: 'item',
+      url: '/add-details',
+      icon: icons.IconShadow,
+      breadcrumbs: false
+    },
+    {
+      id: 'report',
+      title: 'Reports',
+      type: 'item',
+      url: '/reports',
+      icon: icons.IconShadow,
+      breadcrumbs: false
     }
   ]
 };
