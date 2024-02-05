@@ -32,6 +32,8 @@ import AnimateButton from 'ui-component/extended/AnimateButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
+import axiosInstance from 'custom-axios';
 
 // import Google from 'assets/images/icons/social-google.svg';
 
@@ -43,7 +45,7 @@ const FirebaseLogin = ({ ...others }) => {
   // const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   // const customization = useSelector((state) => state.customization);
   const [checked, setChecked] = useState(true);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // const googleHandler = async () => {
   //   console.error('Login');
@@ -57,6 +59,15 @@ const FirebaseLogin = ({ ...others }) => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  const fetchApi = () => {
+    const response = axiosInstance.get('api/test-api');
+    console.log(response);
+  };
+
+  useEffect(() => {
+    fetchApi();
+  }, []);
 
   return (
     <>
@@ -121,8 +132,8 @@ const FirebaseLogin = ({ ...others }) => {
 
       <Formik
         initialValues={{
-          email: 'info@codedthemes.com',
-          password: '123456',
+          email: '',
+          password: '',
           submit: null
         }}
         validationSchema={Yup.object().shape({
@@ -135,8 +146,7 @@ const FirebaseLogin = ({ ...others }) => {
             if (scriptedRef.current) {
               setStatus({ success: true });
               setSubmitting(false);
-              navigate('/dashboard');
-
+              navigate('/milk-productions');
               console.log(values);
             }
           } catch (err) {
