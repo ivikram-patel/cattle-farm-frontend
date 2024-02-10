@@ -24,14 +24,14 @@ const utilities = {
       icon: icons.IconTypography,
       breadcrumbs: false
     },
-    {
-      id: 'milk_production',
-      title: 'દૂધ ઉત્પાદન',
-      type: 'item',
-      url: 'milk-production',
-      icon: icons.IconTypography,
-      breadcrumbs: false
-    },
+    // {
+    //   id: 'milk_production',
+    //   title: 'દૂધ ઉત્પાદન',
+    //   type: 'item',
+    //   url: 'milk-production',
+    //   icon: icons.IconTypography,
+    //   breadcrumbs: false
+    // },
     {
       id: 'cattle_food',
       title: 'ખોરાક',
