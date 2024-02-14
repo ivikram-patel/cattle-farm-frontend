@@ -1,0 +1,931 @@
+.padding0px {
+    padding: 0 !important;
+}
+
+.padding6px {
+    padding: 6px;
+}
+
+.padding0-10px {
+    padding: 0 10px 0 0 !important;
+}
+
+.padding20px {
+    padding: 20px
+}
+
+.padding10px {
+    padding: 10px !important;
+}
+
+.padding-left0 {
+    padding-left: 0 !important;
+}
+
+.padding-left6 {
+    padding-left: 6px !important;
+}
+
+.padding-right0 {
+    padding-right: 0 !important;
+}
+
+
+.margin10px {
+    margin: 10px;
+}
+
+.margin-bottom2px {
+    margin-bottom: 2px
+}
+
+.margin-left20px {
+    margin-left: 20px;
+}
+
+.margin-left80px {
+    margin-left: 80px !important;
+}
+
+.mx-10 {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.text-grey {
+    color: #707070;
+}
+
+.item-end {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.item-start {
+    display: flex;
+    justify-content: start;
+}
+
+.item-center {
+    display: flex;
+    align-items: center;
+}
+
+.black-bold-text {
+    color: #000;
+    font-weight: 600;
+}
+
+
+.black-text-1 {
+    color: #000
+}
+
+.black-text {
+    color: #252525
+}
+
+.dark-blue-color {
+    color: #0067ac;
+}
+
+.blue-button {
+    background-color: #0067ac !important;
+    text-transform: uppercase;
+    /* height: 2.5em; */
+    line-height: 3em;
+    padding: 0px 1.5em;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+}
+
+.war-blue-button {
+    background-color: #41A3B0;
+    color: #FFFFFF;
+    font-size: 14px;
+    border: 1px solid #41A3B0;
+    /* font-family: 'Source Sans Pro', sans-serif; */
+    border-radius: 3px;
+    padding: 6px 10px;
+    font-weight: 400;
+}
+
+.war-blue-button:hover {
+    background-image: linear-gradient(to bottom, #41A3B0, #73c9c6);
+    text-decoration: none;
+}
+
+/* .war-blue-group-button, */
+/* .war-blue-group-button,
+.btn-check:active+.btn,
+.war-blue-group-button,
+.btn-check:checked+.btn,
+.war-blue-group-button,
+.btn.active,
+.war-blue-group-button,
+.btn.show,
+.war-blue-group-button,
+.btn:active,
+.war-blue-group-button,
+.btn:focus,
+.war-blue-group-button,
+.btn:hover {
+    background-color: #41A3B0 !important;
+    border: 1px solid #41A3B0;
+    box-shadow: none;
+}
+
+.war-blue-button:hover {
+    background-color: #41A3B0 !important;
+}
+
+.war-blue-group-button {
+    border: 1px solid #41A3B0;
+} */
+
+/* 
+.war-blue-button:active,
+:focus {
+    background-color: red;
+} */
+
+.width15vh {
+    width: 15vh;
+}
+
+.width120px {
+    width: 120px;
+}
+
+.width50 {
+    width: 50% !important;
+}
+
+.width70 {
+    width: 70% !important;
+}
+
+.min-width-16vh {
+    min-width: 16vh !important;
+}
+
+.min-width-12vh {
+    min-width: 12vh !important;
+}
+
+.font13px {
+    font-size: 13px !important
+}
+
+.font12px {
+    font-size: 12px !important
+}
+
+.font14px {
+    font-size: 14px !important
+}
+
+.font15px {
+    font-size: 15px !important
+}
+
+.font18px {
+    font-size: 18px !important
+}
+
+.font20px {
+    font-size: 20px !important
+}
+
+
+
+.font-weight400px {
+    font-weight: 400;
+}
+
+.border-bottom-none {
+    border-bottom: none;
+}
+
+.border-none-all {
+    border: none !important;
+}
+
+.line-height-20px {
+    line-height: 20px !important
+}
+
+.row-inline {
+    display: table;
+    width: 100%;
+    /* table-layout: fixed;  */
+    border-spacing: 10px;
+    /*Optional*/
+}
+
+.column-inline {
+    display: table-cell;
+}
+
+
+.margin-0px {
+    margin: 0 !important;
+}
+
+/* margin top */
+
+.margin-top0px {
+    margin-top: 0px !important;
+}
+
+.margin-top3px {
+    margin-top: 3px !important;
+}
+
+.margin-top5px {
+    margin-top: 5px !important;
+}
+
+.margin-top10px {
+    margin-top: 10px !important;
+}
+
+.margin-top15px {
+    margin-top: 15px !important;
+}
+
+.margin-top20px {
+    margin-top: 20px !important;
+}
+
+.margin-top25px {
+    margin-top: 25px !important;
+}
+
+.margin-top30px {
+    margin-top: 30px !important;
+}
+
+.margin-top35px {
+    margin-top: 35px !important;
+}
+
+.margin-top40px {
+    margin-top: 40px !important;
+}
+
+.margin-top50px {
+    margin-top: 50px !important;
+}
+
+.margin-top60px {
+    margin-top: 60px !important;
+}
+
+.margin-top75px {
+    margin-top: 75px !important;
+}
+
+.margin-top90px {
+    margin-top: 90px !important;
+}
+
+.margin-top100px {
+    margin-top: 100px !important;
+}
+
+.margin-top200px {
+    margin-top: 200px !important;
+}
+
+
+/* margin bottom */
+.margin-bottom0px {
+    margin-bottom: 0 !important;
+}
+
+.margin-bottom5px {
+    margin-bottom: 5px !important;
+}
+
+.margin-bottom10px {
+    margin-bottom: 10px !important;
+}
+
+.margin-bottom15px {
+    margin-bottom: 15px !important;
+}
+
+.margin-bottom20px {
+    margin-bottom: 20px !important;
+}
+
+.margin-bottom25px {
+    margin-bottom: 25px !important;
+}
+
+.margin-bottom30px {
+    margin-bottom: 30px !important;
+}
+
+.margin-bottom35px {
+    margin-bottom: 35px !important;
+}
+
+.margin-bottom40px {
+    margin-bottom: 40px !important;
+}
+
+.margin-bottom50px {
+    margin-bottom: 50px !important;
+}
+
+.margin-bottom80px {
+    margin-bottom: 80px !important;
+}
+
+/* margin right */
+.margin-right5px {
+    margin-right: 5px !important;
+}
+
+.margin-right10px {
+    margin-right: 10px !important;
+}
+
+.margin-right15px {
+    margin-right: 15px !important;
+}
+
+.margin-right20px {
+    margin-right: 20px !important;
+}
+
+.margin-right25px {
+    margin-right: 25px !important;
+}
+
+.margin-right30px {
+    margin-right: 30px !important;
+}
+
+.margin-right35px {
+    margin-right: 35px !important;
+}
+
+.margin-right40px {
+    margin-right: 40px !important;
+}
+
+.margin-right100px {
+    margin-right: 100px !important;
+}
+
+.my0 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* margin left */
+.margin-left0px {
+    margin-left: 0 !important;
+}
+
+.margin-left5px {
+    margin-left: 5px !important;
+}
+
+.margin-left10px {
+    margin-left: 10px !important;
+}
+
+.margin-left15px {
+    margin-left: 15px !important;
+}
+
+.margin-left20px {
+    margin-left: 20px !important;
+}
+
+.margin-left25px {
+    margin-left: 25px !important;
+}
+
+.margin-left30px {
+    margin-left: 30px !important;
+}
+
+.margin-left35px {
+    margin-left: 35px !important;
+}
+
+.margin-left40px {
+    margin-left: 40px !important;
+}
+
+.margin-left110px {
+    margin-left: 110px !important;
+}
+
+/* padding top */
+.padding-top0px {
+    padding-top: 0 !important;
+}
+
+.padding-top5px {
+    padding-top: 5px !important;
+}
+
+.padding-top10px {
+    padding-top: 10px !important;
+}
+
+.padding-top15px {
+    padding-top: 15px !important;
+}
+
+.padding-top20px {
+    padding-top: 20px !important;
+}
+
+.padding-top25px {
+    padding-top: 25px !important;
+}
+
+.padding-top30px {
+    padding-top: 30px !important;
+}
+
+.padding-top35px {
+    padding-top: 35px !important;
+}
+
+.padding-top40px {
+    padding-top: 40px !important;
+}
+
+.padding-top50px {
+    padding-top: 50px !important;
+}
+
+.padding-top60px {
+    padding-top: 60px !important;
+}
+
+
+
+/* padding bottom */
+.padding-bottom5px {
+    padding-bottom: 5px !important;
+}
+
+.padding-bottom10px {
+    padding-bottom: 10px !important;
+}
+
+.padding-bottom15px {
+    padding-bottom: 15px !important;
+}
+
+.padding-bottom20px {
+    padding-bottom: 20px !important;
+}
+
+.padding-bottom25px {
+    padding-bottom: 25px !important;
+}
+
+.padding-bottom30px {
+    padding-bottom: 30px !important;
+}
+
+.padding-bottom35px {
+    padding-bottom: 35px !important;
+}
+
+.padding-bottom40px {
+    padding-bottom: 40px !important;
+}
+
+.padding-bottom50px {
+    padding-bottom: 50px !important;
+}
+
+/* padding right */
+.padding-right5px {
+    padding-right: 5px !important;
+}
+
+.padding-right10px {
+    padding-right: 10px !important;
+}
+
+.padding-right15px {
+    padding-right: 15px !important;
+}
+
+.padding-right20px {
+    padding-right: 20px !important;
+}
+
+.padding-right25px {
+    padding-right: 25px !important;
+}
+
+.padding-right30px {
+    padding-right: 30px !important;
+}
+
+.padding-right35px {
+    padding-right: 35px !important;
+}
+
+.padding-right40px {
+    padding-right: 40px !important;
+}
+
+.padding-right50px {
+    padding-right: 50px !important;
+}
+
+.padding-right87px {
+    padding-right: 87px !important;
+}
+
+.padding-right100px {
+    padding-right: 100px !important;
+}
+
+/* padding left */
+.padding-left5px {
+    padding-left: 5px !important;
+}
+
+.padding-left10px {
+    padding-left: 10px !important;
+}
+
+.padding-left15px {
+    padding-left: 15px !important;
+}
+
+.padding-left20px {
+    padding-left: 20px !important;
+}
+
+.padding-left25px {
+    padding-left: 25px !important;
+}
+
+.padding-left30px {
+    padding-left: 30px !important;
+}
+
+.padding-left35px {
+    padding-left: 35px !important;
+}
+
+.padding-left40px {
+    padding-left: 40px !important;
+}
+
+.heade2-left {
+    padding-left: 10px !important;
+}
+
+.minus-margin10px {
+    margin-top: -10px !important;
+}
+
+.minus-margin20px {
+    margin-top: -20px !important;
+}
+
+.pli15px {
+    padding-left: 15px !important;
+}
+
+/* all padding */
+.all_padding0px {
+    padding: 0 !important;
+}
+
+.all_padding10px {
+    padding: 10px 10px !important;
+}
+
+.all_padding5_10px {
+    padding: 5px 10px !important;
+}
+
+.all_padding15px {
+    padding: 15px 15px !important;
+}
+
+.all_padding20px {
+    padding: 20px 20px !important;
+}
+
+.all_padding20_30px {
+    padding: 20px 30px !important;
+}
+
+.all_padding40px {
+    padding: 40px 40px !important;
+}
+
+.padding_0 {
+    padding: 0 !important;
+}
+
+.padding5_30 {
+    padding: 5px 30px !important;
+}
+
+.padding10_5 {
+    padding: 10px 5px !important;
+}
+
+.pull-left {
+    float: left !important;
+}
+
+.pull-right {
+    float: right !important;
+}
+
+.blue_clr {
+    color: #41A3B0;
+}
+
+.blue_clr_important {
+    color: #41A3B0 !important;
+}
+
+.text-bold {
+    font-family: latobold !important;
+}
+
+.white_clr {
+    color: #fff;
+}
+
+.white1_clr {
+    color: #b4b4b4;
+}
+
+.gray_clr {
+    color: #525252;
+}
+
+.sbu-title-underline {
+    color: #362778;
+    font-size: 16px;
+    border-bottom: 2px solid #362778;
+    width: 180px;
+}
+
+.border_gary {
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.bg-transparent {
+    background: transparent;
+}
+
+.bg-white {
+    background-color: #ffffff;
+}
+
+/* common used button for robinson */
+
+.btn-transparent {
+    border: 1px solid #41A3B0;
+    display: inline-block;
+    padding: 5px 20px;
+    border-radius: 45px;
+    text-align: center;
+    cursor: pointer;
+    color: #707070;
+    font-size: 12px;
+    text-decoration: none;
+    /*margin-right: 20px;*/
+}
+
+.common-btn {
+    /*text-transform: uppercase;*/
+    padding: 5px 15px;
+    border-radius: 20px;
+    text-align: center;
+    cursor: pointer;
+    color: #ffffff;
+    /*font-family: 'Open Sans', sans-serif;*/
+    font-weight: 400;
+    border: none;
+}
+
+.war-button {
+    background-color: #42a4b1 !important;
+    margin: 10px
+}
+
+
+.justify-content-flex-start {
+    justify-content: unset;
+}
+
+.mui-box-shadows {
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+
+
+
+/*-----------------CUSTOM CHECKBOX BUTTON----------------------------*/
+
+.checkbox-btn {
+    /* display: block; */
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-btn input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkbox-btn label {
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    border: 1px solid #000;
+    transition: .2s linear;
+}
+
+.checkbox-btn input:checked~.checkmark {
+    background-color: transparent;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    left: 50%;
+    top: 40%;
+    width: 10px;
+    height: 14px;
+    border: 2px solid #0ea021;
+    filter: drop-shadow(0px 0px 5px #0ea021);
+    border-width: 0 2.5px 2.5px 0;
+    transition: .2s linear;
+    transform: translate(-50%, -50%) rotate(-90deg) scale(0.2);
+}
+
+/* Show the check-mark when checked */
+.checkbox-btn input:checked~.checkmark:after {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    border-width: 0 2.5px 2.5px 0;
+    /* animation: pulse 1s ease-in; */
+}
+
+.checkbox-btn input:checked~.checkmark {
+    transform: rotate(45deg);
+    border: none;
+}
+
+.text-lime-green {
+    color: limegreen !important;
+    background-color: #e6ffe6;
+}
+
+.change-log-head .text-lime-green {
+    font-weight: 600;
+    background-color: #e6ffe6;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1.6);
+    }
+}
+
+/*-----------------EO CUSTOM CHECKBOX BUTTON----------------------------*/
+
+
+
+/* ========================LOADERS============================= */
+
+
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    background: #d1c7c7;
+    z-index: 2000;
+    opacity: 0.7;
+}
+
+@keyframes loader-out {
+    100% {
+        visibility: hidden;
+        opacity: 0;
+    }
+}
+
+#loader.loaded {
+    animation: loader-out 0.3s both;
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    border: 3px solid;
+    border-color: #f9f9f9 #f9f9f9 transparent transparent;
+    box-sizing: border-box;
+    scale: 1.5;
+    animation: rotation 1s linear infinite;
+}
+
+.loader::after,
+.loader::before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 2000;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    border: 3px solid;
+    border-color: transparent transparent #0067ac #0067ac;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: rotationBack 0.5s linear infinite;
+    transform-origin: center center;
+}
+
+.loader::before {
+    width: 32px;
+    height: 32px;
+    border-color: #f9f9f9 #f9f9f9 transparent transparent;
+    animation: rotation 1.5s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotationBack {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(-360deg);
+    }
+}
