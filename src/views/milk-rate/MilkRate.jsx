@@ -23,8 +23,8 @@ import axiosInstance from 'custom-axios';
 import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
-import { blockSpecialChar } from 'styles/commonFunction';
+// import { useState } from 'react';
+// import { blockSpecialChar } from 'styles/commonFunction';
 // import { blockSpecialChar } from 'styles/commonFunction';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -47,7 +47,7 @@ const MilkRate = () => {
 
 
     const {
-        register,
+        // register,
         // setError,
         control,
         setValue,
@@ -93,7 +93,7 @@ const MilkRate = () => {
                 toast.error(response.message);
             }
         } catch (error) {
-            
+
             console.error(error)
 
         } finally {
