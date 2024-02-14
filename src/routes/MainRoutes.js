@@ -1,4 +1,5 @@
 import { lazy } from 'react';
+import { Navigate } from 'react-router-dom';
 
 // project imports
 import MainLayout from 'layout/MainLayout';
@@ -11,7 +12,7 @@ const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')))
 // const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
 // const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
 // const UtilsShadow = Loadable(lazy(() => import('views/utilities/Shadow')));
-const UtilsMaterialIcons = Loadable(lazy(() => import('views/utilities/MaterialIcons')));
+// const UtilsMaterialIcons = Loadable(lazy(() => import('views/utilities/MaterialIcons')));
 // const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons')));
 const MilkProductions = Loadable(lazy(() => import('views/milk-production/MilkProductions')));
 const MilkProduction = Loadable(lazy(() => import('views/milk-production/MilkProduction')));
@@ -20,12 +21,17 @@ const CattleFood = Loadable(lazy(() => import('views/cattle-food/CattleFood')));
 const Expenses = Loadable(lazy(() => import('views/expense/Expenses')));
 const Reports = Loadable(lazy(() => import('views/report/Reports')));
 const AddDetails = Loadable(lazy(() => import('views/add-details/AddDetails')));
+const CustomersList = Loadable(lazy(() => import('views/list-details/CustomersList')));
+const DoctorsList = Loadable(lazy(() => import('views/list-details/DoctorsList')));
+const MilkRate = Loadable(lazy(() => import('views/milk-rate/MilkRate')));
 // const MilkProduction = Loadable(lazy(() => import('views/milk-production/MilkProduction')));
 
 // sample page routing
 // const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 
 // ==============================|| MAIN ROUTING ||============================== //
+
+const isAdminLogin = true;
 
 const MainRoutes = {
   path: '/',
@@ -87,14 +93,11 @@ const MainRoutes = {
       path: '',
       children: [{ path: 'reports', element: <Reports /> }]
     },
-    {
-      path: '',
-      children: [{ path: 'details', element: <AddDetails /> }]
-    },
-    {
-      path: 'icons',
-      children: [{ path: 'material-icons', element: <UtilsMaterialIcons /> }]
-    },
+    { path: '/details', element: isAdminLogin ? <AddDetails /> : <Navigate to={'/add-details'} /> },
+    { path: '/milk-rate', element: isAdminLogin ? <MilkRate /> : <Navigate to={'/add-details'} /> },
+    { path: '/customer-list', element: isAdminLogin ? <CustomersList /> : <Navigate to={'/add-details'} /> },
+    { path: '/doctors-list', element: isAdminLogin ? <DoctorsList /> : <Navigate to={'/add-details'} /> },
+
     {
       path: 'sample-page',
       element: <AddDetails />

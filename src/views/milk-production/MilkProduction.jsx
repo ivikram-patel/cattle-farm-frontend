@@ -77,6 +77,17 @@ const MilkProduction = () => {
     const submitForm = async (data) => {
         console.log("Submit Data:")
         console.log(data, milkDateTime, formData)
+
+        try {
+            const apiResponse = await axiosInstance.post(url, submitData);
+            if (apiResponse.status === 'success') {
+                toast.success(apiResponse.message);
+            }
+            hideLoader();
+        } catch (error) {
+            console.log(error);
+        }
+        
     }
 
     console.log(formData)
@@ -152,14 +163,12 @@ const MilkProduction = () => {
                                         // minDate={new Date('01-01-1949')}
                                         inputFormat="dd/MM/yyyy"
                                         onChange={(newValue) => {
-                                            console.log(newValue)
                                             setMilkDateTime(newValue);
                                             formData.milk_date_time = newValue.toDate()
                                         }}
                                         renderInput={(params) => (
                                             <TextField
                                                 {...params}
-                                                size="small"
                                                 variant='standard'
                                                 {...register('milk_date_time', { required: true, valueAsDate: true })}
                                                 error={Boolean(errors && errors['milk_date_time'])}
