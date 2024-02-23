@@ -87,7 +87,7 @@ const MilkProduction = () => {
         } catch (error) {
             console.log(error);
         }
-        
+
     }
 
     console.log(formData)
@@ -110,7 +110,7 @@ const MilkProduction = () => {
 
                         <Grid item xs={10} className='text-left' style={{ textAlign: 'left' }}>
 
-                            <FormControl sx={{ minWidth: 180 }} size="small" error={Boolean(errors && errors['add_detail'])}>
+                            {/* <FormControl sx={{ minWidth: 180 }} size="small" error={Boolean(errors && errors['add_detail'])}>
 
                                 <InputLabel id="milk-time-select-small-label">વિગતો </InputLabel>
 
@@ -142,6 +142,26 @@ const MilkProduction = () => {
                                     })}
 
                                 </Select>
+                            </FormControl> */}
+
+                            <FormControl>
+                                {/* <FormLabel id="payment-controlled-radio-buttons-group">Gender</FormLabel> */}
+                                <RadioGroup
+                                    row
+                                    aria-labelledby="time-details-controlled-radio-buttons-group"
+                                    name="add_detail"
+                                    value={formData.add_detail}
+                                    onChange={handleChange}
+                                >
+
+                                    {TIME_DETAILS.map((row, index) => {
+                                        return (
+                                            <FormControlLabel key={index} value={row.value} control={<Radio />} label={row.label} />
+                                        )
+                                    })}
+                                    {/* <FormControlLabel value="full" control={<Radio />} label="Full" />
+                                    <FormControlLabel value="half" control={<Radio />} label="Half" /> */}
+                                </RadioGroup>
                             </FormControl>
                         </Grid>
 

@@ -25,10 +25,10 @@ const utilities = {
       breadcrumbs: false
     },
     {
-      id: 'milk_rate',
-      title: 'Milk Rate',
+      id: 'milk_rates',
+      title: 'Milk Rates',
       type: 'item',
-      url: 'milk-rate',
+      url: 'milk-rates',
       icon: icons.IconTypography,
       breadcrumbs: false
     },

@@ -34,6 +34,13 @@ const detail = {
           type: 'item',
           url: '/doctors-list',
           target: false
+        },
+        {
+          id: 'employee',
+          title: 'Employee',
+          type: 'item',
+          url: '/employee-list',
+          target: false
         }
       ]
     }

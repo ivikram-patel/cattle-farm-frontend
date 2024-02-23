@@ -23,7 +23,9 @@ const Reports = Loadable(lazy(() => import('views/report/Reports')));
 const AddDetails = Loadable(lazy(() => import('views/add-details/AddDetails')));
 const CustomersList = Loadable(lazy(() => import('views/list-details/CustomersList')));
 const DoctorsList = Loadable(lazy(() => import('views/list-details/DoctorsList')));
+const EmployeeList = Loadable(lazy(() => import('views/list-details/EmployeeList')));
 const MilkRate = Loadable(lazy(() => import('views/milk-rate/MilkRate')));
+const MilkRates = Loadable(lazy(() => import('views/milk-rate/MilkRates')));
 // const MilkProduction = Loadable(lazy(() => import('views/milk-production/MilkProduction')));
 
 // sample page routing
@@ -94,9 +96,11 @@ const MainRoutes = {
       children: [{ path: 'reports', element: <Reports /> }]
     },
     { path: '/details', element: isAdminLogin ? <AddDetails /> : <Navigate to={'/add-details'} /> },
+    { path: '/milk-rates', element: isAdminLogin ? <MilkRates /> : <Navigate to={'/add-details'} /> },
     { path: '/milk-rate', element: isAdminLogin ? <MilkRate /> : <Navigate to={'/add-details'} /> },
     { path: '/customer-list', element: isAdminLogin ? <CustomersList /> : <Navigate to={'/add-details'} /> },
     { path: '/doctors-list', element: isAdminLogin ? <DoctorsList /> : <Navigate to={'/add-details'} /> },
+    { path: '/employee-list', element: isAdminLogin ? <EmployeeList /> : <Navigate to={'/add-details'} /> },
 
     {
       path: 'sample-page',

@@ -1,17 +1,6 @@
 /* eslint-disable prettier/prettier */
-// import React from 'react'
-
-// const MilkRate = () => {
-//   return (
-//     <div>MilkRate</div>
-//   )
-// }
-
-// export default MilkRate;
-
-
 import React, { useEffect } from 'react';
-// import { useNavigate, useParams } from 'react-router';
+import { useNavigate } from 'react-router';
 // import * as Yup from "yup";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -34,7 +23,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const MilkRate = () => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [loader, showLoader, hideLoader] = useFullPageLoader();
     // const [milkRate, setMilkRate] = useState(0)
 
@@ -49,27 +38,12 @@ const MilkRate = () => {
         // register,
         // setError,
         control,
-        setValue,
         handleSubmit,
         formState: { errors }
     } = useForm({
         resolver: yupResolver(validation)
     });
 
-    const fetchData = async () => {
-
-        showLoader();
-
-        try {
-
-            const response = await axiosInstance.get(`api/milk-rate`);
-            setValue('milk_rate', response.rate)
-            hideLoader()
-
-        } catch (error) {
-            toast.error(error.message);
-        }
-    };
 
     const submitForm = async (data) => {
 
@@ -86,7 +60,8 @@ const MilkRate = () => {
             if (response.status === 200) {
 
                 toast.success(response.message);
-                fetchData();
+                navigate('/milk-rate')
+
 
             } else {
                 toast.error(response.message);
@@ -102,7 +77,7 @@ const MilkRate = () => {
     };
 
     useEffect(() => {
-        fetchData();
+        // fetchData();
     }, []);
 
     return (

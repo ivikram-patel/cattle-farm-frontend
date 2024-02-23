@@ -14,7 +14,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router';
 import { StyledTableCell, StyledTableCellData, StyledTableRow } from 'styles/commonFunction';
 
-const CustomersList = () => {
+const EmployeeList = () => {
 
   const navigate = useNavigate();
   const [customerList, setCustomerList] = useState([])
@@ -23,7 +23,7 @@ const CustomersList = () => {
   const fetchList = async () => {
     showLoader();
     try {
-      const response = await axiosInstance.get(`api/customer-details`);
+      const response = await axiosInstance.get(`api/employee-details`);
 
       setCustomerList(response.data)
 
@@ -79,7 +79,7 @@ const CustomersList = () => {
             <TableRow className="eft-table-cell">
               <StyledTableCell style={{ width: '40px' }}>No</StyledTableCell>
               <StyledTableCell>Full Name</StyledTableCell>
-              <StyledTableCell>Balance</StyledTableCell>
+              <StyledTableCell>Salary</StyledTableCell>
               <StyledTableCell>Action</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -117,4 +117,4 @@ const CustomersList = () => {
     </>
   )
 }
-export default CustomersList;
+export default EmployeeList;
