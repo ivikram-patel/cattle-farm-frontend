@@ -17,6 +17,14 @@ const utilities = {
   type: 'group',
   children: [
     {
+      id: 'cattle_details',
+      title: 'ભેંસની વિગતો',
+      type: 'item',
+      url: 'cattle-details',
+      icon: icons.IconTypography,
+      breadcrumbs: false
+    },
+    {
       id: 'milk_productions',
       title: 'દૂધ ઉત્પાદન',
       type: 'item',
@@ -41,21 +49,22 @@ const utilities = {
       breadcrumbs: false
     },
     {
-      id: 'expense',
-      title: 'ખર્ચ',
+      id: 'income',
+      title: 'Income',
       type: 'item',
-      url: '/expense',
+      url: '/income',
       icon: icons.IconPalette,
       breadcrumbs: false
     },
     {
-      id: 'cattle_details',
-      title: 'ભેંસની વિગતો',
+      id: 'expenses',
+      title: 'Expense',
       type: 'item',
-      url: '/cattle-details',
-      icon: icons.IconShadow,
+      url: '/expenses',
+      icon: icons.IconPalette,
       breadcrumbs: false
     },
+    
     {
       id: 'add_details',
       title: 'વિગતો',

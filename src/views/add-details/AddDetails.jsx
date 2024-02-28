@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react'
-// import { useNavigate, useParams } from 'react-router'
+import { useNavigate } from 'react-router'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Box, Button, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField, Typography } from '@mui/material';
@@ -22,7 +22,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const AddDetails = () => {
-	// const navigate = useNavigate();  
+	const navigate = useNavigate();  
 	// const { id } = useParams();
 	const [loader, showLoader, hideLoader] = useFullPageLoader();
 	const [formData, setFormData] = useState([])

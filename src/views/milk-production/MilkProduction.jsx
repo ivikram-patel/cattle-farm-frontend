@@ -78,8 +78,9 @@ const MilkProduction = () => {
         console.log("Submit Data:")
         console.log(data, milkDateTime, formData)
 
+        let endPoint = `api/submit-milk-prod`;
         try {
-            const apiResponse = await axiosInstance.post(url, submitData);
+            const apiResponse = await axiosInstance.post(endPoint, submitData);
             if (apiResponse.status === 'success') {
                 toast.success(apiResponse.message);
             }

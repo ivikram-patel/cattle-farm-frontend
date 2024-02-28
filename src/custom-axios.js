@@ -15,7 +15,7 @@ axiosInstance.interceptors.request.use((config) => {
 });
 
 // response interceptor
-// let counter = 0;
+let counter = 0;
 axiosInstance.interceptors.response.use(
     (response) => {
         return response.data;

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Box, Button, IconButton, Paper, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material';
 import axiosInstance from 'custom-axios';
 import { useFullPageLoader } from 'hooks/useFullPageLoader';
@@ -5,24 +6,24 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router';
 import { StyledTableCell, StyledTableCellData, StyledTableRow } from 'styles/commonFunction';
-
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import AddIcon from '@mui/icons-material/Add';
+import { CATTLE_OBTAIN_DETAILS } from 'store/constant';
 
-const Expenses = () => {
+const CattleDetails = () => {
   const navigate = useNavigate();
-  const [expenseList, setExpenseList] = useState([]);
+  const [cattleDetails, setCattleDetails] = useState([]);
   const [loader, showLoader, hideLoader] = useFullPageLoader();
 
   const fetchList = async () => {
     showLoader();
     try {
-      const response = await axiosInstance.get(`api/expenses-details`);
+      const response = await axiosInstance.get(`api/cattle-details`);
 
-      setExpenseList(response.data);
+      setCattleDetails(response.data);
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -30,24 +31,26 @@ const Expenses = () => {
     }
   };
 
-  async function deleteCategory(id) {
-    let confirmDelete = window.confirm('Are you sure want to delete this?');
+  // console.log(cattleDetails)
+  async function deleteCattle(id) {
+
+    let confirmDelete = window.confirm("Are you sure want to delete this?");
 
     if (confirmDelete) {
+
       try {
-        const response = await axiosInstance.delete(`api/delete-asset-category/${id}`);
+        const response = await axiosInstance.delete(`api/delete-cattle/${id}`);
         toast.success(response.message);
 
-        fetchAssetCategories();
+        fetchList();
+
       } catch (error) {
-        toast.error(error.message);
+        toast.error(error.message)
       } finally {
-        hideLoader();
+        hideLoader()
       }
     }
   }
-
-  console.log(expenseList);
 
   useEffect(() => {
     fetchList();
@@ -56,7 +59,7 @@ const Expenses = () => {
   return (
     <>
       <Box className="margin20px text-right">
-        <Button startIcon={<AddIcon />} variant="contained" color="primary" className="blue-button" onClick={() => navigate('/expense')}>
+        <Button startIcon={<AddIcon />} variant="contained" color="primary" className="blue-button" onClick={() => navigate('/cattle')}>
           Add New
         </Button>
       </Box>
@@ -66,48 +69,43 @@ const Expenses = () => {
           <TableHead>
             <TableRow className="eft-table-cell">
               <StyledTableCell>No</StyledTableCell>
-              <StyledTableCell>Description</StyledTableCell>
-              <StyledTableCell>Amount</StyledTableCell>
-              <StyledTableCell>Year</StyledTableCell>
+              <StyledTableCell>Tag No</StyledTableCell>
+              <StyledTableCell>Obtain From</StyledTableCell>
               <StyledTableCell>Action</StyledTableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
-            {expenseList?.map((row, index) => {
+            {cattleDetails?.map((row, index) => {
+
+              const obtainFromLabel = CATTLE_OBTAIN_DETAILS.find(item => item.value === row.cattle_obtain_from)?.label;
+
               return (
-                <StyledTableRow className="eft-table-cell" key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <StyledTableRow className="eft-table-cell" key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <StyledTableCellData component="td" scope="row" style={{ width: '5px' }}>
                     {index + 1}
                   </StyledTableCellData>
                   <StyledTableCellData component="td" scope="row" style={{ width: '300px' }}>
-                    {row.description}
+                    {row.tag_no}
                   </StyledTableCellData>
                   <StyledTableCellData component="td" scope="row" style={{ width: '10px' }}>
-                    ${row.amount}
+                    {obtainFromLabel}
                   </StyledTableCellData>
                   <StyledTableCellData component="td" scope="row" style={{ width: '10px' }}>
-                    {row.date_time}
-                  </StyledTableCellData>
-                  <StyledTableCellData component="td" scope="row" style={{ width: '10px' }}>
-                    <IconButton onClick={() => deleteCategory(row.id)}>
-                      <DeleteForeverIcon />
-                    </IconButton>
-                    <IconButton onClick={() => navigate(`/admin/asset-category/${row.id}`)}>
-                      <EditIcon />
-                    </IconButton>
+                    <IconButton onClick={() => deleteCattle(row.id)} ><DeleteForeverIcon /></IconButton>
+                    <IconButton onClick={() => navigate(`/cattle/${row.id}`)}><EditIcon /></IconButton>
                   </StyledTableCellData>
                 </StyledTableRow>
               );
             })}
 
-            {/* {rateList.length === 0 && (
-                            <tr>
-                                <td colSpan="6" align="center" style={{ padding: '5px' }}>
-                                    No record found
-                                </td>
-                            </tr>
-                        )} */}
+            {cattleDetails.length === 0 && (
+              <tr>
+                <td colSpan="6" align="center" style={{ padding: '5px' }}>
+                  No record found
+                </td>
+              </tr>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
@@ -118,4 +116,4 @@ const Expenses = () => {
   );
 };
 
-export default Expenses;
+export default CattleDetails;

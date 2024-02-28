@@ -31,7 +31,6 @@ const MilkRates = () => {
         }
     };
 
-    console.log(MONTHS_LIST)
     // async function deleteCategory(id) {
 
     //     let confirmDelete = window.confirm("Are you sure want to delete this?");

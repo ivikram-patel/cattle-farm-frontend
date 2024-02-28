@@ -9,6 +9,11 @@ export const ADD_DETAILS = [
   { label: 'Customer', value: 2 },
   { label: 'Employee', value: 3 }
 ];
+export const CATTLE_OBTAIN_DETAILS = [
+  { label: 'Purchased', value: 1 },
+  { label: 'Born on Farm', value: 2 },
+  { label: 'Other', value: 3 }
+];
 
 export const TIME_DETAILS = [
   { label: 'સવાર', value: 1 },
