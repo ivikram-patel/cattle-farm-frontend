@@ -3,24 +3,41 @@ import { IconLamp } from '@tabler/icons';
 
 // constant
 const icons = {
-    IconLamp
+  IconLamp
 };
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
 
 const detail = {
   id: 'pages',
-//   title: 'Pages',
-//   caption: 'Pages Caption',
+  //   title: 'Pages',
+  //   caption: 'Pages Caption',
   type: 'group',
   children: [
     {
-      id: 'list',
-      title: 'Lists',
+      id: 'farm-setup',
+      title: 'Farm Setup',
       type: 'collapse',
       icon: icons.IconLamp,
 
       children: [
+
+        {
+          id: 'income',
+          title: 'Income',
+          type: 'item',
+          url: '/income',
+          icon: icons.IconPalette,
+          breadcrumbs: false
+        },
+        {
+          id: 'expenses',
+          title: 'Expense',
+          type: 'item',
+          url: '/expenses',
+          icon: icons.IconPalette,
+          breadcrumbs: false
+        },
         {
           id: 'customer',
           title: 'Customers',

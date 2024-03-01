@@ -49,23 +49,6 @@ const utilities = {
       breadcrumbs: false
     },
     {
-      id: 'income',
-      title: 'Income',
-      type: 'item',
-      url: '/income',
-      icon: icons.IconPalette,
-      breadcrumbs: false
-    },
-    {
-      id: 'expenses',
-      title: 'Expense',
-      type: 'item',
-      url: '/expenses',
-      icon: icons.IconPalette,
-      breadcrumbs: false
-    },
-    
-    {
       id: 'add_details',
       title: 'વિગતો',
       type: 'item',
