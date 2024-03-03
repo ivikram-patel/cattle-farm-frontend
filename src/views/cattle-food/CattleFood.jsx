@@ -1,17 +1,16 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Box, Button, FormControl, Grid, InputAdornment, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import { useFullPageLoader } from 'hooks/useFullPageLoader';
-// import axiosInstance from 'custom-axios';
+import axiosInstance from 'custom-axios';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import axiosInstance from 'custom-axios';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { FOOD_DETAILS } from 'store/constant';
@@ -29,79 +28,105 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const CattleFood = () => {
 	const navigate = useNavigate();
-	// const { id } = useParams();
+	const { id } = useParams();
 	const [loader, showLoader, hideLoader] = useFullPageLoader();
 
 	const [formData, setFormData] = useState({
-		food: 1, // Set the initial value for demonstration, replace with your logic
-		food_in_weight: '',
-		food_in_nos: '',
-		rate: '',
+		id: id ? id : 0,
+		food_type: 1, // Set the initial value for demonstration, replace with your logic
+		food_name: '',
+		food_in_weight: 0,
+		food_in_nos: 0,
+		rate: 0,
 		total_amount: 0,
+		food_delivery_time: dayjs(),
+		vendor_name: '',
+		vendor_phone_no: '',
+		note: '',
 	});
 
-	// const validation = Yup.object().shape({
-	// 	food: Yup.string().required(),
-	// 	first_name: Yup.string().required(),
-	// 	gender: Yup.string().nullable().required('Please select a gender'),
-	// });
-
-
 	const validation = Yup.object().shape({
-		food: Yup.number().required(),
+		food_type: Yup.number().required(),
 		food_name: Yup.string().required(),
-		// food_in_weight: Yup.number().when('food', {
-		// 	is: 1, // Specify the value for which this rule is applied
-		// 	then: Yup.number().required('Weight is required'),
-		// }),
-		// food_in_nos: Yup.number().when('food', {
-		// 	is: 2, // Specify the value for which this rule is applied
-		// 	then: Yup.number().required('Number is required'),
-		// }),
-		// food_delivery_time: Yup.date().required(),
+		food_in_weight: Yup.number().when('food_type', {
+			is: value => value !== 2,
+			then: Yup.number().required('Weight is required'),
+		}),
+		food_in_nos: Yup.number().when('food_type', {
+			is: 2,
+			then: Yup.number().required('Number is required'),
+		}),
+
 		rate: Yup.number().required(),
-		// vendor_phone_no: Yup.string().required(),
-		note: Yup.string(),
 	});
 	const {
 		register,
 		// setError,
 		// control,
-		// setValue,
+		setValue,
 		handleSubmit,
 		formState: { errors }
 	} = useForm({
 		resolver: yupResolver(validation)
 	});
 
+	const fetchFoodData = async () => {
 
-	// const handleChange = (e) => {
-	// 	const { name, value } = e.target
+		showLoader();
 
-	// 	console.log(name, value)
-	// 	setFormData({ ...formData, [name]: value })
-	// };
+		try {
+			const apiResponse = await axiosInstance.get(`api/food-detail/${id}`);
+
+			if (apiResponse.status === 200) {
+
+				setFormData({
+					...formData,
+					'food_name': apiResponse.data.food_name,
+					'food_type': apiResponse.data.food_type,
+					'food_in_nos': apiResponse.data.food_in_nos,
+					'food_in_weight': apiResponse.data.food_in_weight,
+					'note': apiResponse.data.note,
+					'rate': apiResponse.data.rate,
+					'total_amount': apiResponse.data.total_amount,
+					'vendor_name': apiResponse.data.vendor_name,
+					'vendor_phone_no': apiResponse.data.vendor_phone_no,
+				})
+
+				setValue('food_name', apiResponse.data.food_name)
+				setValue('food_type', apiResponse.data.food_type)
+				setValue('food_in_nos', apiResponse.data.food_in_nos)
+				setValue('food_in_weight', apiResponse.data.food_in_weight)
+				setValue('note', apiResponse.data.note)
+				setValue('rate', apiResponse.data.rate)
+				setValue('total_amount', apiResponse.data.total_amount)
+				setValue('vendor_name', apiResponse.data.vendor_name)
+				setValue('vendor_phone_no', apiResponse.data.vendor_phone_no)
+			}
+
+			hideLoader();
+		} catch (error) {
+			console.log(error);
+		}
+	}
 
 	const handleChange = (e) => {
-		// Handle form field changes here
 		setFormData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
 	};
 
+	const submitForm = async () => {
 
-
-	const submitForm = async (data) => {
-
-		// console.log(data)
-		// const formatData = { ...formData, data }
-		// console.log(formatData)
 		showLoader()
+
 		let endPoint = `api/submit-food-details`;
 
-		try {
-			const apiResponse = await axiosInstance.post(endPoint, data);
+		console.log(endPoint)
 
-			if (apiResponse.status === 'success') {
+		try {
+			const apiResponse = await axiosInstance.post(endPoint, formData);
+
+			if (apiResponse.status === 200) {
 				toast.success(apiResponse.message);
+				navigate('/cattle-foods')
 			}
 
 			hideLoader();
@@ -111,17 +136,16 @@ const CattleFood = () => {
 	}
 
 	useEffect(() => {
-		// Calculate total_amount when food_in_weight, food_in_nos, or rate changes
 		const calculateTotalAmount = () => {
-			const { food, food_in_weight, food_in_nos, rate } = formData;
+			const { food_type, food_in_weight, food_in_nos, rate } = formData;
 
 			let totalAmount = 0;
 
-			if (food === 2) {
-				// Condition for food == 2, using food_in_nos
+			if (food_type === 2) {
+				// Condition for food_type == 2, using food_in_nos
 				totalAmount = parseFloat(food_in_nos) * parseFloat(rate);
 			} else {
-				// Default condition for other values of food, using food_in_weight
+				// Default condition for other values of food_type, using food_in_weight
 				totalAmount = parseFloat(food_in_weight) * parseFloat(rate);
 			}
 
@@ -138,9 +162,14 @@ const CattleFood = () => {
 		};
 
 		calculateTotalAmount();
-	}, [formData.food, formData.food_in_weight, formData.food_in_nos, formData.rate]);
+	}, [formData.food_type, formData.food_in_weight, formData.food_in_nos, formData.rate]);
 
-	console.log(formData)
+
+	useEffect(() => {
+		fetchFoodData()
+	}, [id])
+
+	console.log(errors)
 
 	return <>
 		<Item>
@@ -159,14 +188,14 @@ const CattleFood = () => {
 
 						<Grid item xs={10} className='text-left'>
 
-							<FormControl sx={{ minWidth: 380 }} size="small" error={Boolean(errors && errors['food'])}>
+							<FormControl sx={{ minWidth: 380 }} size="small" error={Boolean(errors && errors['food_type'])}>
 								<InputLabel id="milk-time-select-small-label">Food </InputLabel>
 								<Select
 									labelId="milk-time-select-small-label"
 									id="milk-time-select-small"
 									label="Food"
-									name='food'
-									value={formData.food || ''}
+									name='food_type'
+									value={formData.food_type || ''}
 									classes={{ select: "custom-select-label" }}
 
 									MenuProps={{
@@ -175,7 +204,7 @@ const CattleFood = () => {
 									}}
 
 									inputProps={{
-										...register('food', {
+										...register('food_type', {
 											require: true,
 											onChange: handleChange,
 										})
@@ -205,6 +234,7 @@ const CattleFood = () => {
 								variant="outlined"
 								fullWidth
 								size='small'
+								value={formData.food_name}
 								{...register('food_name', { onChange: handleChange })}
 								error={!!errors.food_name}
 							/>
@@ -218,13 +248,14 @@ const CattleFood = () => {
 
 						<Grid item xs={10} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
 
-							{formData.food != 2 ?
+							{formData.food_type != 2 ?
 
 								<TextField
-									label="With normal TextField"
+									label="Food in Weight"
 									id="outlined-start-adornment"
 									size='small'
 									fullWidth
+									value={formData.food_in_weight || ''}
 									{...register('food_in_weight', { onChange: handleChange })}
 									InputProps={{
 										startAdornment: <InputAdornment position="start">kg</InputAdornment>,
@@ -234,11 +265,12 @@ const CattleFood = () => {
 								:
 								<TextField
 									id="outlined-number"
-									label="Number"
+									label="Food in Nos"
 									type="number"
 									size='small'
 									{...register('food_in_nos', { onChange: handleChange })}
 									fullWidth
+									value={formData.food_in_nos || ''}
 									InputLabelProps={{
 										shrink: true,
 									}}
@@ -260,6 +292,7 @@ const CattleFood = () => {
 								variant="outlined"
 								fullWidth
 								size='small'
+								value={formData.rate || ''}
 								{...register('rate', { onChange: handleChange })}
 								error={!!errors.rate}
 							/>
@@ -337,6 +370,7 @@ const CattleFood = () => {
 								variant="outlined"
 								fullWidth
 								size='small'
+								value={formData.vendor_name || ''}
 								{...register('vendor_name', { onChange: handleChange })}
 								error={!!errors.vendor_name}
 								helperText={errors.vendor_name?.message}
@@ -355,6 +389,7 @@ const CattleFood = () => {
 								variant="outlined"
 								fullWidth
 								size='small'
+								value={formData.vendor_phone_no || ''}
 								{...register('vendor_phone_no', { onChange: handleChange })}
 							// error={!!errors.vendor_phone_no}
 							// helperText={errors.vendor_phone_no?.message}
@@ -373,6 +408,7 @@ const CattleFood = () => {
 								variant="outlined"
 								fullWidth
 								size='small'
+								value={formData.note || ''}
 								{...register('note', { onChange: handleChange })}
 								multiline
 								rows={4}

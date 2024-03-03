@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router';
 import { StyledTableCell, StyledTableCellData, StyledTableRow } from 'styles/commonFunction';
 import { MONTHS_LIST } from 'store/constant';
 
-  
+
 const MilkRates = () => {
     const navigate = useNavigate();
     const [rateList, setRateList] = useState([]);
@@ -99,17 +99,16 @@ const MilkRates = () => {
                             );
                         })}
 
-                        {/* {rateList.length === 0 && (
+                        {rateList.length === 0 && (
                             <tr>
                                 <td colSpan="6" align="center" style={{ padding: '5px' }}>
                                     No record found
                                 </td>
                             </tr>
-                        )} */}
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer>
-            {/* ÷ */}
             {loader}
             <ToastContainer autoClose={2000} />
         </>
