@@ -123,7 +123,7 @@ const Cattle = () => {
 
                         <Grid container spacing={2}>
 
-                            <Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+                            <Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
                                 <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
                                     Breed
                                 </Typography>
@@ -139,7 +139,7 @@ const Cattle = () => {
                                 />
                             </Grid>
 
-                            <Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+                            <Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
                                 <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
                                     Tag *
                                 </Typography>
@@ -183,7 +183,7 @@ const Cattle = () => {
                                 {errors.gender && <p style={{ color: 'red' }}>{errors.gender.message}</p>}
                             </Grid> */}
 
-                            <Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+                            <Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
                                 <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
                                     Cattle Obtain from
                                 </Typography>
@@ -227,7 +227,7 @@ const Cattle = () => {
 
                             {formData.cattle_obtain_from == 3 ?
                                 <>
-                                    <Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+                                    <Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
                                         <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
                                             Other
                                         </Typography>
@@ -247,7 +247,7 @@ const Cattle = () => {
 
 
 
-                            <Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+                            <Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
                                 <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
                                     Notes
                                 </Typography>

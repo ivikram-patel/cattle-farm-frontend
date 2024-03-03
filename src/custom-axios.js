@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import axios from 'axios';
 // import { toast } from 'react-toastify';
 import { API_BASE_URL } from 'store/constant';
@@ -29,7 +30,7 @@ axiosInstance.interceptors.response.use(
         if (!error.status) {
             // console.log('Netword error ' + counter)
             //If error message contain 404 not found ,than no need to re-process
-            if ((error.message).includes('404')) {
+            if (error.message.includes('404')) {
 
                 return Promise.reject({ 'status': 404, 'statusText': 'ERROR', 'message': '404 Not found!' });
             } else if (counter == 0) { // @todo:: change the condition to 5 once understand these code

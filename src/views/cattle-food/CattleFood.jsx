@@ -15,8 +15,17 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { FOOD_DETAILS } from 'store/constant';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from 'dayjs';
 import { useEffect } from 'react';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import 'dayjs/locale/en'; // Import the desired locale
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+// Set the desired time zone (IST in this case)
+dayjs.tz.setDefault('Asia/Kolkata');
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -71,7 +80,6 @@ const CattleFood = () => {
 	});
 
 	const fetchFoodData = async () => {
-
 		showLoader();
 
 		try {
@@ -88,9 +96,11 @@ const CattleFood = () => {
 					'note': apiResponse.data.note,
 					'rate': apiResponse.data.rate,
 					'total_amount': apiResponse.data.total_amount,
+					'food_delivery_time': (apiResponse.data.food_delivery_time),
 					'vendor_name': apiResponse.data.vendor_name,
 					'vendor_phone_no': apiResponse.data.vendor_phone_no,
 				})
+
 
 				setValue('food_name', apiResponse.data.food_name)
 				setValue('food_type', apiResponse.data.food_type)
@@ -99,6 +109,7 @@ const CattleFood = () => {
 				setValue('note', apiResponse.data.note)
 				setValue('rate', apiResponse.data.rate)
 				setValue('total_amount', apiResponse.data.total_amount)
+				setValue('food_delivery_time', (apiResponse.data.food_delivery_time))
 				setValue('vendor_name', apiResponse.data.vendor_name)
 				setValue('vendor_phone_no', apiResponse.data.vendor_phone_no)
 			}
@@ -115,14 +126,14 @@ const CattleFood = () => {
 
 	const submitForm = async () => {
 
+		console.table(formData)
+
 		showLoader()
-
 		let endPoint = `api/submit-food-details`;
-
-		console.log(endPoint)
 
 		try {
 			const apiResponse = await axiosInstance.post(endPoint, formData);
+			// const apiResponse = await axios.post(endPo)
 
 			if (apiResponse.status === 200) {
 				toast.success(apiResponse.message);
@@ -166,10 +177,10 @@ const CattleFood = () => {
 
 
 	useEffect(() => {
-		fetchFoodData()
+		if (id) {
+			fetchFoodData()
+		}
 	}, [id])
-
-	console.log(errors)
 
 	return <>
 		<Item>
@@ -180,7 +191,7 @@ const CattleFood = () => {
 					autoComplete="off"
 				>
 					<Grid container spacing={2}>
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Food
 							</Typography>
@@ -222,7 +233,7 @@ const CattleFood = () => {
 						</Grid>
 
 
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Food Name
 							</Typography>
@@ -240,13 +251,13 @@ const CattleFood = () => {
 							/>
 						</Grid>
 
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
-								Total Weight/Nos of Food
+								Total {formData.food_type != 2 ? 'Weight' : 'Nos'}
 							</Typography>
 						</Grid>
 
-						<Grid item xs={10} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={10} className='d-flex' style={{ alignItems: 'center' }}>
 
 							{formData.food_type != 2 ?
 
@@ -280,7 +291,7 @@ const CattleFood = () => {
 						</Grid>
 
 
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Rate
 							</Typography>
@@ -300,7 +311,7 @@ const CattleFood = () => {
 
 
 						{/* calculate the total amount and make it disabled */}
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Total Amount
 							</Typography>
@@ -319,7 +330,7 @@ const CattleFood = () => {
 						</Grid>
 
 
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Delivery Time
 							</Typography>
@@ -332,12 +343,11 @@ const CattleFood = () => {
 									<DesktopDatePicker
 										disableFuture
 										label="Delivery Time"
-										value={formData.food_delivery_time}
+										value={dayjs.utc(formData.food_delivery_time)}
 										// minDate={new Date('01-01-1949')}
 										format="DD-MM-YYYY"
 										defaultValue={dayjs()}
 										onChange={(newValue) => {
-											// setMilkDateTime(newValue);
 											formData.food_delivery_time = newValue.toDate()
 										}}
 										renderInput={(params) => (
@@ -356,9 +366,7 @@ const CattleFood = () => {
 						</Grid>
 						<Grid item xs={5}></Grid>
 
-
-
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Vendor Details
 							</Typography>
@@ -377,7 +385,7 @@ const CattleFood = () => {
 							/>
 						</Grid>
 
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Phone No
 							</Typography>
@@ -396,7 +404,7 @@ const CattleFood = () => {
 							/>
 						</Grid>
 
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Notes
 							</Typography>

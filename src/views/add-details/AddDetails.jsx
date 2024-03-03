@@ -22,7 +22,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const AddDetails = () => {
-	const navigate = useNavigate();  
+	const navigate = useNavigate();
 	// const { id } = useParams();
 	const [loader, showLoader, hideLoader] = useFullPageLoader();
 	const [formData, setFormData] = useState([])
@@ -109,7 +109,7 @@ const AddDetails = () => {
 					autoComplete="off"
 				>
 					<Grid container spacing={2}>
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								વિગતો
 							</Typography>
@@ -151,7 +151,7 @@ const AddDetails = () => {
 
 						</Grid>
 
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Gender
 							</Typography>
@@ -178,7 +178,7 @@ const AddDetails = () => {
 
 
 
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								અટક
 							</Typography>
@@ -198,7 +198,7 @@ const AddDetails = () => {
 
 						{/* -----------first name------------ */}
 
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								First Name
 							</Typography>
@@ -216,7 +216,7 @@ const AddDetails = () => {
 							/>
 						</Grid>
 
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Last Name
 							</Typography>
@@ -235,7 +235,7 @@ const AddDetails = () => {
 						</Grid>
 
 
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Phone No
 							</Typography>
@@ -254,7 +254,7 @@ const AddDetails = () => {
 						</Grid>
 
 
-						<Grid item xs={2} className='d-flex justify-content-center'>
+						<Grid item xs={2} className='d-flex'>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Address
 							</Typography>

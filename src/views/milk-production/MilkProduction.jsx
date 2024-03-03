@@ -75,8 +75,8 @@ const MilkProduction = () => {
     };
 
     const submitForm = async (data) => {
-        console.log("Submit Data:")
-        console.log(data, milkDateTime, formData)
+        // console.log("Submit Data:")
+        // console.log(data, milkDateTime, formData)
 
         let endPoint = `api/submit-milk-prod`;
         try {

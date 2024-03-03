@@ -60,7 +60,7 @@ const Expense = () => {
     const [loader, showLoader, hideLoader] = useFullPageLoader();
     const [amountData, setAmountData] = useState([]);
     const [milkDateTime, setMilkDateTime] = useState(dayjs())
-	const navigate = useNavigate();  
+    const navigate = useNavigate();
 
     const validation = Yup.object().shape({
         amount: Yup.string().required(),
@@ -124,7 +124,7 @@ const Expense = () => {
                     <Box sx={{ '& > :not(style)': { m: 1, width: '90%' } }} noValidate autoComplete="off">
                         <Grid container spacing={2}>
 
-                            <Grid item xs={2} className="d-flex justify-content-center" style={{ alignItems: 'center' }}>
+                            <Grid item xs={2} className="d-flex" style={{ alignItems: 'center' }}>
                                 <Typography variant="subtitle1" className="text-capitalize" style={{ fontSize: 14 }}>
                                     Amount
                                 </Typography>
@@ -155,7 +155,7 @@ const Expense = () => {
                                 />
                             </Grid>
 
-                            <Grid item xs={2} className="d-flex justify-content-center" style={{ alignItems: 'center' }}>
+                            <Grid item xs={2} className="d-flex" style={{ alignItems: 'center' }}>
                                 <Typography variant="subtitle1" className="text-capitalize" style={{ fontSize: 14 }}>
                                     Month
                                 </Typography>
@@ -196,7 +196,7 @@ const Expense = () => {
                                 </FormControl>
                             </Grid>
 
-                            <Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+                            <Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
                                 <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
                                     સમય
                                 </Typography>
@@ -230,7 +230,7 @@ const Expense = () => {
                             </Grid>
                             <Grid item xs={5}></Grid>
 
-                            <Grid item xs={2} className="d-flex justify-content-center">
+                            <Grid item xs={2} className="d-flex">
                                 <Typography variant="subtitle1" className="text-capitalize" style={{ fontSize: 14 }}>
                                     Description
                                 </Typography>
