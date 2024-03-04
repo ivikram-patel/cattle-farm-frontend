@@ -42,7 +42,7 @@ const detail = {
           id: 'customer',
           title: 'Customers',
           type: 'item',
-          url: '/customer-list',
+          url: '/customers',
           target: false // if it is true then page is open in new tab
         },
         {

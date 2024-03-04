@@ -65,7 +65,7 @@ const AddDetails = () => {
 
 		} else if (data.add_detail == 2) {
 			endPoint = `api/submit-customer-details`;
-			redirectPage = '/customer-list';
+			redirectPage = '/customers';
 
 		} else {
 			endPoint = `api/submit-employee-details`;
@@ -99,7 +99,7 @@ const AddDetails = () => {
 		}
 		// }
 	}
-	console.log(errors)
+
 	return <>
 		<Item>
 			<form onSubmit={handleSubmit(submitForm)}>
