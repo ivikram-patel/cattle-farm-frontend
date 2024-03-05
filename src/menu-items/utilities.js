@@ -33,6 +33,14 @@ const utilities = {
       breadcrumbs: false
     },
     {
+      id: 'transaction',
+      title: 'Transaction',
+      type: 'item',
+      url: 'transactions',
+      icon: icons.IconTypography,
+      breadcrumbs: false
+    },
+    {
       id: 'milk_rates',
       title: 'Milk Rates',
       type: 'item',

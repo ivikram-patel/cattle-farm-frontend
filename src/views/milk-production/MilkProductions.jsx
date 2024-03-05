@@ -11,7 +11,6 @@ const MilkProduction = () => {
         <>
             <Stack direction="row" spacing={2}>
                 <Button variant="outlined" onClick={() => navigate('/milk-production')} className='text-right'>Single Payment</Button>
-                <Button variant="outlined" onClick={() => navigate('/milk-production')} className='text-right'>Monthly Payment</Button>
             </Stack>
         </>);
 }

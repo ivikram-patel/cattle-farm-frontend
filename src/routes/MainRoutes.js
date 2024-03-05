@@ -32,6 +32,8 @@ const MilkRate = Loadable(lazy(() => import('views/milk-rate/MilkRate')));
 const MilkRates = Loadable(lazy(() => import('views/milk-rate/MilkRates')));
 const Income = Loadable(lazy(() => import('views/income/Income')));
 const Cattle = Loadable(lazy(() => import('views/cattle/Cattle')));
+const Transaction = Loadable(lazy(() => import('views/transactions/Transaction')));
+const Transactions = Loadable(lazy(() => import('views/transactions/Transactions')));
 // const MilkProduction = Loadable(lazy(() => import('views/milk-production/MilkProduction')));
 
 // sample page routing
@@ -117,6 +119,8 @@ const MainRoutes = {
       path: '',
       children: [{ path: 'reports', element: <Reports /> }]
     },
+    { path: '/transactions', element: isAdminLogin ? <Transactions /> : <Navigate to={'/add-details'} /> },
+    { path: '/transaction', element: isAdminLogin ? <Transaction /> : <Navigate to={'/add-details'} /> },
     { path: '/details', element: isAdminLogin ? <AddDetails /> : <Navigate to={'/add-details'} /> },
     { path: '/milk-rates', element: isAdminLogin ? <MilkRates /> : <Navigate to={'/add-details'} /> },
     { path: '/milk-rate', element: isAdminLogin ? <MilkRate /> : <Navigate to={'/add-details'} /> },
