@@ -9,10 +9,10 @@ const Transactions = () => {
     return (
         <>
             <Stack direction="row" spacing={2}>
-                <Button variant="outlined" onClick={() => navigate('/transaction')} className="text-right">
+                <Button variant="outlined" onClick={() => navigate('/milk-transaction')} className="text-right">
                     Single Payment
                 </Button>
-                <Button variant="outlined" onClick={() => navigate('/transaction')} className="text-right">
+                <Button variant="outlined" onClick={() => navigate('/milk-transaction')} className="text-right">
                     Monthly Payment
                 </Button>
             </Stack>
