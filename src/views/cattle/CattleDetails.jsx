@@ -31,7 +31,7 @@ const CattleDetails = () => {
     }
   };
 
-  // console.log(cattleDetails)
+
   async function deleteCattle(id) {
 
     let confirmDelete = window.confirm("Are you sure want to delete this?");
@@ -70,6 +70,7 @@ const CattleDetails = () => {
             <TableRow className="eft-table-cell">
               <StyledTableCell>No</StyledTableCell>
               <StyledTableCell>Tag No</StyledTableCell>
+              <StyledTableCell>Note</StyledTableCell>
               <StyledTableCell>Obtain From</StyledTableCell>
               <StyledTableCell>Action</StyledTableCell>
             </TableRow>
@@ -85,8 +86,11 @@ const CattleDetails = () => {
                   <StyledTableCellData component="td" scope="row" style={{ width: '5px' }}>
                     {index + 1}
                   </StyledTableCellData>
-                  <StyledTableCellData component="td" scope="row" style={{ width: '300px' }}>
+                  <StyledTableCellData component="td" scope="row" style={{ width: '100px' }}>
                     {row.tag_no}
+                  </StyledTableCellData>
+                  <StyledTableCellData component="td" scope="row" style={{ width: '300px' }}>
+                    {row.note}
                   </StyledTableCellData>
                   <StyledTableCellData component="td" scope="row" style={{ width: '10px' }}>
                     {obtainFromLabel}

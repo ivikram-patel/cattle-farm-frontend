@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
-import { useNavigate, useParams} from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -35,7 +35,10 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary
 }));
 
+
+
 const Cattle = () => {
+
     const navigate = useNavigate();
     const { id } = useParams();
     const [loader, showLoader, hideLoader] = useFullPageLoader();
@@ -46,8 +49,8 @@ const Cattle = () => {
         cattle_obtain_from: Yup.string().required(),
         cattle_obtain_from_other: Yup.string().when('cattle_obtain_from', {
             is: '3',
-            then: Yup.string().required('Please provide details for Other'),
-            otherwise: Yup.string()  // You can add additional validation for other cases if needed
+            then: Yup.string().nullable().required('Please provide details for Other'),
+            otherwise: Yup.string().nullable()
         }),
         // gender: Yup.string().nullable().required('Please select a gender')
     });
@@ -56,7 +59,7 @@ const Cattle = () => {
         register,
         // setError,
         // control,
-        // setValue,
+        setValue,
         handleSubmit,
         formState: { errors }
     } = useForm({
@@ -71,25 +74,36 @@ const Cattle = () => {
 
     const fetchCattleDetails = async () => {
         showLoader();
-        
-        try {
-          const response = await axiosInstance.get(`api/cattle-details/${id}`);
-    
-          setCattleDetails(response.data);
-        } catch (error) {
-          toast.error(error.message);
-        } finally {
-          hideLoader();
-        }
-      };
 
-      
+        try {
+            const response = await axiosInstance.get(`api/cattle-detail/${id}`);
+
+            setFormData({
+                ...formData,
+                'breed': response.data.breed,
+                'tag_no': response.data.tag_no,
+                'cattle_obtain_from': response.data.cattle_obtain_from,
+                'cattle_obtain_from_other': response.data.cattle_obtain_from_other,
+                'note': response.data.note,
+            })
+
+            setValue('breed', response.data.breed)
+            setValue('tag_no', response.data.tag_no)
+            setValue('cattle_obtain_from', response.data.cattle_obtain_from)
+            setValue('cattle_obtain_from_other', response.data.cattle_obtain_from_other)
+            setValue('note', response.data.note)
+
+        } catch (error) {
+            toast.error(error.message);
+        } finally {
+            hideLoader();
+        }
+    };
+
+
     const submitForm = async (data) => {
-        console.log(data);
-        console.table([data])
 
         let endPoint = `api/submit-cattle-details`;
-
 
         showLoader();
 
@@ -108,17 +122,19 @@ const Cattle = () => {
             hideLoader();
         }
     };
-    
+
     useEffect(() => {
-      if(id){
-        fetchCattleDetails()
-      }
+        if (id) {
+            fetchCattleDetails()
+        }
     }, [id])
-    
+
     return (
         <>
             <Item>
                 <form onSubmit={handleSubmit(submitForm)}>
+                    <input type='hidden' name='id' {...register('id')} defaultValue={id || 0} />
+                    {/* <input type='hidden' {...register('id')} value={id} /> */}
                     <Box sx={{ '& > :not(style)': { m: 1, width: '90%' } }} noValidate autoComplete="off">
 
                         <Grid container spacing={2}>
@@ -132,10 +148,11 @@ const Cattle = () => {
                             <Grid item xs={10} className='text-start'>
                                 <TextField
                                     label="Breed"
-                                    variant="outlined"
+                                    // variant="outlined"
                                     fullWidth
                                     size='small'
-                                    {...register('breed')}
+                                    value={formData.breed || ''}
+                                    {...register('breed', { onChange: handleChange })}
                                 />
                             </Grid>
 
@@ -150,38 +167,12 @@ const Cattle = () => {
                                     label="Tag"
                                     variant="outlined"
                                     fullWidth
+                                    value={formData.tag_no || ''}
                                     size='small'
-                                    {...register('tag_no')}
+                                    {...register('tag_no', { onChange: handleChange })}
                                     error={!!errors.tag_no}
                                 />
                             </Grid>
-
-
-                            {/* ---------- GENDER ----------- */}
-
-                            {/* <Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
-                                <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
-                                    Gender
-                                </Typography>
-                            </Grid>
-
-                            <Grid item xs={10} className='text-left' style={{ textAlign: 'left' }}>
-                                <FormControl>
-                                    <RadioGroup
-                                        row
-                                        aria-labelledby="gender-controlled-radio-buttons-group"
-                                        name="gender"
-                                        value={formData.gender}
-                                        onChange={handleChange}
-                                        {...register('gender')}
-
-                                    >
-                                        <FormControlLabel value={1} control={<Radio />} label="Male" />
-                                        <FormControlLabel value={2} control={<Radio />} label="Female" />
-                                    </RadioGroup>
-                                </FormControl>
-                                {errors.gender && <p style={{ color: 'red' }}>{errors.gender.message}</p>}
-                            </Grid> */}
 
                             <Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
                                 <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
@@ -200,7 +191,7 @@ const Cattle = () => {
                                         name='cattle_obtain_from'
                                         value={formData.cattle_obtain_from || ''}
                                         classes={{ select: "custom-select-label" }}
-
+                                        onChange={handleChange}
                                         MenuProps={{
                                             disableScrollLock: true,
                                             PaperProps: { sx: { maxHeight: 200 } }
@@ -209,7 +200,7 @@ const Cattle = () => {
                                         inputProps={{
                                             ...register('cattle_obtain_from', {
                                                 require: true,
-                                                onChange: handleChange,
+                                                // onChange: handleChange,
                                             })
                                         }}
                                     >
@@ -238,8 +229,9 @@ const Cattle = () => {
                                             label="Other"
                                             variant="outlined"
                                             fullWidth
+                                            value={formData.cattle_obtain_from_other || ''}
                                             size='small'
-                                            {...register('cattle_obtain_from_other')}
+                                            {...register('cattle_obtain_from_other', { onChange: handleChange })}
                                             error={!!errors.cattle_obtain_from_other}
                                         />
                                     </Grid>
@@ -258,10 +250,11 @@ const Cattle = () => {
                                     label="Notes"
                                     variant="outlined"
                                     fullWidth
+                                    value={formData.note || ''}
                                     multiline
                                     rows={6}
                                     size='small'
-                                    {...register('note')}
+                                    {...register('note', { onChange: handleChange })}
                                 />
                             </Grid>
 
