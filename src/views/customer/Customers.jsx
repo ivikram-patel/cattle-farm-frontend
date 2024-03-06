@@ -75,6 +75,7 @@ const Customers = () => {
                 </Button>
             </Box>
 
+            <p className='red-color'> *** ગ્રાહક જે માસિક ધોરણે ચૂકવણી કરે છે</p>
             <TableContainer component={Paper}>
                 <Table aria-label="simple table" className="list-table">
                     <TableHead>
