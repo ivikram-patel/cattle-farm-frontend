@@ -1,3 +1,4 @@
+import cattle_details from './cattle-details';
 import dashboard from './dashboard';
 import detail from './detail';
 import milk_details from './milk-details';
@@ -7,7 +8,7 @@ import utilities from './utilities';
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-  items: [dashboard, utilities, milk_details, detail]
+  items: [dashboard, utilities, cattle_details, milk_details, detail]
 };
 
 export default menuItems;

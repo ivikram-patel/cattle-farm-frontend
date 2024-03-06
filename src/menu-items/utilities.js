@@ -17,14 +17,6 @@ const utilities = {
   type: 'group',
   children: [
     {
-      id: 'cattle_details',
-      title: 'ભેંસની વિગતો',
-      type: 'item',
-      url: 'cattle-details',
-      icon: icons.IconTypography,
-      breadcrumbs: false
-    },
-    {
       id: 'milk_rates',
       title: 'Milk Rates',
       type: 'item',

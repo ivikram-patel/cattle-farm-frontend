@@ -16,7 +16,6 @@ const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')))
 // const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons')));
 const MilkProductions = Loadable(lazy(() => import('views/milk-production/MilkProductions')));
 const MilkProduction = Loadable(lazy(() => import('views/milk-production/MilkProduction')));
-const CattleDetails = Loadable(lazy(() => import('views/cattle/CattleDetails')));
 const CattleFood = Loadable(lazy(() => import('views/cattle-food/CattleFood')));
 const CattleFoods = Loadable(lazy(() => import('views/cattle-food/CattleFoods')));
 const Expenses = Loadable(lazy(() => import('views/expense/Expenses')));
@@ -31,7 +30,6 @@ const EmployeeList = Loadable(lazy(() => import('views/list-details/EmployeeList
 const MilkRate = Loadable(lazy(() => import('views/milk-rate/MilkRate')));
 const MilkRates = Loadable(lazy(() => import('views/milk-rate/MilkRates')));
 const Income = Loadable(lazy(() => import('views/income/Income')));
-const Cattle = Loadable(lazy(() => import('views/cattle/Cattle')));
 const Transaction = Loadable(lazy(() => import('views/transactions/Transaction')));
 const Transactions = Loadable(lazy(() => import('views/transactions/Transactions')));
 // const MilkProduction = Loadable(lazy(() => import('views/milk-production/MilkProduction')));
@@ -42,6 +40,15 @@ const SinglePayments = Loadable(lazy(() => import('views/milk-records/single-pay
 
 const MonthlyPayment = Loadable(lazy(() => import('views/milk-records/monthly-payment/MonthlyPayment')));
 const MonthlyPayments = Loadable(lazy(() => import('views/milk-records/monthly-payment/MonthlyPayments')));
+
+const BuyCattle = Loadable(lazy(() => import('views/cattle-details/buy/BuyCattle')));
+const BuyCattles = Loadable(lazy(() => import('views/cattle-details/buy/BuyCattles')));
+
+const SellCattle = Loadable(lazy(() => import('views/cattle-details/sell/SellCattle')));
+const SellCattles = Loadable(lazy(() => import('views/cattle-details/sell/SellCattles')));
+
+const CattleReproduction = Loadable(lazy(() => import('views/cattle-details/reproduction/CattleReproduction')));
+const CattleReproductionList = Loadable(lazy(() => import('views/cattle-details/reproduction/CattleReproductionList')));
 
 // sample page routing
 // const SamplePage = Loadable(lazy(() => import('views/sample-page')));
@@ -114,10 +121,6 @@ const MainRoutes = {
     },
     {
       path: '',
-      children: [{ path: 'cattle-details', element: <CattleDetails /> }]
-    },
-    {
-      path: '',
       children: [{ path: 'milk-production', element: <MilkProduction /> }]
     },
     {
@@ -135,8 +138,6 @@ const MainRoutes = {
     { path: '/doctors-list', element: isAdminLogin ? <DoctorsList /> : <Navigate to={'/add-details'} /> },
     { path: '/employee-list', element: isAdminLogin ? <EmployeeList /> : <Navigate to={'/add-details'} /> },
     { path: '/income', element: isAdminLogin ? <Income /> : <Navigate to={'/add-details'} /> },
-    { path: '/cattle', element: isAdminLogin ? <Cattle /> : <Navigate to={'/add-details'} /> },
-    { path: '/cattle/:id', element: isAdminLogin ? <Cattle /> : <Navigate to={'/add-details'} /> },
     { path: '/cattle-food/:id', element: isAdminLogin ? <CattleFood /> : <Navigate to={'/add-details'} /> },
 
 
@@ -151,6 +152,19 @@ const MainRoutes = {
     { path: '/monthly-payments', element: isAdminLogin ? <MonthlyPayments /> : <Navigate to={'/add-details'} /> },
     { path: '/monthly-payment', element: isAdminLogin ? <MonthlyPayment /> : <Navigate to={'/add-details'} /> },
     { path: '/monthly-payment/:id', element: isAdminLogin ? <MonthlyPayment /> : <Navigate to={'/add-details'} /> },
+
+
+    { path: '/cattle-reproduction-records', element: isAdminLogin ? <CattleReproductionList /> : <Navigate to={'/add-details'} /> },
+    { path: '/cattle-reproduction', element: isAdminLogin ? <CattleReproduction /> : <Navigate to={'/add-details'} /> },
+    { path: '/cattle-reproduction/:id', element: isAdminLogin ? <CattleReproduction /> : <Navigate to={'/add-details'} /> },
+
+    { path: '/buy-cattles', element: isAdminLogin ? <BuyCattles /> : <Navigate to={'/add-details'} /> },
+    { path: '/buy-cattle', element: isAdminLogin ? <BuyCattle /> : <Navigate to={'/add-details'} /> },
+    { path: '/buy-cattle/:id', element: isAdminLogin ? <BuyCattle /> : <Navigate to={'/add-details'} /> },
+
+    { path: '/sell-cattles', element: isAdminLogin ? <SellCattles /> : <Navigate to={'/add-details'} /> },
+    { path: '/sell-cattle', element: isAdminLogin ? <SellCattle /> : <Navigate to={'/add-details'} /> },
+    { path: '/sell-cattle/:id', element: isAdminLogin ? <SellCattle /> : <Navigate to={'/add-details'} /> },
 
     {
       path: 'sample-page',

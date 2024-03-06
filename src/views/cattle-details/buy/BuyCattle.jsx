@@ -35,9 +35,7 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary
 }));
 
-
-
-const Cattle = () => {
+const BuyCattle = () => {
 
     const navigate = useNavigate();
     const { id } = useParams();
@@ -112,7 +110,7 @@ const Cattle = () => {
 
             if (response.status === 200) {
                 toast.success(response.message);
-                navigate('/cattle-details');
+                navigate('/buy-cattles');
             } else {
                 toast.error(response.message);
             }
@@ -237,6 +235,27 @@ const Cattle = () => {
                                     </Grid>
                                 </> : ''}
 
+                            {formData.cattle_obtain_from == 1 ?
+                                <>
+                                    <Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
+                                        <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
+                                            Price
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item xs={10} className='text-start'>
+                                        <TextField
+                                            label="Price"
+                                            variant="outlined"
+                                            fullWidth
+                                            value={formData.cattle_price || ''}
+                                            size='small'
+                                            {...register('cattle_price', { onChange: handleChange })}
+                                            error={!!errors.cattle_price}
+                                        />
+                                    </Grid>
+                                </> : ''}
+
 
 
                             <Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
@@ -280,4 +299,4 @@ const Cattle = () => {
     );
 };
 
-export default Cattle;
+export default BuyCattle;

@@ -1,18 +1,20 @@
 /* eslint-disable prettier/prettier */
-// assets
-import { IconLamp } from '@tabler/icons';
+import { IconLamp, IconTypography, IconPalette, IconShadow, IconWindmill } from '@tabler/icons';
+
 
 // constant
 const icons = {
-    IconLamp
+    IconLamp,
+    IconTypography,
+    IconPalette,
+    IconShadow,
+    IconWindmill
 };
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
 
 const milk_details = {
-    id: 'milk_detail_page',
-    //   title: 'Pages',
-    //   caption: 'Pages Caption',
+    id: 'cattle_detail_page',
     type: 'group',
     children: [
         {
