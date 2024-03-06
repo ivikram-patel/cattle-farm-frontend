@@ -10,7 +10,7 @@ const icons = {
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
 
 const milk_details = {
-    id: 'pages',
+    id: 'milk_detail_page',
     //   title: 'Pages',
     //   caption: 'Pages Caption',
     type: 'group',
@@ -45,28 +45,7 @@ const milk_details = {
                     url: '/monthly-payments',
                     icon: icons.IconPalette,
                     breadcrumbs: false
-                },
-                // {
-                //     id: 'customer',
-                //     title: 'Customers',
-                //     type: 'item',
-                //     url: '/customers',
-                //     target: false // if it is true then page is open in new tab
-                // },
-                // {
-                //     id: 'doctor',
-                //     title: 'Doctors',
-                //     type: 'item',
-                //     url: '/doctors-list',
-                //     target: false
-                // },
-                // {
-                //     id: 'employee',
-                //     title: 'Employee',
-                //     type: 'item',
-                //     url: '/employee-list',
-                //     target: false
-                // }
+                }
             ]
         }
     ]
