@@ -12,6 +12,7 @@ import { StyledTableCell, StyledTableCellData, StyledTableRow } from 'styles/com
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { CATTLE_OBTAIN_DETAILS } from 'store/constant';
+import { numberFormat } from 'hooks/useNumberFormat';
 
 const BuyCattles = () => {
 
@@ -25,7 +26,7 @@ const BuyCattles = () => {
 
         try {
 
-            const response = await axiosInstance.get(`api/cattle-details`);
+            const response = await axiosInstance.get(`api/buy-cattle-details`);
             setCattleDetails(response.data);
 
         } catch (error) {
@@ -43,7 +44,7 @@ const BuyCattles = () => {
         if (confirmDelete) {
 
             try {
-                const response = await axiosInstance.delete(`api/delete-cattle/${id}`);
+                const response = await axiosInstance.delete(`api/delete-buy-cattle/${id}`);
                 toast.success(response.message);
 
                 fetchList();
@@ -76,6 +77,7 @@ const BuyCattles = () => {
                             <StyledTableCell>Tag No</StyledTableCell>
                             <StyledTableCell>Note</StyledTableCell>
                             <StyledTableCell>Obtain From</StyledTableCell>
+                            <StyledTableCell>Price</StyledTableCell>
                             <StyledTableCell>Action</StyledTableCell>
                         </TableRow>
                     </TableHead>
@@ -90,18 +92,26 @@ const BuyCattles = () => {
                                     <StyledTableCellData component="td" scope="row" style={{ width: '5px' }}>
                                         {index + 1}
                                     </StyledTableCellData>
+
                                     <StyledTableCellData component="td" scope="row" style={{ width: '100px' }}>
                                         {row.tag_no}
                                     </StyledTableCellData>
+
                                     <StyledTableCellData component="td" scope="row" style={{ width: '300px' }}>
                                         {row.note}
                                     </StyledTableCellData>
+
                                     <StyledTableCellData component="td" scope="row" style={{ width: '10px' }}>
                                         {obtainFromLabel}
                                     </StyledTableCellData>
+
+                                    <StyledTableCellData component="td" scope="row" style={{ width: '10px' }}>
+                                        {numberFormat(row.price)}
+                                    </StyledTableCellData>
+
                                     <StyledTableCellData component="td" scope="row" style={{ width: '10px' }}>
                                         <IconButton onClick={() => deleteCattle(row.id)} ><DeleteForeverIcon /></IconButton>
-                                        <IconButton onClick={() => navigate(`/cattle/${row.id}`)}><EditIcon /></IconButton>
+                                        <IconButton onClick={() => navigate(`/buy-cattle/${row.id}`)}><EditIcon /></IconButton>
                                     </StyledTableCellData>
                                 </StyledTableRow>
                             );

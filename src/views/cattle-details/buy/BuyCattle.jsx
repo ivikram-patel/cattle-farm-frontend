@@ -14,6 +14,7 @@ import {
     // Radio,
     // RadioGroup,
     Select,
+    Stack,
     TextField,
     Typography
 } from '@mui/material';
@@ -27,6 +28,19 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axiosInstance from 'custom-axios';
 import { useEffect } from 'react';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import 'dayjs/locale/en'; // Import the desired locale
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+// Set the desired time zone (IST in this case)
+dayjs.tz.setDefault('Asia/Kolkata');
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -40,7 +54,18 @@ const BuyCattle = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const [loader, showLoader, hideLoader] = useFullPageLoader();
-    const [formData, setFormData] = useState([]);
+    const [formData, setFormData] = useState({
+        id: id ? id : 0,
+        breed: '',
+        buy_cattle_time: dayjs(),
+        tag_no: '',
+        cattle_obtain_from: 0,
+        cattle_price: 0,
+        cattle_obtain_from_other: '',
+        mother_tag_no: 0,
+        note: '',
+    });
+
 
     const validation = Yup.object().shape({
         tag_no: Yup.string().required(),
@@ -48,6 +73,11 @@ const BuyCattle = () => {
         cattle_obtain_from_other: Yup.string().when('cattle_obtain_from', {
             is: '3',
             then: Yup.string().nullable().required('Please provide details for Other'),
+            otherwise: Yup.string().nullable()
+        }),
+        cattle_price: Yup.string().when('cattle_obtain_from', {
+            is: '1',
+            then: Yup.string().nullable().required(),
             otherwise: Yup.string().nullable()
         }),
         // gender: Yup.string().nullable().required('Please select a gender')
@@ -74,7 +104,7 @@ const BuyCattle = () => {
         showLoader();
 
         try {
-            const response = await axiosInstance.get(`api/cattle-detail/${id}`);
+            const response = await axiosInstance.get(`api/buy-cattle-detail/${id}`);
 
             setFormData({
                 ...formData,
@@ -82,7 +112,9 @@ const BuyCattle = () => {
                 'tag_no': response.data.tag_no,
                 'cattle_obtain_from': response.data.cattle_obtain_from,
                 'cattle_obtain_from_other': response.data.cattle_obtain_from_other,
+                'buy_cattle_time': response.data.buy_cattle_time || '',
                 'note': response.data.note,
+                'cattle_price': response.data.price,
             })
 
             setValue('breed', response.data.breed)
@@ -90,6 +122,8 @@ const BuyCattle = () => {
             setValue('cattle_obtain_from', response.data.cattle_obtain_from)
             setValue('cattle_obtain_from_other', response.data.cattle_obtain_from_other)
             setValue('note', response.data.note)
+            setValue('buy_cattle_time', response.data.buy_cattle_time)
+            setValue('cattle_price', response.data.price)
 
         } catch (error) {
             toast.error(error.message);
@@ -99,14 +133,14 @@ const BuyCattle = () => {
     };
 
 
-    const submitForm = async (data) => {
+    const submitForm = async () => {
 
-        let endPoint = `api/submit-cattle-details`;
+        let endPoint = `api/submit-buy-cattle-details`;
 
         showLoader();
 
         try {
-            const response = await axiosInstance.post(endPoint, data);
+            const response = await axiosInstance.post(endPoint, formData);
 
             if (response.status === 200) {
                 toast.success(response.message);
@@ -171,6 +205,41 @@ const BuyCattle = () => {
                                     error={!!errors.tag_no}
                                 />
                             </Grid>
+
+                            <Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
+                                <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
+                                    સમય
+                                </Typography>
+                            </Grid>
+
+                            <Grid item xs={3} className='text-start'>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <Stack spacing={3}>
+                                        <DesktopDatePicker
+                                            disableFuture
+                                            label="Time"
+                                            value={dayjs.utc(formData.buy_cattle_time)}
+                                            // minDate={new Date('01-01-2014')}
+                                            format="DD-MM-YYYY"
+                                            defaultValue={dayjs()}
+                                            onChange={(newValue) => {
+                                                formData.buy_cattle_time = newValue.toDate()
+                                            }}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    size='small'
+                                                    variant='standard'
+                                                    {...register('buy_cattle_time', { required: true, valueAsDate: true, onChange: handleChange })}
+                                                    error={Boolean(errors && errors['buy_cattle_time'])}
+                                                    helperText={errors['buy_cattle_time']?.message}
+                                                />
+                                            )}
+                                        />
+                                    </Stack>
+                                </LocalizationProvider>
+                            </Grid>
+                            <Grid item xs={7}></Grid>
 
                             <Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
                                 <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
@@ -252,6 +321,27 @@ const BuyCattle = () => {
                                             size='small'
                                             {...register('cattle_price', { onChange: handleChange })}
                                             error={!!errors.cattle_price}
+                                        />
+                                    </Grid>
+                                </> : ''}
+
+                            {formData.cattle_obtain_from == 2 ?
+                                <>
+                                    <Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
+                                        <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
+                                            Mother Tag No
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item xs={10} className='text-start'>
+                                        <TextField
+                                            label="Mother Tag No"
+                                            variant="outlined"
+                                            fullWidth
+                                            value={formData.mother_tag_no || ''}
+                                            size='small'
+                                            {...register('mother_tag_no', { onChange: handleChange })}
+                                            error={!!errors.mother_tag_no}
                                         />
                                     </Grid>
                                 </> : ''}
