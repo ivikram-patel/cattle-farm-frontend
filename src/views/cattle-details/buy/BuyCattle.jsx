@@ -159,7 +159,7 @@ const BuyCattle = () => {
         if (id) {
             fetchCattleDetails()
         }
-    }, [id])
+    }, [])
 
     return (
         <>
