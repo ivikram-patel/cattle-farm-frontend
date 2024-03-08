@@ -50,6 +50,12 @@ const SellCattles = Loadable(lazy(() => import('views/cattle-details/sell/SellCa
 const CattleReproduction = Loadable(lazy(() => import('views/cattle-details/reproduction/CattleReproduction')));
 const CattleReproductionList = Loadable(lazy(() => import('views/cattle-details/reproduction/CattleReproductionList')));
 
+const IncomeCategories = Loadable(lazy(() => import('views/income-expense-category/IncomeCategories')));
+const ExpenseCategories = Loadable(lazy(() => import('views/income-expense-category/ExpenseCategories')));
+const AddExpenseCategory = Loadable(lazy(() => import('views/income-expense-category/AddExpenseCategory')));
+const AddIncomeCategory = Loadable(lazy(() => import('views/income-expense-category/AddIncomeCategory')));
+
+
 // sample page routing
 // const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 
@@ -137,7 +143,6 @@ const MainRoutes = {
     { path: '/customer/:id', element: isAdminLogin ? <Customer /> : <Navigate to={'/add-details'} /> },
     { path: '/doctors-list', element: isAdminLogin ? <DoctorsList /> : <Navigate to={'/add-details'} /> },
     { path: '/employee-list', element: isAdminLogin ? <EmployeeList /> : <Navigate to={'/add-details'} /> },
-    { path: '/income', element: isAdminLogin ? <Income /> : <Navigate to={'/add-details'} /> },
     { path: '/cattle-food/:id', element: isAdminLogin ? <CattleFood /> : <Navigate to={'/add-details'} /> },
 
 
@@ -166,6 +171,17 @@ const MainRoutes = {
     { path: '/sell-cattle', element: isAdminLogin ? <SellCattle /> : <Navigate to={'/add-details'} /> },
     { path: '/sell-cattle/:id', element: isAdminLogin ? <SellCattle /> : <Navigate to={'/add-details'} /> },
 
+    // farm-setup
+    { path: '/income', element: isAdminLogin ? <Income /> : <Navigate to={'/add-details'} /> },
+
+    { path: '/add-expense', element: isAdminLogin ? <AddExpenseCategory /> : <Navigate to={'/add-details'} /> },
+    { path: '/add-expense/:id', element: isAdminLogin ? <AddExpenseCategory /> : <Navigate to={'/add-details'} /> },
+    { path: '/income-categories', element: isAdminLogin ? <IncomeCategories /> : <Navigate to={'/add-details'} /> },
+
+    { path: '/add-income', element: isAdminLogin ? <AddIncomeCategory /> : <Navigate to={'/add-details'} /> },
+    { path: '/add-income/:id', element: isAdminLogin ? <AddIncomeCategory /> : <Navigate to={'/add-details'} /> },
+    { path: '/expense-categories', element: isAdminLogin ? <ExpenseCategories /> : <Navigate to={'/add-details'} /> },
+    
     {
       path: 'sample-page',
       element: <AddDetails />

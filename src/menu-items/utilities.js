@@ -48,6 +48,22 @@ const utilities = {
       icon: icons.IconShadow,
       breadcrumbs: false
     },
+    {
+      id: 'income',
+      title: 'Income',
+      type: 'item',
+      url: '/income',
+      icon: icons.IconShadow,
+      breadcrumbs: false
+    },
+    {
+      id: 'expense',
+      title: 'Expense',
+      type: 'item',
+      url: '/expense',
+      icon: icons.IconShadow,
+      breadcrumbs: false
+    },
 
   ]
 };

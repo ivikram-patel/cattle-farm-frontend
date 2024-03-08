@@ -23,21 +23,38 @@ const detail = {
       children: [
 
         {
-          id: 'income',
-          title: 'Income',
+          id: 'income_category',
+          title: 'Income Category',
           type: 'item',
-          url: '/income',
+          url: '/income-categories',
           icon: icons.IconPalette,
           breadcrumbs: false
         },
+        // income-categories
         {
-          id: 'expenses',
-          title: 'Expense',
+          id: 'expense_category',
+          title: 'Expense Category',
           type: 'item',
-          url: '/expenses',
+          url: '/expense-categories',
           icon: icons.IconPalette,
           breadcrumbs: false
         },
+         // {
+        //   id: 'income',
+        //   title: 'Income',
+        //   type: 'item',
+        //   url: '/income',
+        //   icon: icons.IconPalette,
+        //   breadcrumbs: false
+        // },
+        // {
+        //   id: 'expenses',
+        //   title: 'Expense',
+        //   type: 'item',
+        //   url: '/expenses',
+        //   icon: icons.IconPalette,
+        //   breadcrumbs: false
+        // },
         {
           id: 'customer',
           title: 'Customers',

@@ -6,4 +6,4 @@ const CattleReproduction = () => {
   )
 }
 
-export default CattleReproduction
+export default CattleReproduction;
