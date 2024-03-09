@@ -20,6 +20,8 @@ const CattleFood = Loadable(lazy(() => import('views/cattle-food/CattleFood')));
 const CattleFoods = Loadable(lazy(() => import('views/cattle-food/CattleFoods')));
 const Expenses = Loadable(lazy(() => import('views/expense/Expenses')));
 const Expense = Loadable(lazy(() => import('views/expense/Expense')));
+const Income = Loadable(lazy(() => import('views/income/Income')));
+const IncomeList = Loadable(lazy(() => import('views/income/IncomeList')));
 const Reports = Loadable(lazy(() => import('views/report/Reports')));
 const AddDetails = Loadable(lazy(() => import('views/add-details/AddDetails')));
 // const CustomersList = Loadable(lazy(() => import('views/list-details/CustomersList')));
@@ -29,7 +31,6 @@ const DoctorsList = Loadable(lazy(() => import('views/list-details/DoctorsList')
 const EmployeeList = Loadable(lazy(() => import('views/list-details/EmployeeList')));
 const MilkRate = Loadable(lazy(() => import('views/milk-rate/MilkRate')));
 const MilkRates = Loadable(lazy(() => import('views/milk-rate/MilkRates')));
-const Income = Loadable(lazy(() => import('views/income/Income')));
 const Transaction = Loadable(lazy(() => import('views/transactions/Transaction')));
 const Transactions = Loadable(lazy(() => import('views/transactions/Transactions')));
 // const MilkProduction = Loadable(lazy(() => import('views/milk-production/MilkProduction')));
@@ -107,23 +108,9 @@ const MainRoutes = {
         }
       ]
     },
-    // { path: '', children: [{ path: 'expenses', element:  <Expenses /> }]},
-
-    // { path: '/expenses', element: isAdminLogin ? <Expenses /> : <Navigate to={'/default'} /> },
-    // { path: '/expense', element: isAdminLogin ? <Expense /> : <Navigate to={'/default'} /> },
     {
       path: '',
       children: [{ path: 'add-details', element: <AddDetails /> }]
-    },
-
-    {
-      path: '',
-      children: [{ path: 'expenses', element: <Expenses /> }]
-    },
-
-    {
-      path: '',
-      children: [{ path: 'expense', element: <Expense /> }]
     },
     {
       path: '',
@@ -171,9 +158,6 @@ const MainRoutes = {
     { path: '/sell-cattle', element: isAdminLogin ? <SellCattle /> : <Navigate to={'/add-details'} /> },
     { path: '/sell-cattle/:id', element: isAdminLogin ? <SellCattle /> : <Navigate to={'/add-details'} /> },
 
-    // farm-setup
-    { path: '/income', element: isAdminLogin ? <Income /> : <Navigate to={'/add-details'} /> },
-
     { path: '/add-expense', element: isAdminLogin ? <AddExpenseCategory /> : <Navigate to={'/add-details'} /> },
     { path: '/add-expense/:id', element: isAdminLogin ? <AddExpenseCategory /> : <Navigate to={'/add-details'} /> },
     { path: '/income-categories', element: isAdminLogin ? <IncomeCategories /> : <Navigate to={'/add-details'} /> },
@@ -181,7 +165,15 @@ const MainRoutes = {
     { path: '/add-income', element: isAdminLogin ? <AddIncomeCategory /> : <Navigate to={'/add-details'} /> },
     { path: '/add-income/:id', element: isAdminLogin ? <AddIncomeCategory /> : <Navigate to={'/add-details'} /> },
     { path: '/expense-categories', element: isAdminLogin ? <ExpenseCategories /> : <Navigate to={'/add-details'} /> },
-    
+
+    { path: '/income', element: isAdminLogin ? <Income /> : <Navigate to={'/add-details'} /> },
+    { path: '/income/:id', element: isAdminLogin ? <Income /> : <Navigate to={'/add-details'} /> },
+    { path: '/income-list', element: isAdminLogin ? <IncomeList /> : <Navigate to={'/add-details'} /> },
+
+    { path: '/expense', element: isAdminLogin ? <Expense /> : <Navigate to={'/add-details'} /> },
+    { path: '/expense/:id', element: isAdminLogin ? <Expense /> : <Navigate to={'/add-details'} /> },
+    { path: '/expense-list', element: isAdminLogin ? <Expenses /> : <Navigate to={'/add-details'} /> },
+
     {
       path: 'sample-page',
       element: <AddDetails />

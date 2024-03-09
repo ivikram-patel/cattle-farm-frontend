@@ -98,10 +98,33 @@ const Expense = () => {
         }
     };
 
+    const fetchList = async () => {
+        showLoader();
+        try {
+            const response = await axiosInstance.get(`api/expenses-details/${id}`);
+            console.log(response.data)
+
+            setFormData({
+                ...formData,
+                expense_category: response.data.expense_category,
+                amount: response.data.amount,
+                expense_datetime: response.data.date_time,
+                description: response.data.description,
+            })
+
+
+
+        } catch (error) {
+            toast.error(error.message);
+        } finally {
+            hideLoader();
+        }
+    };
+
+
     const submitForm = async () => {
 
         showLoader()
-        console.log(formData)
 
         let endPoint = `api/submit-expense`;
 
@@ -111,7 +134,7 @@ const Expense = () => {
 
             if (apiResponse.status === 200) {
                 toast.success(apiResponse.message);
-                navigate('/expenses')
+                navigate('/expense-list')
             }
 
             hideLoader();
@@ -124,6 +147,7 @@ const Expense = () => {
 
     useEffect(() => {
         fetchExpenseList()
+        if (id) { fetchList() }
     }, [])
     return (
         <>
@@ -194,6 +218,7 @@ const Expense = () => {
                                             allowNegative={false}
                                             size='small'
                                             decimalScale={2}
+                                            value={formData.amount}
                                             fixedDecimalScale={true}
                                             customInput={TextField}
                                             onValueChange={(values) => {

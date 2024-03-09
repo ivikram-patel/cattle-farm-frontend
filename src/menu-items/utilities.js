@@ -52,7 +52,7 @@ const utilities = {
       id: 'income',
       title: 'Income',
       type: 'item',
-      url: '/income',
+      url: '/income-list',
       icon: icons.IconShadow,
       breadcrumbs: false
     },
@@ -60,7 +60,7 @@ const utilities = {
       id: 'expense',
       title: 'Expense',
       type: 'item',
-      url: '/expenses',
+      url: '/expense-list',
       icon: icons.IconShadow,
       breadcrumbs: false
     },
