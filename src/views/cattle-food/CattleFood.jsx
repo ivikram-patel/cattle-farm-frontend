@@ -191,7 +191,7 @@ const CattleFood = () => {
 					autoComplete="off"
 				>
 					<Grid container spacing={2}>
-						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex'>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Food
 							</Typography>
@@ -233,7 +233,7 @@ const CattleFood = () => {
 						</Grid>
 
 
-						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' >
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Food Name
 							</Typography>
@@ -251,13 +251,13 @@ const CattleFood = () => {
 							/>
 						</Grid>
 
-						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' >
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Total {formData.food_type != 2 ? 'Weight' : 'Nos'}
 							</Typography>
 						</Grid>
 
-						<Grid item xs={10} className='d-flex' style={{ alignItems: 'center' }}>
+						<Grid item xs={10} className='d-flex' >
 
 							{formData.food_type != 2 ?
 
@@ -291,7 +291,7 @@ const CattleFood = () => {
 						</Grid>
 
 
-						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' >
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Rate
 							</Typography>
@@ -311,7 +311,7 @@ const CattleFood = () => {
 
 
 						{/* calculate the total amount and make it disabled */}
-						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' >
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Total Amount
 							</Typography>
@@ -330,7 +330,7 @@ const CattleFood = () => {
 						</Grid>
 
 
-						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' >
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Delivery Time
 							</Typography>
@@ -366,7 +366,7 @@ const CattleFood = () => {
 						</Grid>
 						<Grid item xs={5}></Grid>
 
-						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' >
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Vendor Details
 							</Typography>
@@ -385,7 +385,7 @@ const CattleFood = () => {
 							/>
 						</Grid>
 
-						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' >
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Phone No
 							</Typography>
@@ -404,7 +404,7 @@ const CattleFood = () => {
 							/>
 						</Grid>
 
-						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' >
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Notes
 							</Typography>

@@ -60,7 +60,7 @@ const utilities = {
       id: 'expense',
       title: 'Expense',
       type: 'item',
-      url: '/expense',
+      url: '/expenses',
       icon: icons.IconShadow,
       breadcrumbs: false
     },

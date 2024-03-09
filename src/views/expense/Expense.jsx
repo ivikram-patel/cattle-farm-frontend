@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import { useNavigate, useParams } from 'react-router'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,27 +27,20 @@ import { NumericFormat } from "react-number-format";
 
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-
-// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import { useNavigate } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import 'dayjs/locale/en'; // Import the desired locale
 
-const MONTHS_LIST_ARRAY = [
-    { id: 1, name: 'January' },
-    { id: 2, name: 'February' },
-    { id: 3, name: 'March' },
-    { id: 4, name: 'April' },
-    { id: 5, name: 'May' },
-    { id: 6, name: 'June' },
-    { id: 7, name: 'July' },
-    { id: 8, name: 'August' },
-    { id: 9, name: 'September' },
-    { id: 10, name: 'October' },
-    { id: 11, name: 'November' },
-    { id: 12, name: 'December' }
-];
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+// Set the desired time zone (IST in this case)
+dayjs.tz.setDefault('Asia/Kolkata');
+
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -57,16 +50,23 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Expense = () => {
-    const [loader, showLoader, hideLoader] = useFullPageLoader();
-    const [amountData, setAmountData] = useState([]);
-    const [milkDateTime, setMilkDateTime] = useState(dayjs())
     const navigate = useNavigate();
+    const { id } = useParams();
+    const [loader, showLoader, hideLoader] = useFullPageLoader();
+    const [expenseCategoryList, setExpenseCategoryList] = useState([]);
+    const [formData, setFormData] = useState({
+        id: id ? id : 0,
+        amount: 0.00,
+        expense_category: '',
+        expense_datetime: dayjs(),
+        description: '',
+    });
+
 
     const validation = Yup.object().shape({
         amount: Yup.string().required(),
-        month: Yup.string().required(),
-        description: Yup.string().required(),
-        // milk_date_time: Yup.string().required(),
+        // description: Yup.string().required(),
+        expense_category: Yup.string().required(),
     });
 
     const {
@@ -81,29 +81,33 @@ const Expense = () => {
     });
 
 
-    // console.log(errors)
-    // const handleChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setFormData({ ...formData, [name]: value });
-    // };
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
 
-    const submitForm = async (data) => {
+    const fetchExpenseList = async () => {
+        showLoader();
+        try {
+            const response = await axiosInstance.get(`api/expenses-categories-details`);
+            setExpenseCategoryList(response.data);
+        } catch (error) {
+            toast.error(error.message);
+        } finally {
+            hideLoader();
+        }
+    };
+
+    const submitForm = async () => {
 
         showLoader()
-        const isError = amountData == undefined || amountData == 0 ? true : false
-
-        if (isError) {
-            toast.error('Please enter amount.')
-            return;
-        }
-
-        const submitData = { amount: amountData, date: milkDateTime.toDate(), month: parseInt(data.month), description: data.description }
+        console.log(formData)
 
         let endPoint = `api/submit-expense`;
 
         try {
 
-            const apiResponse = await axiosInstance.post(endPoint, submitData);
+            const apiResponse = await axiosInstance.post(endPoint, formData);
 
             if (apiResponse.status === 200) {
                 toast.success(apiResponse.message);
@@ -117,12 +121,59 @@ const Expense = () => {
             hideLoader()
         }
     };
+
+    useEffect(() => {
+        fetchExpenseList()
+    }, [])
     return (
         <>
             <Item>
                 <form onSubmit={handleSubmit(submitForm)}>
                     <Box sx={{ '& > :not(style)': { m: 1, width: '90%' } }} noValidate autoComplete="off">
                         <Grid container spacing={2}>
+
+                            {/* <input type='hidden' name='id' {...register('id')} defaultValue={id || 0} /> */}
+
+                            <Grid item xs={2} className="d-flex" style={{ alignItems: 'center' }}>
+                                <Typography variant="subtitle1" className="text-capitalize" style={{ fontSize: 14 }}>
+                                    Expense Categories
+                                </Typography>
+                            </Grid>
+
+                            <Grid item xs={10} className="text-start">
+
+                                <FormControl sx={{ minWidth: 180 }} size="small" error={Boolean(errors && errors['expense_category'])}>
+                                    <InputLabel id="expense_category-time-select-small-label">Category</InputLabel>
+                                    <Select
+                                        labelId="expense_category-time-select-small-label"
+                                        id="expense_category-time-select-small"
+                                        label="Category"
+                                        name='category'
+                                        value={formData.expense_category || ''}
+                                        classes={{ select: "custom-select-label" }}
+
+                                        MenuProps={{
+                                            disableScrollLock: true,
+                                            PaperProps: { sx: { maxHeight: 200 } }
+                                        }}
+
+                                        inputProps={{
+                                            ...register('expense_category', {
+                                                require: true,
+                                                onChange: handleChange,
+                                            })
+                                        }}
+                                    >
+
+                                        {expenseCategoryList.map((row) => {
+                                            return (
+                                                <MenuItem key={row.id} value={row.id}>{row.name}</MenuItem>
+                                            )
+                                        })}
+
+                                    </Select>
+                                </FormControl>
+                            </Grid>
 
                             <Grid item xs={2} className="d-flex" style={{ alignItems: 'center' }}>
                                 <Typography variant="subtitle1" className="text-capitalize" style={{ fontSize: 14 }}>
@@ -146,54 +197,13 @@ const Expense = () => {
                                             fixedDecimalScale={true}
                                             customInput={TextField}
                                             onValueChange={(values) => {
-                                                setAmountData(values.floatValue)
+                                                setFormData({ ...formData, amount: values.floatValue })
                                             }}
                                             error={Boolean(errors && errors['amount'])}
 
                                         />
                                     )}
                                 />
-                            </Grid>
-
-                            <Grid item xs={2} className="d-flex" style={{ alignItems: 'center' }}>
-                                <Typography variant="subtitle1" className="text-capitalize" style={{ fontSize: 14 }}>
-                                    Month
-                                </Typography>
-                            </Grid>
-
-                            <Grid item xs={10} className="text-start">
-
-                                <FormControl sx={{ minWidth: 180 }} size="small" error={Boolean(errors && errors['month'])}>
-                                    <InputLabel id="month-time-select-small-label">Month </InputLabel>
-                                    <Select
-                                        labelId="month-time-select-small-label"
-                                        id="month-time-select-small"
-                                        label="વિગતો"
-                                        name='month'
-                                        // value={formData.add_detail || ''}
-                                        classes={{ select: "custom-select-label" }}
-
-                                        MenuProps={{
-                                            disableScrollLock: true,
-                                            PaperProps: { sx: { maxHeight: 200 } }
-                                        }}
-
-                                        inputProps={{
-                                            ...register('month', {
-                                                require: true,
-                                                // onChange: handleChange,
-                                            })
-                                        }}
-                                    >
-
-                                        {MONTHS_LIST_ARRAY.map((row) => {
-                                            return (
-                                                <MenuItem key={row.id} value={row.id}>{row.name}</MenuItem>
-                                            )
-                                        })}
-
-                                    </Select>
-                                </FormControl>
                             </Grid>
 
                             <Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
@@ -203,25 +213,25 @@ const Expense = () => {
                             </Grid>
 
                             <Grid item xs={5} className='text-start'>
-
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <Stack spacing={3}>
                                         <DesktopDatePicker
                                             disableFuture
-                                            label="સમય"
-                                            value={milkDateTime}
-                                            // minDate={new Date('01-01-1949')}
-                                            inputFormat="dd/MM/yyyy"
+                                            label="Time"
+                                            value={dayjs.utc(formData.expense_datetime)}
+                                            format="DD-MM-YYYY"
+                                            defaultValue={dayjs()}
                                             onChange={(newValue) => {
-                                                // console.log(newValue)
-                                                setMilkDateTime(newValue);
+                                                formData.expense_datetime = newValue.toDate()
                                             }}
                                             renderInput={(params) => (
                                                 <TextField
                                                     {...params}
+                                                    size='small'
                                                     variant='standard'
-                                                    {...register('milk_date_time', { required: true, valueAsDate: true })}
-                                                    error={Boolean(errors && errors['milk_date_time'])}
+                                                    {...register('expense_datetime', { required: true, valueAsDate: true })}
+                                                    error={Boolean(errors && errors['expense_datetime'])}
+                                                    helperText={errors['expense_datetime']?.message}
                                                 />
                                             )}
                                         />
@@ -242,9 +252,10 @@ const Expense = () => {
                                     variant="outlined"
                                     fullWidth
                                     multiline
+                                    name='description'
                                     rows={6}
                                     size="small"
-                                    {...register('description')}
+                                    {...register('description', { onChange: handleChange })}
                                     error={Boolean(errors && errors['description'])}
 
                                 />

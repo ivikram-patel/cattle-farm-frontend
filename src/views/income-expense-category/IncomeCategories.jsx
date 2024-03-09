@@ -86,7 +86,7 @@ const IncomeCategories = () => {
                                     <StyledTableCellData component="td" scope="row" style={{ width: '10px' }}>
                                         {row.created_at}
                                     </StyledTableCellData>
-                                    <StyledTableCellData component="td" scope="row" style={{ width: '10px' }}>
+                                    <StyledTableCellData component="td" scope="row" align='center' style={{ width: '10px' }}>
 
                                         {/* <IconButton onClick={() => deleteIncomeCategory(row.id)} ><DeleteForeverIcon /></IconButton> */}
                                         <IconButton style={{padding:'0px'}} onClick={() => navigate(`/add-income/${row.id}`)}><EditIcon /></IconButton>

@@ -35,10 +35,10 @@ const Expenses = () => {
 
     if (confirmDelete) {
       try {
-        const response = await axiosInstance.delete(`api/delete-asset-category/${id}`);
+        const response = await axiosInstance.delete(`api/delete-expense/${id}`);
         toast.success(response.message);
 
-        fetchAssetCategories();
+        fetchList();
       } catch (error) {
         toast.error(error.message);
       } finally {
