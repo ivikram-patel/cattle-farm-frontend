@@ -1,10 +1,14 @@
+
+
 /* eslint-disable no-unused-vars */
+
+
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Autocomplete, Box, Button, FormControl, FormControlLabel, FormLabel, Grid, InputAdornment, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField, Typography } from '@mui/material';
+import { Alert, Autocomplete, Box, Button, FormControl, FormControlLabel, FormLabel, Grid, InputAdornment, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import { useFullPageLoader } from 'hooks/useFullPageLoader';
@@ -41,32 +45,21 @@ const MonthlyPayment = () => {
     const { id } = useParams();
     const [loader, showLoader, hideLoader] = useFullPageLoader();
     const [customerList, setCustomerList] = useState([])
+    const [milkRate, setMilkRate] = useState(0)
+    const [customerMilkQuantity, setCustomerMilkQuantity] = useState(0)
     const [formData, setFormData] = useState({
         id: id ? id : 0,
         milking_time: 1,
+        due_amount: 0,
         customer_id: '',
         customer_name: '',
         quantity: '',
+        milk_rate: '',
         payment_date: dayjs(),
         payment_option: 1,
         half_payment: '',
         // note: '',
     });
-
-    const validationSchema = Yup.object().shape({
-        customer_id: Yup.number().when('is_existing_client', {
-            is: 1,
-            then: Yup.number().required('Please select a customer'),
-            otherwise: Yup.number(),
-        }),
-        quantity: Yup.number().required('Please enter the quantity').positive('Quantity must be a positive number'),
-        half_payment: Yup.number().when('payment_option', {
-            is: 2,
-            then: Yup.number().required('Please enter the half payment').positive('Half payment must be a positive number'),
-            otherwise: Yup.number(),
-        }),
-    });
-
 
     const {
         register,
@@ -77,8 +70,9 @@ const MonthlyPayment = () => {
         handleSubmit,
         formState: { errors }
     } = useForm({
-        resolver: yupResolver(validationSchema)
+        // resolver: yupResolver(validationSchema)
     });
+
 
     const fetchCustomerList = async () => {
         showLoader();
@@ -87,11 +81,12 @@ const MonthlyPayment = () => {
 
             const convertedData = response.data.map(item => ({
                 label: item.first_name,
-                id: item.id
+                id: item.id,
+                quantity: item.quantity
             }));
 
-
             setCustomerList(convertedData)
+            fetchMilkRate()
 
         } catch (error) {
             toast.error(error.message);
@@ -100,31 +95,48 @@ const MonthlyPayment = () => {
         }
     };
 
+    const fetchMilkRate = async () => {
+        showLoader();
+        try {
+            const apiResponse = await axiosInstance.get(`api/milk-rate`);
+
+            setFormData({ ...formData, milk_rate: apiResponse })
+            setMilkRate(apiResponse)
+
+        } catch (error) {
+            console.log(error);
+        } finally {
+            hideLoader();
+        }
+    }
+
     const handleChange = (e) => {
         const { name, value } = e.target
         setFormData({ ...formData, [name]: value })
     };
 
+    const changeCustomer = (e, newValue) => {
+
+        if (newValue) {
+            const filteredData = customerList.filter(item => item.id === newValue.id);
+            setCustomerMilkQuantity(filteredData[0].quantity)
+        }
+
+        setFormData({
+            ...formData,
+            customer_id: newValue ? newValue.id : null,
+        });
+    }
+
     const submitForm = async () => {
         console.log(formData)
 
-        if (formData.is_existing_client == 1) {
-            if (formData.customer_id == '') {
-                toast.error('Please Select Customer')
-                return;
-            }
-        } else if (formData.is_existing_client == 2) {
-            if (formData.customer_name == '') {
-                toast.error('Please Enter Customer Name')
-                return;
-            }
-        }
-
-        // let endPoint = `api/submit-milk-prod`;
+        // let endPoint = `api/submit-single-payment`;
         // try {
-        //     const apiResponse = await axiosInstance.post(endPoint, submitData);
-        //     if (apiResponse.status === 'success') {
+        //     const apiResponse = await axiosInstance.post(endPoint, formData);
+        //     if (apiResponse.status === 200) {
         //         toast.success(apiResponse.message);
+        //         navigate('/single-payments')
         //     }
         //     hideLoader();
         // } catch (error) {
@@ -132,6 +144,52 @@ const MonthlyPayment = () => {
         // }
 
     }
+
+    useEffect(() => {
+        const calculateTotalAmount = () => {
+            const { payment_option, half_payment, payment_date } = formData;
+            const date = new Date(payment_date);
+
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1; // Adding 1 to adjust for zero-based index
+
+            const daysInMonth = new Date(year, month, 0).getDate();
+
+            const plainHalfPaymentValue = (half_payment > 0) ? half_payment.toString().replace(/,/g, '') : 0.00;
+
+            let totalAmount = 0;
+            let totalDueAmount = 0;
+
+            totalAmount = parseFloat(customerMilkQuantity) * parseFloat(milkRate) * daysInMonth;
+
+            if (isNaN(totalAmount)) {
+                totalAmount = 0;
+            }
+
+            totalAmount = parseFloat(totalAmount.toFixed(2));
+
+            if (parseFloat(plainHalfPaymentValue) > totalAmount) {
+                totalDueAmount = totalAmount
+                formData.half_payment = totalAmount
+            } else {
+                totalDueAmount = totalAmount - parseFloat(plainHalfPaymentValue)
+            }
+
+            if (plainHalfPaymentValue == 0) {
+                totalDueAmount = totalAmount;
+            }
+
+            if (isNaN(totalDueAmount)) {
+                totalDueAmount = 0;
+            }
+
+            totalDueAmount = parseFloat(totalDueAmount).toFixed(2);
+            setFormData((prevData) => ({ ...prevData, full_payment: totalAmount, due_amount: totalDueAmount }));
+        };
+
+        calculateTotalAmount();
+    }, [customerMilkQuantity, formData.half_payment, formData.payment_date]);
+
 
     useEffect(() => {
         fetchCustomerList()
@@ -146,10 +204,10 @@ const MonthlyPayment = () => {
                     noValidate
                     autoComplete="off"
                 >
+                    <Alert severity="info">Current Rate: ₹{milkRate} per liter</Alert>
                     <Grid container spacing={2}>
 
                         {/* ---------------- customer list ------------- */}
-
                         <Grid item xs={2} className='d-flex'>
                             <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
                                 Customer
@@ -161,18 +219,11 @@ const MonthlyPayment = () => {
                                 disablePortal
                                 id="customer-box-demo"
                                 options={customerList}
-                                sx={{ width: 170 }}
+                                sx={{ width: 300 }}
                                 size='small'
                                 value={customerList.find(customer => customer.id === formData.customer_id) || null}
                                 getOptionLabel={(option) => option.label}
-                                onChange={(event, newValue) => {
-                                    setFormData({
-                                        ...formData,
-                                        customer_id: newValue ? newValue.id : null,
-
-                                    });
-                                }}
-
+                                onChange={(event, newValue) => { changeCustomer(event, newValue) }}
                                 renderInput={(params) =>
                                     <TextField
                                         {...params}
@@ -190,28 +241,22 @@ const MonthlyPayment = () => {
                         </Grid>
 
                         <Grid item xs={10} className="text-start">
-                            <Controller
-                                name="quantity"
-                                control={control}
-                                render={({ field }) => (
-                                    <NumericFormat
-                                        {...field}
-                                        placeholder="Enter in liter"
-                                        thousandSeparator={true}
-                                        // prefix={'liter'}
-                                        allowNegative={false}
-                                        size='small'
-                                        value={formData.amount}
-                                        decimalScale={2}
-                                        fixedDecimalScale={true}
-                                        customInput={TextField}
-                                        onValueChange={(values) => {
-                                            setFormData({ ...formData, quantity: values.floatValue })
-                                        }}
-                                        error={Boolean(errors && errors['quantity'])}
+                            <TextField
+                                label="quantity"
+                                fullWidth
+                                size="small"
+                                margin="dense"
+                                value={customerMilkQuantity}
+                                name='quantity'
+                                sx={{ width: 300 }}
+                                disabled
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">liter</InputAdornment>
+                                    )
+                                }}
 
-                                    />
-                                )}
+                                {...register('quantity', { onChange: handleChange })}
                             />
                         </Grid>
 
@@ -268,12 +313,9 @@ const MonthlyPayment = () => {
                                                 {...params}
                                                 size='small'
                                                 variant='standard'
-                                                {...register('payment_date', { required: true, valueAsDate: true, onChange: handleChange })}
-                                                error={Boolean(errors && errors['payment_date'])}
-                                                helperText={errors['payment_date']?.message}
+                                                {...register('payment_date')}
                                             />
                                         )}
-                                        sx={{ width: 200 }}
                                     />
                                 </Stack>
                             </LocalizationProvider>
@@ -340,8 +382,55 @@ const MonthlyPayment = () => {
                                                 onValueChange={(values) => {
                                                     setFormData({ ...formData, half_payment: values.floatValue })
                                                 }}
-                                                {...register('half_payment', { onChange: handleChange })}
-                                                error={Boolean(errors && errors['half_payment'])}
+                                            // {...register('half_payment', { onChange: handleChange })}
+                                            // error={Boolean(errors && errors['half_payment'])}
+
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+                                <Grid item xs={3} >
+                                    <Typography variant="h4">બાકી રકમ: {formData.due_amount}</Typography>
+                                </Grid>
+                            </>
+                        )}
+
+                        {formData.payment_option == 1 && (
+                            <>
+                                <Grid item xs={2} className='d-flex'>
+                                    <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
+                                        Full Payment
+                                    </Typography>
+                                </Grid>
+
+                                <Grid item xs={3} className='text-left'>
+                                    <Controller
+                                        name="full_payment"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <NumericFormat
+                                                {...field}
+                                                placeholder="Payment"
+                                                thousandSeparator={true}
+                                                // prefix={'₹'}
+                                                allowNegative={false}
+                                                size='small'
+                                                disabled
+                                                InputProps={{
+                                                    startAdornment: (
+                                                        <InputAdornment position="start">₹</InputAdornment>
+                                                    )
+                                                }}
+                                                value={formData.full_payment}
+                                                decimalScale={2}
+                                                fixedDecimalScale={true}
+                                                customInput={TextField}
+                                                onValueChange={(values) => {
+                                                    setFormData({ ...formData, full_payment: values.floatValue })
+                                                }}
+                                                {...register('full_payment', { onChange: handleChange })}
+                                            // error={Boolean(errors && errors['full_payment'])}
+
                                             />
                                         )}
                                     />

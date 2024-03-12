@@ -142,16 +142,17 @@ const SinglePayment = () => {
             }
         }
 
-        // let endPoint = `api/submit-milk-prod`;
-        // try {
-        //     const apiResponse = await axiosInstance.post(endPoint, submitData);
-        //     if (apiResponse.status === 'success') {
-        //         toast.success(apiResponse.message);
-        //     }
-        //     hideLoader();
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        let endPoint = `api/submit-single-payment`;
+        try {
+            const apiResponse = await axiosInstance.post(endPoint, formData);
+            if (apiResponse.status === 200) {
+                toast.success(apiResponse.message);
+                navigate('/single-payments')
+            }
+            hideLoader();
+        } catch (error) {
+            console.log(error);
+        }
 
     }
 
