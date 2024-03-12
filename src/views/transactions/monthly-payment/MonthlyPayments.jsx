@@ -62,7 +62,7 @@ const MonthlyPayments = () => {
                     variant="contained"
                     color="primary"
                     className="blue-button"
-                    onClick={() => navigate('/milk-rate')}
+                    onClick={() => navigate('/monthly-payment')}
                 >
                     Add New
                 </Button>

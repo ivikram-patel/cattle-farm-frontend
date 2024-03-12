@@ -62,7 +62,7 @@ const SinglePayments = () => {
                     variant="contained"
                     color="primary"
                     className="blue-button"
-                    onClick={() => navigate('/milk-rate')}
+                    onClick={() => navigate('/single-payment')}
                 >
                     Add New
                 </Button>

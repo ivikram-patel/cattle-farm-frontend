@@ -36,11 +36,12 @@ const Transactions = Loadable(lazy(() => import('views/transactions/Transactions
 // const MilkProduction = Loadable(lazy(() => import('views/milk-production/MilkProduction')));
 const MilkRecords = Loadable(lazy(() => import('views/milk-records/milk-records/MilkRecords')));
 const MilkRecord = Loadable(lazy(() => import('views/milk-records/milk-records/MilkRecord')));
-const SinglePayment = Loadable(lazy(() => import('views/milk-records/single-payment/SinglePayment')));
-const SinglePayments = Loadable(lazy(() => import('views/milk-records/single-payment/SinglePayments')));
+const SinglePayment = Loadable(lazy(() => import('views/transactions/single-payment/SinglePayment')));
+const SinglePayments = Loadable(lazy(() => import('views/transactions/single-payment/SinglePayments')));
 
-const MonthlyPayment = Loadable(lazy(() => import('views/milk-records/monthly-payment/MonthlyPayment')));
-const MonthlyPayments = Loadable(lazy(() => import('views/milk-records/monthly-payment/MonthlyPayments')));
+const MonthlyPayment = Loadable(lazy(() => import('views/transactions/monthly-payment/MonthlyPayment')));
+const MonthlyPayments = Loadable(lazy(() => import('views/transactions/monthly-payment/MonthlyPayments')));
+
 
 const BuyCattle = Loadable(lazy(() => import('views/cattle-details/buy/BuyCattle')));
 const BuyCattles = Loadable(lazy(() => import('views/cattle-details/buy/BuyCattles')));
