@@ -128,7 +128,6 @@ const SinglePayment = () => {
     };
 
     const submitForm = async () => {
-        console.log(formData)
 
         if (formData.is_existing_client == 1) {
             if (formData.customer_id == '') {
