@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 // /* eslint-disable prettier/prettier */
-import { Box, Button, Grid, Paper, Table, TableBody, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Button, Paper, Table, TableBody, TableContainer, TableHead, TableRow } from '@mui/material';
 import axiosInstance from 'custom-axios';
 import { useFullPageLoader } from 'hooks/useFullPageLoader';
 import React from 'react';
@@ -20,7 +20,7 @@ const MonthlyPayments = () => {
     const fetchList = async () => {
         showLoader();
         try {
-            const response = await axiosInstance.get(`api/single-payment-list`);
+            const response = await axiosInstance.get(`api/monthly-payment-list`);
 
             setPaymentDetails(response.data);
         } catch (error) {
@@ -67,12 +67,6 @@ const MonthlyPayments = () => {
                 </Button>
             </Box>
 
-            <Grid item xs={2} className='d-flex' >
-                <Typography variant='subtitle2' className='text-capitalize' style={{ fontSize: 14 }}>
-                    Name in green are old #customer
-                </Typography>
-            </Grid>
-
             <TableContainer component={Paper}>
                 <Table aria-label="simple table" className="list-table">
                     <TableHead>
@@ -97,7 +91,7 @@ const MonthlyPayments = () => {
                                         {index + 1}
                                     </StyledTableCellData>
 
-                                    <StyledTableCellData component="td" scope="row" style={{ width: '100px', color: `${row.is_existing_client == 1 ? 'green' : 'brown'}` }}>
+                                    <StyledTableCellData component="td" scope="row" style={{ width: '100px' }}>
                                         {row.name}
                                     </StyledTableCellData>
 

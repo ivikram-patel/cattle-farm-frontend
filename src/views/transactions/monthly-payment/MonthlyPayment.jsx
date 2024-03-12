@@ -52,7 +52,6 @@ const MonthlyPayment = () => {
         milking_time: 1,
         due_amount: 0,
         customer_id: '',
-        customer_name: '',
         quantity: '',
         milk_rate: '',
         payment_date: dayjs(),
@@ -120,28 +119,48 @@ const MonthlyPayment = () => {
         if (newValue) {
             const filteredData = customerList.filter(item => item.id === newValue.id);
             setCustomerMilkQuantity(filteredData[0].quantity)
+
+            setFormData({
+                ...formData,
+                customer_id: newValue ? newValue.id : null,
+                quantity: filteredData[0].quantity ? filteredData[0].quantity : null,
+            });
         }
 
-        setFormData({
-            ...formData,
-            customer_id: newValue ? newValue.id : null,
-        });
+        console.log(formData)
+
+        // setFormData({
+        //     ...formData,
+        //     customer_id: newValue ? newValue.id : null,
+        // });
     }
 
     const submitForm = async () => {
         console.log(formData)
 
-        // let endPoint = `api/submit-single-payment`;
-        // try {
-        //     const apiResponse = await axiosInstance.post(endPoint, formData);
-        //     if (apiResponse.status === 200) {
-        //         toast.success(apiResponse.message);
-        //         navigate('/single-payments')
-        //     }
-        //     hideLoader();
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        if (formData.customer_id == '') {
+            toast.error('Please Select Customer')
+            return;
+        } else if (formData.customer_name == '') {
+            toast.error('Please Enter Customer Name')
+            return;
+        }
+
+
+
+        let endPoint = `api/submit-monthly-payment`;
+        try {
+            const apiResponse = await axiosInstance.post(endPoint, formData);
+            if (apiResponse.status === 200) {
+                toast.success(apiResponse.message);
+                navigate('/monthly-payments')
+            } else {
+                toast.error(apiResponse.message)
+            }
+            hideLoader();
+        } catch (error) {
+            console.log(error);
+        }
 
     }
 
@@ -275,7 +294,7 @@ const MonthlyPayment = () => {
                                     name="milking_time"
                                     value={formData.milking_time}
                                     onChange={handleChange}
-                                    {...register('milking_time')}
+                                    // {...register('milking_time')}
                                 >
 
                                     {TIME_DETAILS.map((row, index) => {
