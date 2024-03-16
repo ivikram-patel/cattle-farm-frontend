@@ -45,8 +45,6 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 const TotalIncomeDarkCard = ({ isLoading, expenseDetails }) => {
   const theme = useTheme();
 
-  console.log(expenseDetails);
-
   return (
     <>
       {isLoading ? (
