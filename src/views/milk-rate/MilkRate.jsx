@@ -59,8 +59,8 @@ const MilkRate = () => {
 
             if (response.status === 200) {
 
-                toast.success(response.message);
                 navigate('/milk-rate')
+                toast.success(response.message);
 
 
             } else {

@@ -2,7 +2,7 @@
 export const gridSpacing = 3;
 export const drawerWidth = 260;
 export const appDrawerWidth = 320;
-export const API_BASE_URL = 'https://brahmaani-cattle-farm.infinityfreeapp.com';
+export const API_BASE_URL = 'http://localhost:8000/';
 
 export const ADD_DETAILS = [
   { label: 'Doctor', value: 1 },
@@ -24,6 +24,10 @@ export const CATTLE_OBTAIN_DETAILS = [
 export const TIME_DETAILS = [
   { label: 'સવાર', value: 1 },
   { label: 'સાંજ', value: 2 }
+];
+export const PAYMENT_OPTION = [
+  { label: 'Full', value: 1 },
+  { label: 'Half', value: 2 }
 ];
 
 export const MONTHS_LIST = {

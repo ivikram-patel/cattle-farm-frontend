@@ -294,7 +294,7 @@ const MonthlyPayment = () => {
                                     name="milking_time"
                                     value={formData.milking_time}
                                     onChange={handleChange}
-                                    // {...register('milking_time')}
+                                // {...register('milking_time')}
                                 >
 
                                     {TIME_DETAILS.map((row, index) => {
