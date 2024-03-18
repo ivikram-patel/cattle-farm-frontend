@@ -73,7 +73,7 @@ const Income = () => {
 		register,
 		// setError,
 		control,
-		// setValue,
+		setValue,
 		handleSubmit,
 		formState: { errors }
 	} = useForm({
@@ -113,13 +113,15 @@ const Income = () => {
 				description: response.data.description,
 			})
 
+			setValue('income_category', response.data.income_category)
+			setValue('amount', response.data.amount)
 		} catch (error) {
 			toast.error(error.message);
 		} finally {
 			hideLoader();
 		}
 	};
-
+console.log(errors)
 
 	const submitForm = async () => {
 

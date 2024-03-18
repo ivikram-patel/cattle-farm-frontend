@@ -1,23 +1,23 @@
 /* eslint-disable prettier/prettier */
 import PropTypes from 'prop-types';
-// import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 
 // third-party
-// import ApexCharts from 'apexcharts';
+import ApexCharts from 'apexcharts';
 import Chart from 'react-apexcharts';
 
 // project imports
 import SkeletonTotalGrowthBarChart from 'ui-component/cards/Skeleton/TotalGrowthBarChart';
 import MainCard from 'ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
-import { numberFormat } from 'hooks/useNumberFormat';
 
 // chart data
-// import chartData from './chart-data/total-growth-bar-chart';
+import chartData from './chart-data/total-growth-bar-chart';
 
 // const status = [
 //   {
@@ -36,25 +36,40 @@ import { numberFormat } from 'hooks/useNumberFormat';
 
 // ==============================|| DASHBOARD DEFAULT - TOTAL GROWTH BAR CHART ||============================== //
 
-const TotalGrowthBarChart = ({ isLoading, graphValue }) => {
+const GrowthBarChart = ({ isLoading }) => {
     // const [value, setValue] = useState('today');
-    // console.log(chartData.options)
-    // console.log(chartData)
-
+    console.log(chartData)
+    const [graphValue, setGraphValue] = useState({});
     const theme = useTheme();
-    // const customization = useSelector((state) => state.customization);
-    // const { navType } = customization;
-    // const darkLight = theme.palette.dark.light;
+    const customization = useSelector((state) => state.customization);
+
+    const { navType } = customization;
     const { primary } = theme.palette.text;
+    const darkLight = theme.palette.dark.light;
     const grey200 = theme.palette.grey[200];
     const grey500 = theme.palette.grey[500];
 
     const primary200 = theme.palette.primary[200];
-    // const primaryDark = theme.palette.primary.dark;
+    const primaryDark = theme.palette.primary.dark;
     const secondaryMain = theme.palette.secondary.main;
     const secondaryLight = theme.palette.secondary.light;
 
+    const fetchGraphData = async () => {
+
+        try {
+            const response = await axiosInstance.get(`api/income-expense-graph`);
+
+            setGraphValue(response.data)
+
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+
+    console.log(graphValue)
+
     const newChartData = {
+        // ...chartData.options,
         height: 480,
         type: 'bar',
         options: {
@@ -117,33 +132,27 @@ const TotalGrowthBarChart = ({ isLoading, graphValue }) => {
             },
             grid: {
                 show: true
-            },
-            tooltip: {
-                theme: 'light',
-                enabled: true, // Ensure tooltip is enabled
-                y: {
-                    formatter: function (value) {
-                        return numberFormat(value);
-                    }
-                }
             }
         },
         series: [
             {
                 name: 'Income',
-                data: graphValue.income
+                data: [35, 125, 35, 35, 35, 80, 35, 20, 35, 45, 15, 75]
             },
             {
                 name: 'Expense',
-                data: graphValue.expense
+                data: [35, 15, 15, 35, 65, 40, 80, 25, 15, 85, 25, 75]
             },
             {
                 name: 'Profit',
-                data: graphValue.profit
+                data: [35, 145, 35, 35, 20, 105, 100, 10, 65, 45, 30, 10]
+            },
+            {
+                name: 'Maintenance',
+                data: [0, 0, 75, 0, 0, 115, 0, 0, 0, 0, 150, 0]
             }
         ],
-        colors: [primary200, secondaryLight, secondaryMain],
-
+        colors: [primary200, primaryDark, secondaryMain, secondaryLight],
         xaxis: {
             labels: {
                 style: {
@@ -161,6 +170,9 @@ const TotalGrowthBarChart = ({ isLoading, graphValue }) => {
         grid: {
             borderColor: grey200
         },
+        tooltip: {
+            theme: 'light'
+        },
         legend: {
             labels: {
                 colors: grey500
@@ -168,6 +180,9 @@ const TotalGrowthBarChart = ({ isLoading, graphValue }) => {
         }
     };
 
+    useEffect(() => {
+        fetchGraphData()
+    }, [])
 
     return (
         <>
@@ -209,9 +224,8 @@ const TotalGrowthBarChart = ({ isLoading, graphValue }) => {
     );
 };
 
-TotalGrowthBarChart.propTypes = {
-    isLoading: PropTypes.bool,
-    graphValue: PropTypes.any
+GrowthBarChart.propTypes = {
+    isLoading: PropTypes.bool
 };
 
-export default TotalGrowthBarChart;
+export default GrowthBarChart;

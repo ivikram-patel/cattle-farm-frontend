@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router';
 import { numberFormat } from 'hooks/useNumberFormat';
 import { KeyboardArrowUp as KeyboardArrowUpIcon, KeyboardArrowDown as KeyboardArrowDownIcon } from '@mui/icons-material';
 import { PAYMENT_OPTION } from 'store/constant';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 const MonthlyPayments = () => {
@@ -94,6 +95,8 @@ const MonthlyPayments = () => {
                                             <TableCell align="right">Due Amount</TableCell>
                                             <TableCell align="right">Half Payment</TableCell>
                                             <TableCell align="right">Full Payment</TableCell>
+                                            <TableCell align="right">Total Amount</TableCell>
+                                            <TableCell align="right">Action</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -111,6 +114,14 @@ const MonthlyPayments = () => {
                                                     <TableCell align="right">{numberFormat(historyRow.due_amount)}</TableCell>
                                                     <TableCell style={{ color: `${historyRow.half_payment > 0 ? 'red' : ''}` }} align="right" >{numberFormat(historyRow.half_payment)}</TableCell>
                                                     <TableCell align="right">{numberFormat(historyRow.full_payment)}</TableCell>
+                                                    <TableCell align="right">{numberFormat(historyRow.total_amount)}</TableCell>
+                                                    <TableCell align='right'>
+                                                        {historyRow.payment_option == 2 ?
+                                                            <IconButton onClick={() => navigate(`/monthly-payment/${historyRow.id}`)}>
+                                                                <EditIcon className='font18px' />
+                                                            </IconButton>
+                                                            : ''}
+                                                    </TableCell>
                                                 </TableRow>)
                                         })}
                                     </TableBody>

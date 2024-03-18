@@ -113,6 +113,8 @@ const Expense = () => {
             })
 
 
+			setValue('expense_category', response.data.expense_category)
+			setValue('amount', response.data.amount)
 
         } catch (error) {
             toast.error(error.message);

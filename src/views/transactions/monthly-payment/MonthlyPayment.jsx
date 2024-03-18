@@ -1,8 +1,4 @@
-
-
 /* eslint-disable no-unused-vars */
-
-
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
@@ -72,6 +68,7 @@ const MonthlyPayment = () => {
         // resolver: yupResolver(validationSchema)
     });
 
+    console.log(id);
 
     const fetchCustomerList = async () => {
         showLoader();
