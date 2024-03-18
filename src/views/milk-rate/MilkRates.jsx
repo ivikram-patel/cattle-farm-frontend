@@ -68,6 +68,8 @@ const MilkRates = () => {
                 </Button>
             </Box>
 
+            <p className='red-color'> *** દરેક નવા મહિનાની શરૂઆતમાં દર બદલો, જેમ કે જાન્યુઆરી 1, 2024 અથવા ફેબ્રુઆરી 1, 2024.</p>
+
             <TableContainer component={Paper}>
                 <Table aria-label="simple table" className="list-table">
                     <TableHead>

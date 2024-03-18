@@ -155,7 +155,8 @@ const Customer = () => {
                                 value={formData.first_name}
                                 {...register('first_name', { onChange: handleChange })}
                                 error={!!errors.first_name}
-                            // helperText={errors.first_name?.message}
+                                // helperText={errors.first_name?.message}
+                                InputLabelProps={{ shrink: true }}
                             />
                         </Grid>
 
@@ -172,6 +173,7 @@ const Customer = () => {
                                 fullWidth
                                 size='small'
                                 value={formData.last_name}
+                                InputLabelProps={{ shrink: true }}
                                 {...register('last_name')}
                                 onChange={handleChange} c
                                 error={!!errors.last_name}
@@ -217,6 +219,7 @@ const Customer = () => {
                                 variant="outlined"
                                 fullWidth
                                 size='small'
+                                InputLabelProps={{ shrink: true }}
                                 {...register('surname', { onChange: handleChange })}
                                 error={!!errors.surname}
                                 helperText={errors.surname?.message}
@@ -234,6 +237,7 @@ const Customer = () => {
                             <TextField
                                 id="outlined-number"
                                 label="Food in Nos"
+                                InputLabelProps={{ shrink: true }}
                                 type="number"
                                 size='small'
                                 {...register('milk_quantity', { onChange: handleChange })}
@@ -255,6 +259,7 @@ const Customer = () => {
                                 label="Phone No"
                                 variant="outlined"
                                 fullWidth
+                                InputLabelProps={{ shrink: true }}
                                 size='small'
                                 {...register('phone_no', { onChange: handleChange })}
                             // error={!!errors.last_name}
@@ -275,6 +280,7 @@ const Customer = () => {
                                 variant="outlined"
                                 fullWidth
                                 multiline
+                                InputLabelProps={{ shrink: true }}
                                 rows={6}
                                 size='small'
                                 {...register('address', { onChange: handleChange })}

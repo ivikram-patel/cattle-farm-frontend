@@ -56,7 +56,7 @@ const Expense = () => {
     const [expenseCategoryList, setExpenseCategoryList] = useState([]);
     const [formData, setFormData] = useState({
         id: id ? id : 0,
-        amount: 0.00,
+        amount: '',
         expense_category: '',
         expense_datetime: dayjs(),
         description: '',
