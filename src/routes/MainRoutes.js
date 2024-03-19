@@ -41,6 +41,7 @@ const SinglePayments = Loadable(lazy(() => import('views/transactions/single-pay
 
 const MonthlyPayment = Loadable(lazy(() => import('views/transactions/monthly-payment/MonthlyPayment')));
 const MonthlyPayments = Loadable(lazy(() => import('views/transactions/monthly-payment/MonthlyPayments')));
+const MonthlyHalfPayment = Loadable(lazy(() => import('views/transactions/monthly-payment/MonthlyHalfPayment')));
 
 
 const BuyCattle = Loadable(lazy(() => import('views/cattle-details/buy/BuyCattle')));
@@ -145,6 +146,7 @@ const MainRoutes = {
     { path: '/monthly-payments', element: isAdminLogin ? <MonthlyPayments /> : <Navigate to={'/add-details'} /> },
     { path: '/monthly-payment', element: isAdminLogin ? <MonthlyPayment /> : <Navigate to={'/add-details'} /> },
     { path: '/monthly-payment/:id', element: isAdminLogin ? <MonthlyPayment /> : <Navigate to={'/add-details'} /> },
+    { path: '/monthly-half-payment/:id/:customer_id', element: isAdminLogin ? <MonthlyHalfPayment /> : <Navigate to={'/add-details'} /> },
 
 
     { path: '/cattle-reproduction-records', element: isAdminLogin ? <CattleReproductionList /> : <Navigate to={'/add-details'} /> },

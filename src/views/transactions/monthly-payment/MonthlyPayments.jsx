@@ -117,7 +117,7 @@ const MonthlyPayments = () => {
                                                     <TableCell align="right">{numberFormat(historyRow.total_amount)}</TableCell>
                                                     <TableCell align='right'>
                                                         {historyRow.payment_option == 2 ?
-                                                            <IconButton onClick={() => navigate(`/monthly-payment/${historyRow.id}`)}>
+                                                            <IconButton onClick={() => navigate(`/monthly-half-payment/${historyRow.id}/${row.customer_id}`)}>
                                                                 <EditIcon className='font18px' />
                                                             </IconButton>
                                                             : ''}
