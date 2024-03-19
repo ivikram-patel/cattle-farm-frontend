@@ -16,16 +16,15 @@ import { StyledTableCell, StyledTableCellData, StyledTableRow } from 'styles/com
 const DoctorsList = () => {
 
     const navigate = useNavigate();
-    const [doctorList, setDoctorList] = useState()
+    const [doctorList, setDoctorList] = useState([])
     const [loader, showLoader, hideLoader] = useFullPageLoader();
-    let type = 2; // for Dr list from table
 
     const fetchList = async () => {
         showLoader();
         try {
-            const response = await axiosInstance.get(`api/list-details/${type}`);
+            const response = await axiosInstance.get(`api/doctor-details`);
+                setDoctorList(response.data)
 
-            setDoctorList(response)
 
         } catch (error) {
             toast.error(error.message);
@@ -85,7 +84,7 @@ const DoctorsList = () => {
                     </TableHead>
 
                     <TableBody>
-                        {doctorList?.data?.map((row, index) => {
+                        {doctorList?.map((row, index) => {
                             return (
                                 <StyledTableRow
                                     className="eft-table-cell"
@@ -101,8 +100,13 @@ const DoctorsList = () => {
                                     </StyledTableCellData>
                                 </StyledTableRow>
                             )
-                        })
-                        }
+                        })}
+
+                        {doctorList.length === 0 && (
+                            <tr>
+                                <td colSpan="6" align='center' style={{ padding:'5px'}}>No record found</td>
+                            </tr>
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer >
