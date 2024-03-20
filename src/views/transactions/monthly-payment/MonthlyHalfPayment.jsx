@@ -43,16 +43,13 @@ const MonthlyHalfPayment = () => {
     const [customerList, setCustomerList] = useState([])
     const [milkRate, setMilkRate] = useState(0)
     const [customerMilkQuantity, setCustomerMilkQuantity] = useState(0)
+    const [originalDueAmount, setOriginalDueAmount] = useState("");
     const [formData, setFormData] = useState({
         id: id ? id : 0,
-        milking_time: 1,
         due_amount: 0,
+        new_due_amount: 0,
         customer_id: '',
-        quantity: '',
-        milk_rate: '',
         payment_date: dayjs(),
-        payment_option: 1,
-        half_payment: '',
         // note: '',
     });
 
@@ -68,11 +65,30 @@ const MonthlyHalfPayment = () => {
         // resolver: yupResolver(validationSchema)
     });
 
+    const fetchCustomerList = async () => {
+        showLoader();
+        try {
+            const response = await axiosInstance.get(`api/customer-details`);
+
+            const convertedData = response.data.map(item => ({
+                label: item.first_name,
+                id: item.id,
+                quantity: item.quantity
+            }));
+            setCustomerList(convertedData)
+        } catch (error) {
+            toast.error(error.message);
+        } finally {
+            hideLoader();
+        }
+    };
+
     const fetchMonthlyHalfPayment = async () => {
         showLoader();
         try {
             const response = await axiosInstance.get(`api/monthly-half-payment-details/${id}/${customer_id}`);
-
+            setFormData(response.data)
+            setOriginalDueAmount(response.data.due_amount);
         } catch (error) {
             toast.error(error.message);
         } finally {
@@ -88,7 +104,12 @@ const MonthlyHalfPayment = () => {
     const submitForm = async () => {
         console.log(formData)
 
-        let endPoint = `api/submit-monthly-payment`;
+        if (formData.due_amount == 0) {
+            toast.error('Please Add Due Amount.')
+            return;
+        }
+
+        let endPoint = `api/submit-half-monthly-payment`;
         try {
             const apiResponse = await axiosInstance.post(endPoint, formData);
             if (apiResponse.status === 200) {
@@ -101,10 +122,50 @@ const MonthlyHalfPayment = () => {
         } catch (error) {
             console.log(error);
         }
-
     }
 
     useEffect(() => {
+        const calculateTotalAmount = () => {
+            const { half_payment, total_amount } = formData;
+            const plainHalfPaymentValue = (half_payment > 0) ? parseFloat(half_payment.toString().replace(/,/g, '')) : 0.00;
+
+            let dueAmount = parseFloat(formData.due_amount);
+            let totalAmount = parseFloat(total_amount);
+
+            let newHalfPayment = plainHalfPaymentValue + dueAmount;
+            let totalDueAmount = totalAmount - newHalfPayment;
+
+
+            if (isNaN(dueAmount)) {
+                dueAmount = 0;
+            }
+
+            if (newHalfPayment > totalAmount) {
+
+                dueAmount = originalDueAmount
+
+            } else {
+
+                if (dueAmount === 0) {
+                    // dueAmount = totalAmount - plainHalfPaymentValue;
+                    totalDueAmount = originalDueAmount
+                } else if (dueAmount > originalDueAmount) {
+                    console.log('New due amount cannot exceed original due amount');
+                    dueAmount = originalDueAmount;
+                }
+            }
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                due_amount: dueAmount,
+                new_due_amount: totalDueAmount,
+            }));
+        };
+
+        calculateTotalAmount();
+    }, [formData.due_amount, formData.half_payment, formData.total_amount]);
+
+    useEffect(() => {
+        fetchCustomerList()
         fetchMonthlyHalfPayment()
     }, [])
 
@@ -117,7 +178,7 @@ const MonthlyHalfPayment = () => {
                     noValidate
                     autoComplete="off"
                 >
-                    <Alert severity="info">Current Rate: ₹{milkRate} per liter</Alert>
+                    <Alert severity="info">Current Rate: ₹{formData.milk_rate} per liter</Alert>
                     <Grid container spacing={2}>
 
                         {/* ---------------- customer list ------------- */}
@@ -146,60 +207,6 @@ const MonthlyHalfPayment = () => {
                             />
 
                         </Grid>
-
-                        <Grid item xs={2} className='d-flex' >
-                            <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
-                                Quantity
-                            </Typography>
-                        </Grid>
-
-                        <Grid item xs={10} className="text-start">
-                            <TextField
-                                label="quantity"
-                                fullWidth
-                                size="small"
-                                margin="dense"
-                                value={customerMilkQuantity}
-                                name='quantity'
-                                sx={{ width: 300 }}
-                                disabled
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">liter</InputAdornment>
-                                    )
-                                }}
-
-                                {...register('quantity', { onChange: handleChange })}
-                            />
-                        </Grid>
-
-                        <Grid item xs={2} className='d-flex' >
-                            <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
-                                Milking Time
-                            </Typography>
-                        </Grid>
-
-                        <Grid item xs={10} className='text-left' style={{ textAlign: 'left' }}>
-                            <FormControl>
-                                {/* <FormLabel id="payment-controlled-radio-buttons-group">Gender</FormLabel> */}
-                                <RadioGroup
-                                    row
-                                    aria-labelledby="time-details-controlled-radio-buttons-group"
-                                    name="milking_time"
-                                    value={formData.milking_time}
-                                    onChange={handleChange}
-                                // {...register('milking_time')}
-                                >
-
-                                    {TIME_DETAILS.map((row, index) => {
-                                        return (
-                                            <FormControlLabel key={index} value={row.value} control={<Radio />} label={row.label} />
-                                        )
-                                    })}
-                                </RadioGroup>
-                            </FormControl>
-                        </Grid>
-
 
                         <Grid item xs={2} className='d-flex' >
                             <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
@@ -236,120 +243,47 @@ const MonthlyHalfPayment = () => {
                         <Grid item xs={5}></Grid>
 
 
-
-
                         <Grid item xs={2} className='d-flex'>
                             <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
-                                Payment Option
+                                Due Amount
                             </Typography>
                         </Grid>
 
-                        <Grid item xs={10} className='text-left' style={{ textAlign: 'left' }}>
+                        <Grid item xs={3} className='text-left'>
+                            <Controller
+                                name="due_amount"
+                                control={control}
+                                render={({ field }) => (
+                                    <NumericFormat
+                                        {...field}
+                                        placeholder="Payment"
+                                        thousandSeparator={true}
+                                        // prefix={'₹'}
+                                        allowNegative={false}
+                                        size='small'
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">₹</InputAdornment>
+                                            )
+                                        }}
+                                        value={formData.due_amount}
+                                        decimalScale={2}
+                                        fixedDecimalScale={true}
+                                        customInput={TextField}
+                                        onValueChange={(values) => {
+                                            setFormData({ ...formData, due_amount: values.floatValue })
+                                        }}
+                                    // {...register('due_amount', { onChange: handleChange })}
+                                    // error={Boolean(errors && errors['due_amount'])}
 
-                            <FormControl>
-                                {/* <FormLabel id="payment-controlled-radio-buttons-group">Gender</FormLabel> */}
-                                <RadioGroup
-                                    row
-                                    aria-labelledby="payment-controlled-radio-buttons-group"
-                                    name="payment_option"
-                                    value={formData.payment_option}
-                                    onChange={handleChange}
-                                // {...register('payment_option')}
-                                // {...register('payment_option')}
-                                >
-                                    <FormControlLabel value={1} control={<Radio />} label="Full" />
-                                    <FormControlLabel value={2} control={<Radio />} label="Half" />
-                                </RadioGroup>
-                            </FormControl>
+                                    />
+                                )}
+                            />
+                        </Grid>
+                        <Grid item xs={3} >
+                            <Typography variant="h4">બાકી રકમ: {formData.new_due_amount}</Typography>
                         </Grid>
 
-                        {formData.payment_option == 2 && (
-                            <>
-                                <Grid item xs={2} className='d-flex'>
-                                    <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
-                                        Half Payment
-                                    </Typography>
-                                </Grid>
-
-                                <Grid item xs={3} className='text-left'>
-                                    <Controller
-                                        name="half_payment"
-                                        control={control}
-                                        render={({ field }) => (
-                                            <NumericFormat
-                                                {...field}
-                                                placeholder="Payment"
-                                                thousandSeparator={true}
-                                                // prefix={'₹'}
-                                                allowNegative={false}
-                                                size='small'
-                                                InputProps={{
-                                                    startAdornment: (
-                                                        <InputAdornment position="start">₹</InputAdornment>
-                                                    )
-                                                }}
-                                                value={formData.half_payment}
-                                                decimalScale={2}
-                                                fixedDecimalScale={true}
-                                                customInput={TextField}
-                                                onValueChange={(values) => {
-                                                    setFormData({ ...formData, half_payment: values.floatValue })
-                                                }}
-                                            // {...register('half_payment', { onChange: handleChange })}
-                                            // error={Boolean(errors && errors['half_payment'])}
-
-                                            />
-                                        )}
-                                    />
-                                </Grid>
-                                <Grid item xs={3} >
-                                    <Typography variant="h4">બાકી રકમ: {formData.due_amount}</Typography>
-                                </Grid>
-                            </>
-                        )}
-
-                        {formData.payment_option == 1 && (
-                            <>
-                                <Grid item xs={2} className='d-flex'>
-                                    <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
-                                        Full Payment
-                                    </Typography>
-                                </Grid>
-
-                                <Grid item xs={3} className='text-left'>
-                                    <Controller
-                                        name="full_payment"
-                                        control={control}
-                                        render={({ field }) => (
-                                            <NumericFormat
-                                                {...field}
-                                                placeholder="Payment"
-                                                thousandSeparator={true}
-                                                // prefix={'₹'}
-                                                allowNegative={false}
-                                                size='small'
-                                                disabled
-                                                InputProps={{
-                                                    startAdornment: (
-                                                        <InputAdornment position="start">₹</InputAdornment>
-                                                    )
-                                                }}
-                                                value={formData.full_payment}
-                                                decimalScale={2}
-                                                fixedDecimalScale={true}
-                                                customInput={TextField}
-                                                onValueChange={(values) => {
-                                                    setFormData({ ...formData, full_payment: values.floatValue })
-                                                }}
-                                                {...register('full_payment', { onChange: handleChange })}
-                                            // error={Boolean(errors && errors['full_payment'])}
-
-                                            />
-                                        )}
-                                    />
-                                </Grid>
-                            </>
-                        )}
                     </Grid>
                 </Box>
 

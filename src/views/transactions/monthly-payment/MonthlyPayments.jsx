@@ -111,8 +111,8 @@ const MonthlyPayments = () => {
                                                     <TableCell>{paymentOption.label}</TableCell>
                                                     <TableCell align="right">{historyRow.milk_rate}</TableCell>
                                                     <TableCell align="right">{historyRow.milk_quantity}</TableCell>
-                                                    <TableCell align="right">{numberFormat(historyRow.due_amount)}</TableCell>
-                                                    <TableCell style={{ color: `${historyRow.half_payment > 0 ? 'red' : ''}` }} align="right" >{numberFormat(historyRow.half_payment)}</TableCell>
+                                                    <TableCell style={{ color: `${historyRow.due_amount > 0 ? 'red' : ''}` }} align="right">{numberFormat(historyRow.due_amount)}</TableCell>
+                                                    <TableCell align="right" >{numberFormat(historyRow.half_payment)}</TableCell>
                                                     <TableCell align="right">{numberFormat(historyRow.full_payment)}</TableCell>
                                                     <TableCell align="right">{numberFormat(historyRow.total_amount)}</TableCell>
                                                     <TableCell align='right'>
