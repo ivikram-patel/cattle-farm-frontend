@@ -123,8 +123,6 @@ const SellCattle = () => {
 
     const submitForm = async () => {
 
-        console.log(formData)
-        // TODO:: IF YOU SELL CATTLE SUCCESSFULLY THEN ALSO CHANGE IN REMOVE OR IS_DELETED SET TO "1" IN BUY_CATTLE.
         let endPoint = `api/submit-sell-cattle-details`;
 
         showLoader();

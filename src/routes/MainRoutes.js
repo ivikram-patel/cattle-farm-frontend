@@ -50,8 +50,9 @@ const BuyCattles = Loadable(lazy(() => import('views/cattle-details/buy/BuyCattl
 const SellCattle = Loadable(lazy(() => import('views/cattle-details/sell/SellCattle')));
 const SellCattles = Loadable(lazy(() => import('views/cattle-details/sell/SellCattles')));
 
-const CattleReproduction = Loadable(lazy(() => import('views/cattle-details/reproduction/CattleReproduction')));
-const CattleReproductionList = Loadable(lazy(() => import('views/cattle-details/reproduction/CattleReproductionList')));
+const CattleBirthTime = Loadable(lazy(() => import('views/cattle-details/reproduction/CattleBirthTime')));
+const CattleInseminationTime = Loadable(lazy(() => import('views/cattle-details/reproduction/CattleInseminationTime')));
+const CattlePregnancyTime = Loadable(lazy(() => import('views/cattle-details/reproduction/CattlePregnancyTime')));
 
 const IncomeCategories = Loadable(lazy(() => import('views/income-expense-category/IncomeCategories')));
 const ExpenseCategories = Loadable(lazy(() => import('views/income-expense-category/ExpenseCategories')));
@@ -147,11 +148,10 @@ const MainRoutes = {
     { path: '/monthly-payment', element: isAdminLogin ? <MonthlyPayment /> : <Navigate to={'/add-details'} /> },
     { path: '/monthly-payment/:id', element: isAdminLogin ? <MonthlyPayment /> : <Navigate to={'/add-details'} /> },
     { path: '/monthly-half-payment/:id/:customer_id', element: isAdminLogin ? <MonthlyHalfPayment /> : <Navigate to={'/add-details'} /> },
-
-
-    { path: '/cattle-reproduction-records', element: isAdminLogin ? <CattleReproductionList /> : <Navigate to={'/add-details'} /> },
-    { path: '/cattle-reproduction', element: isAdminLogin ? <CattleReproduction /> : <Navigate to={'/add-details'} /> },
-    { path: '/cattle-reproduction/:id', element: isAdminLogin ? <CattleReproduction /> : <Navigate to={'/add-details'} /> },
+    
+    { path: '/cattle-birth-time', element: isAdminLogin ? <CattleBirthTime /> : <Navigate to={'/add-details'} /> },
+    { path: '/bijdan-time', element: isAdminLogin ? <CattleInseminationTime /> : <Navigate to={'/add-details'} /> },
+    { path: '/pregnancy-time', element: isAdminLogin ? <CattlePregnancyTime /> : <Navigate to={'/add-details'} /> },
 
     { path: '/buy-cattles', element: isAdminLogin ? <BuyCattles /> : <Navigate to={'/add-details'} /> },
     { path: '/buy-cattle', element: isAdminLogin ? <BuyCattle /> : <Navigate to={'/add-details'} /> },

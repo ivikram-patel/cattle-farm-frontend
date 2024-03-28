@@ -40,14 +40,33 @@ const cattle_details = {
                     icon: icons.IconPalette,
                     breadcrumbs: false
                 },
+
                 {
-                    id: 'cattle_reproduction_cycle.',
-                    title: 'Cattle Reproduction',
+                    id: 'birth_time',
+                    title: 'Birth Time',
                     type: 'item',
-                    url: '/cattle-reproduction-records',
+                    url: '/cattle-birth-time',
                     icon: icons.IconPalette,
                     breadcrumbs: false
-                }
+                },
+
+                {
+                    id: 'insemination',
+                    title: 'બિજદાન',
+                    type: 'item',
+                    url: '/bijdan-time',
+                    icon: icons.IconPalette,
+                    breadcrumbs: false
+                },
+
+                {
+                    id: 'pregnancy',
+                    title: 'Pregnancy',
+                    type: 'item',
+                    url: '/pregnancy-time',
+                    icon: icons.IconPalette,
+                    breadcrumbs: false
+                },
             ]
         }
     ]
