@@ -75,6 +75,7 @@ const SellCattles = () => {
                             <StyledTableCell>Tag No</StyledTableCell>
                             <StyledTableCell>Price</StyledTableCell>
                             <StyledTableCell>Note</StyledTableCell>
+                            <StyledTableCell>Time</StyledTableCell>
                             <StyledTableCell>Action</StyledTableCell>
                         </TableRow>
                     </TableHead>
@@ -96,8 +97,12 @@ const SellCattles = () => {
                                         {numberFormat(row.cattle_price)}
                                     </StyledTableCellData>
 
-                                    <StyledTableCellData component="td" scope="row" style={{ width: '300px' }}>
+                                    <StyledTableCellData component="td" scope="row" style={{ width: '200px' }}>
                                         {row.note}
+                                    </StyledTableCellData>
+
+                                    <StyledTableCellData component="td" scope="row" style={{ width: '100px' }}>
+                                        {row.selling_time}
                                     </StyledTableCellData>
 
                                     <StyledTableCellData component="td" scope="row" style={{ width: '10px' }}>

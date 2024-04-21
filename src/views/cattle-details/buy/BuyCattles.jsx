@@ -78,6 +78,7 @@ const BuyCattles = () => {
                             <StyledTableCell>Note</StyledTableCell>
                             <StyledTableCell>Obtain From</StyledTableCell>
                             <StyledTableCell>Price</StyledTableCell>
+                            <StyledTableCell>Time</StyledTableCell>
                             <StyledTableCell>Action</StyledTableCell>
                         </TableRow>
                     </TableHead>
@@ -108,6 +109,11 @@ const BuyCattles = () => {
                                     <StyledTableCellData component="td" scope="row" style={{ width: '10px' }}>
                                         {numberFormat(row.price)}
                                     </StyledTableCellData>
+
+                                    <StyledTableCellData component="td" scope="row" style={{ width: '10px' }}>
+                                        {row.buy_cattle_time}
+                                    </StyledTableCellData>
+
 
                                     <StyledTableCellData component="td" scope="row" style={{ width: '10px' }}>
                                         <IconButton onClick={() => deleteCattle(row.id)} ><DeleteForeverIcon /></IconButton>

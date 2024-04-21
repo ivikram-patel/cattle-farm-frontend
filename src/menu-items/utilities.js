@@ -32,14 +32,14 @@ const utilities = {
       icon: icons.IconPalette,
       breadcrumbs: false
     },
-    {
-      id: 'add_details',
-      title: 'વિગતો',
-      type: 'item',
-      url: '/add-details',
-      icon: icons.IconShadow,
-      breadcrumbs: false
-    },
+    // {
+    //   id: 'add_details',
+    //   title: 'વિગતો',
+    //   type: 'item',
+    //   url: '/add-details',
+    //   icon: icons.IconShadow,
+    //   breadcrumbs: false
+    // },
     {
       id: 'report',
       title: 'Reports',

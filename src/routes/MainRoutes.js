@@ -28,7 +28,9 @@ const AddDetails = Loadable(lazy(() => import('views/add-details/AddDetails')));
 const Customers = Loadable(lazy(() => import('views/customer/Customers')));
 const Customer = Loadable(lazy(() => import('views/customer/Customer')));
 const DoctorsList = Loadable(lazy(() => import('views/list-details/DoctorsList')));
+const Doctor = Loadable(lazy(() => import('views/list-details/Doctor')));
 const EmployeeList = Loadable(lazy(() => import('views/list-details/EmployeeList')));
+const Employee = Loadable(lazy(() => import('views/list-details/Employee')));
 const MilkRate = Loadable(lazy(() => import('views/milk-rate/MilkRate')));
 const MilkRates = Loadable(lazy(() => import('views/milk-rate/MilkRates')));
 const Transaction = Loadable(lazy(() => import('views/transactions/Transaction')));
@@ -125,14 +127,24 @@ const MainRoutes = {
     },
     { path: '/milk-transactions', element: isAdminLogin ? <Transactions /> : <Navigate to={'/add-details'} /> },
     { path: '/milk-transaction', element: isAdminLogin ? <Transaction /> : <Navigate to={'/add-details'} /> },
+
     { path: '/details', element: isAdminLogin ? <AddDetails /> : <Navigate to={'/add-details'} /> },
+
     { path: '/milk-rates', element: isAdminLogin ? <MilkRates /> : <Navigate to={'/add-details'} /> },
     { path: '/milk-rate', element: isAdminLogin ? <MilkRate /> : <Navigate to={'/add-details'} /> },
+
     { path: '/customers', element: isAdminLogin ? <Customers /> : <Navigate to={'/add-details'} /> },
     { path: '/customer', element: isAdminLogin ? <Customer /> : <Navigate to={'/add-details'} /> },
     { path: '/customer/:id', element: isAdminLogin ? <Customer /> : <Navigate to={'/add-details'} /> },
+
     { path: '/doctors-list', element: isAdminLogin ? <DoctorsList /> : <Navigate to={'/add-details'} /> },
+    { path: '/doctor', element: isAdminLogin ? <Doctor /> : <Navigate to={'/add-details'} /> },
+    { path: '/doctor/:id', element: isAdminLogin ? <Doctor /> : <Navigate to={'/add-details'} /> },
+
     { path: '/employee-list', element: isAdminLogin ? <EmployeeList /> : <Navigate to={'/add-details'} /> },
+    { path: '/employee', element: isAdminLogin ? <Employee /> : <Navigate to={'/add-details'} /> },
+    { path: '/employee/:id', element: isAdminLogin ? <Employee /> : <Navigate to={'/add-details'} /> },
+
     { path: '/cattle-food/:id', element: isAdminLogin ? <CattleFood /> : <Navigate to={'/add-details'} /> },
 
 
@@ -148,7 +160,7 @@ const MainRoutes = {
     { path: '/monthly-payment', element: isAdminLogin ? <MonthlyPayment /> : <Navigate to={'/add-details'} /> },
     { path: '/monthly-payment/:id', element: isAdminLogin ? <MonthlyPayment /> : <Navigate to={'/add-details'} /> },
     { path: '/monthly-half-payment/:id/:customer_id', element: isAdminLogin ? <MonthlyHalfPayment /> : <Navigate to={'/add-details'} /> },
-    
+
     { path: '/cattle-birth-time', element: isAdminLogin ? <CattleBirthTime /> : <Navigate to={'/add-details'} /> },
     { path: '/bijdan-time', element: isAdminLogin ? <CattleInseminationTime /> : <Navigate to={'/add-details'} /> },
     { path: '/pregnancy-time', element: isAdminLogin ? <CattlePregnancyTime /> : <Navigate to={'/add-details'} /> },

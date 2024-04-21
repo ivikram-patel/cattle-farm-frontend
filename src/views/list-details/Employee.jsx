@@ -1,18 +1,18 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react'
-import { useNavigate, useParams } from 'react-router'
+import { Box, Button, FormControl, FormControlLabel, Grid, Radio, RadioGroup, TextField, Typography } from '@mui/material';
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
+import { useFullPageLoader } from 'hooks/useFullPageLoader';
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Box, Button, FormControl, FormControlLabel, Grid, Radio, RadioGroup, TextField, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
-import { useFullPageLoader } from 'hooks/useFullPageLoader';
 // import axiosInstance from 'custom-axios';
-import { useForm } from 'react-hook-form';
-import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axiosInstance from 'custom-axios';
 import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import * as Yup from 'yup';
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -21,22 +21,19 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary
 }));
 
-
-const Customer = () => {
+const Employee = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-
+    const [loader, showLoader, hideLoader] = useFullPageLoader();
     const initialValue = {
         id: id ? id : 0,
-        gender: 1, // Set the initial value for demonstration, replace with your logic
+        gender: 1
     }
-    
-    const [loader, showLoader, hideLoader] = useFullPageLoader();
     const [formData, setFormData] = useState(initialValue)
 
     const validation = Yup.object().shape({
         first_name: Yup.string().required(),
-        milk_quantity: Yup.string().required(),
+        surname: Yup.string().required(),
     });
 
     const {
@@ -51,12 +48,11 @@ const Customer = () => {
     });
 
 
-    const fetchFoodData = async () => {
+    const fetchData = async () => {
         showLoader();
 
         try {
-            const apiResponse = await axiosInstance.get(`api/customer-detail/${id}`);
-
+            const apiResponse = await axiosInstance.get(`api/employee-detail/${id}`);
             const apiData = apiResponse.data;
 
             if (apiResponse.status === 200) {
@@ -67,7 +63,6 @@ const Customer = () => {
                     'last_name': apiData.middle_name,
                     'gender': apiData.gender,
                     'surname': apiData.surname,
-                    'milk_quantity': apiData.quantity,
                     'phone_no': apiData.phone_no,
                     'address': apiData.address,
                 })
@@ -77,7 +72,6 @@ const Customer = () => {
                 setValue('last_name', apiData.middle_name)
                 setValue('gender', apiData.gender)
                 setValue('surname', apiData.surname)
-                setValue('milk_quantity', apiData.quantity)
                 setValue('phone_no', apiData.phone_no)
                 setValue('address', apiData.address)
             }
@@ -89,45 +83,44 @@ const Customer = () => {
         }
     }
 
-
     const handleChange = (e) => {
         const { name, value } = e.target
         setFormData({ ...formData, [name]: value })
     };
 
+    const submitForm = async () => {
 
-    const submitForm = async (data) => {
-
-        if (data.milk_quantity <= 0) {
-            toast.error('Please enter a number');
-            return;
-        }
-        let endPoint = `api/submit-customer-details`;
+        let endPoint = `api/submit-employee-details`;
+        let redirectPage = '/employee-list';
 
         showLoader();
 
         try {
-            const response = await axiosInstance.post(endPoint, data);
-
-            toast.success(response.message);
+            const response = await axiosInstance.post(endPoint, formData);
 
             if (response.status === 200) {
-                navigate('/customers');
-            }
 
+                toast.success(response.message);
+
+                console.log(redirectPage);
+                navigate(redirectPage);
+
+            } else {
+                toast.error(response.message);
+            }
         } catch (error) {
             console.error(error)
-
         } finally {
             hideLoader();
         }
+        // }
     }
 
     useEffect(() => {
         if (id) {
-            fetchFoodData()
+            fetchData()
         }
-    }, [id])
+    }, [])
 
     return <>
         <Item>
@@ -195,7 +188,7 @@ const Customer = () => {
                                     aria-labelledby="gender-controlled-radio-buttons-group"
                                     name="gender"
                                     value={parseInt(formData.gender)}
-                                    {...register('gender', { onChange: handleChange })}
+                                    {...register('gender', { required: true, onChange: handleChange })}
 
                                 >
                                     <FormControlLabel value={1} control={<Radio />} label="Male" />
@@ -225,28 +218,6 @@ const Customer = () => {
                                 helperText={errors.surname?.message}
                             />
                         </Grid>
-
-
-                        <Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
-                            <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
-                                Milk Quantity
-                            </Typography>
-                        </Grid>
-
-                        <Grid item xs={10} className='text-start'>
-                            <TextField
-                                id="outlined-number"
-                                label="Food in Nos"
-                                InputLabelProps={{ shrink: true }}
-                                type="number"
-                                size='small'
-                                {...register('milk_quantity', { onChange: handleChange })}
-                                fullWidth
-                                value={formData.milk_quantity || ''}
-                                error={!!errors.milk_quantity}
-                            />
-                        </Grid>
-
 
                         <Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
                             <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
@@ -308,4 +279,4 @@ const Customer = () => {
     </>;
 };
 
-export default Customer;
+export default Employee;
