@@ -22,8 +22,8 @@ export const CATTLE_OBTAIN_DETAILS = [
 ];
 
 export const TIME_DETAILS = [
-  { label: 'સવાર', value: 1 },
-  { label: 'સાંજ', value: 2 }
+  { label: 'Morning', value: 1 },
+  { label: 'Evening', value: 2 }
 ];
 export const PAYMENT_OPTION = [
   { label: 'Full', value: 1 },

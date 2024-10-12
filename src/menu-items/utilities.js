@@ -26,7 +26,7 @@ const utilities = {
     },
     {
       id: 'cattle_food',
-      title: 'ખોરાક',
+      title: 'Food',
       type: 'item',
       url: '/cattle-foods',
       icon: icons.IconPalette,

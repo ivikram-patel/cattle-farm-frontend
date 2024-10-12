@@ -95,7 +95,7 @@ const CattleFoods = () => {
                     <TableBody>
                         {foodDetails?.map((row, index) => {
 
-                            const foodItem = FOOD_DETAILS.find(item => item.value === row.food_type);
+                            const foodItem = FOOD_DETAILS.find(item => item.value == row.food_type);
                             const foodType = foodItem ? foodItem.label : '-';
                             const foodQuantityLabel = row.food_in_weight > 0 ? `${row.food_in_weight} Kg` : `${row.food_in_nos} Nos`;
 

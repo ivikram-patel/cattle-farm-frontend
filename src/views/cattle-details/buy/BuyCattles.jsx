@@ -86,7 +86,7 @@ const BuyCattles = () => {
                     <TableBody>
                         {cattleDetails?.map((row, index) => {
 
-                            const obtainFromLabel = CATTLE_OBTAIN_DETAILS.find(item => item.value === row.cattle_obtain_from)?.label;
+                            const obtainFromLabel = CATTLE_OBTAIN_DETAILS.find(item => item.value == row.cattle_obtain_from)?.label;
 
                             return (
                                 <StyledTableRow className="eft-table-cell" key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -94,7 +94,7 @@ const BuyCattles = () => {
                                         {index + 1}
                                     </StyledTableCellData>
 
-                                    <StyledTableCellData component="td" scope="row" style={{ width: '100px' }}>
+                                    <StyledTableCellData component="td" scope="row" style={{ width: '50px' }}>
                                         {row.tag_no}
                                     </StyledTableCellData>
 
@@ -115,7 +115,7 @@ const BuyCattles = () => {
                                     </StyledTableCellData>
 
 
-                                    <StyledTableCellData component="td" scope="row" style={{ width: '10px' }}>
+                                    <StyledTableCellData component="td" scope="row" style={{ width: '30px' }}>
                                         <IconButton onClick={() => deleteCattle(row.id)} ><DeleteForeverIcon /></IconButton>
                                         <IconButton onClick={() => navigate(`/buy-cattle/${row.id}`)}><EditIcon /></IconButton>
                                     </StyledTableCellData>

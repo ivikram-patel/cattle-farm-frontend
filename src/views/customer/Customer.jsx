@@ -114,7 +114,6 @@ const Customer = () => {
             if (response.status === 200) {
                 navigate('/customers');
             }
-
         } catch (error) {
             console.error(error)
 

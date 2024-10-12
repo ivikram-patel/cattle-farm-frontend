@@ -68,8 +68,6 @@ const MonthlyPayment = () => {
         // resolver: yupResolver(validationSchema)
     });
 
-    console.log(id);
-
     const fetchCustomerList = async () => {
         showLoader();
         try {
@@ -124,7 +122,7 @@ const MonthlyPayment = () => {
             });
         }
 
-        console.log(formData)
+        // console.log(formData)
 
         // setFormData({
         //     ...formData,
@@ -176,8 +174,9 @@ const MonthlyPayment = () => {
             let totalAmount = 0;
             let totalDueAmount = 0;
 
+            console.log(customerMilkQuantity, milkRate, daysInMonth)
             totalAmount = parseFloat(customerMilkQuantity) * parseFloat(milkRate) * daysInMonth;
-
+console.log(totalAmount)
             if (isNaN(totalAmount)) {
                 totalAmount = 0;
             }

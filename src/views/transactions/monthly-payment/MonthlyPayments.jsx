@@ -101,7 +101,7 @@ const MonthlyPayments = () => {
                                     </TableHead>
                                     <TableBody>
                                         {row.history.map((historyRow) => {
-                                            const paymentOption = PAYMENT_OPTION.find(item => item.value === historyRow.payment_option);
+                                            const paymentOption = PAYMENT_OPTION.find(item => item.value == historyRow.payment_option);
                                             return (
                                                 <TableRow key={historyRow.payment_date}>
                                                     <TableCell component="th" scope="row">
