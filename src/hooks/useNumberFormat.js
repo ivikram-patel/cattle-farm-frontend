@@ -1,7 +1,7 @@
 export const numberFormat = (value) =>
     new Intl.NumberFormat('en-US', {
         style: 'currency',
-        currency: 'USD'
+        currency: 'INR'
     }).format(value);
 
 export const numberPerCentageFormat = (value) =>

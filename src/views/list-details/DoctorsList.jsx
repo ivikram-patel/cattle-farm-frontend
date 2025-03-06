@@ -16,16 +16,15 @@ import { StyledTableCell, StyledTableCellData, StyledTableRow } from 'styles/com
 const DoctorsList = () => {
 
     const navigate = useNavigate();
-    const [doctorList, setDoctorList] = useState()
+    const [doctorList, setDoctorList] = useState([])
     const [loader, showLoader, hideLoader] = useFullPageLoader();
-    let type = 2; // for Dr list from table
 
     const fetchList = async () => {
         showLoader();
         try {
-            const response = await axiosInstance.get(`api/list-details/${type}`);
+            const response = await axiosInstance.get(`api/doctor-details`);
+            setDoctorList(response.data)
 
-            setDoctorList(response)
 
         } catch (error) {
             toast.error(error.message);
@@ -35,24 +34,26 @@ const DoctorsList = () => {
     };
 
 
-    // async function deleteCategory(id) {
+    async function deleteCategory(id) {
 
-    //     let confirmDelete = window.confirm("Are you sure want to delete this?");
+        let confirmDelete = window.confirm("Are you sure want to delete this?");
 
-    //     if (confirmDelete) {
+        if (confirmDelete) {
 
-    //         try {
-    //             const response = await axiosInstance.delete(`api/delete-asset-category/${id}`);
-    //             toast.success(response.message);
+            showLoader()
+            try {
+                const response = await axiosInstance.delete(`api/delete-doctor-detail/${id}`);
+                toast.success(response.message);
 
-    //             fetchAssetCategories();
+                fetchList();
 
-    //         } catch (error) {
-    //             toast.error(error.message)
-    //         } finally {
-    //         }
-    //     }
-    // }
+            } catch (error) {
+                toast.error(error.message)
+            } finally {
+                hideLoader()
+            }
+        }
+    }
 
     useEffect(() => {
         fetchList()
@@ -67,7 +68,7 @@ const DoctorsList = () => {
                     variant='contained'
                     color="primary"
                     className='blue-button'
-                    onClick={() => navigate('/add-details')}
+                    onClick={() => navigate('/doctor')}
                 >
                     Add New
                 </Button>
@@ -85,7 +86,7 @@ const DoctorsList = () => {
                     </TableHead>
 
                     <TableBody>
-                        {doctorList?.data?.map((row, index) => {
+                        {doctorList?.map((row, index) => {
                             return (
                                 <StyledTableRow
                                     className="eft-table-cell"
@@ -97,12 +98,17 @@ const DoctorsList = () => {
                                     <StyledTableCellData component="td" scope="row" style={{ width: '102px' }}> {row.first_name} </StyledTableCellData>
                                     <StyledTableCellData component="td" scope="row" style={{ width: '10px' }}>
                                         <IconButton onClick={() => deleteCategory(row.id)} ><DeleteForeverIcon /></IconButton>
-                                        <IconButton onClick={() => navigate(`/admin/asset-category/${row.id}`)}><EditIcon /></IconButton>
+                                        <IconButton onClick={() => navigate(`/doctor/${row.id}`)}><EditIcon /></IconButton>
                                     </StyledTableCellData>
                                 </StyledTableRow>
                             )
-                        })
-                        }
+                        })}
+
+                        {doctorList.length === 0 && (
+                            <tr>
+                                <td colSpan="6" align='center' style={{ padding: '5px' }}>No record found</td>
+                            </tr>
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer >

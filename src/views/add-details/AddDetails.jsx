@@ -1,17 +1,18 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react'
-// import { useNavigate, useParams } from 'react-router'
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
-import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { useNavigate } from 'react-router'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Box, Button, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import { ADD_DETAILS } from 'store/constant';
-// import { useFullPageLoader } from 'hooks/useFullPageLoader';
+import { useFullPageLoader } from 'hooks/useFullPageLoader';
 // import axiosInstance from 'custom-axios';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import axiosInstance from 'custom-axios';
 
 const Item = styled(Paper)(({ theme }) => ({
 	...theme.typography.body2,
@@ -21,14 +22,15 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const AddDetails = () => {
-	// const navigate = useNavigate();  
+	const navigate = useNavigate();
 	// const { id } = useParams();
-	// const [loader, showLoader, hideLoader] = useFullPageLoader();
+	const [loader, showLoader, hideLoader] = useFullPageLoader();
 	const [formData, setFormData] = useState([])
 
 	const validation = Yup.object().shape({
 		add_detail: Yup.string().required(),
 		first_name: Yup.string().required(),
+		gender: Yup.string().nullable().required('Please select a gender'),
 	});
 
 	const {
@@ -54,41 +56,50 @@ const AddDetails = () => {
 
 		console.log(data)
 
-		// const captchaToken = await recaptchaRef.current.executeAsync();
+		let endPoint;
+		let redirectPage;
 
-		// if (captchaToken) {
+		if (data.add_detail == 1) {
+			endPoint = `api/submit-doctor-details`;
+			redirectPage = '/doctor-list';
 
-		//     let finalData = { ...data, security_id: id ? id : 0 }
+		} else if (data.add_detail == 2) {
+			endPoint = `api/submit-customer-details`;
+			redirectPage = '/customers';
 
-		//     showLoader();
+		} else {
+			endPoint = `api/submit-employee-details`;
+			redirectPage = '/employee-list';
+		}
 
-		//     let endPoint = `api/submit-security`;
+		showLoader();
 
-		//     try {
-		//         const response = await axiosInstance.post(endPoint, finalData);
+		try {
+			const response = await axiosInstance.post(endPoint, data);
 
-		//         if (response.status === 200) {
+			if (response.status === 200) {
 
-		//             toast.success(response.message);
+				toast.success(response.message);
 
-		//             navigate('/admin/securities');
+				console.log(redirectPage);
+				navigate(redirectPage);
 
+			} else {
+				toast.error(response.message);
+			}
+		} catch (error) {
+			// toast.error(error.message);
+			console.error(error)
 
-		//         } else {
-		//             toast.error(response.message);
-		//         }
-		//     } catch (error) {
-		//         // toast.error(error.message);
-		//         console.error(error)
+		} finally {
 
-		//     } finally {
+			// recaptchaRef.current.reset()
 
-		//         recaptchaRef.current.reset()
-
-		//         hideLoader();
-		//     }
+			hideLoader();
+		}
 		// }
 	}
+
 	return <>
 		<Item>
 			<form onSubmit={handleSubmit(submitForm)}>
@@ -98,7 +109,7 @@ const AddDetails = () => {
 					autoComplete="off"
 				>
 					<Grid container spacing={2}>
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								વિગતો
 							</Typography>
@@ -140,8 +151,34 @@ const AddDetails = () => {
 
 						</Grid>
 
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
+							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
+								Gender
+							</Typography>
+						</Grid>
 
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={10} className='text-left' style={{ textAlign: 'left' }}>
+							<FormControl>
+								{/* <FormLabel id="payment-controlled-radio-buttons-group">Gender</FormLabel> */}
+								<RadioGroup
+									row
+									aria-labelledby="gender-controlled-radio-buttons-group"
+									name="gender"
+									value={formData.gender}
+									onChange={handleChange}
+									{...register('gender')}
+
+								>
+									<FormControlLabel value={1} control={<Radio />} label="Male" />
+									<FormControlLabel value={2} control={<Radio />} label="Female" />
+								</RadioGroup>
+							</FormControl>
+							{errors.gender && <p style={{ color: 'red' }}>{errors.gender.message}</p>}
+						</Grid>
+
+
+
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								અટક
 							</Typography>
@@ -161,7 +198,7 @@ const AddDetails = () => {
 
 						{/* -----------first name------------ */}
 
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								First Name
 							</Typography>
@@ -175,11 +212,11 @@ const AddDetails = () => {
 								size='small'
 								{...register('first_name')}
 								error={!!errors.first_name}
-								helperText={errors.first_name?.message}
+							// helperText={errors.first_name?.message}
 							/>
 						</Grid>
 
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Last Name
 							</Typography>
@@ -198,7 +235,7 @@ const AddDetails = () => {
 						</Grid>
 
 
-						<Grid item xs={2} className='d-flex justify-content-center' style={{ alignItems: 'center' }}>
+						<Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Phone No
 							</Typography>
@@ -217,7 +254,7 @@ const AddDetails = () => {
 						</Grid>
 
 
-						<Grid item xs={2} className='d-flex justify-content-center'>
+						<Grid item xs={2} className='d-flex'>
 							<Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
 								Address
 							</Typography>
@@ -250,7 +287,9 @@ const AddDetails = () => {
 					</Button>
 				</Box>
 			</form>
-		</Item>
+		</Item >
+		<ToastContainer />
+		{loader}
 	</>;
 };
 

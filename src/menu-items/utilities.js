@@ -17,58 +17,50 @@ const utilities = {
   type: 'group',
   children: [
     {
-      id: 'milk_productions',
-      title: 'દૂધ ઉત્પાદન',
+      id: 'milk_rates',
+      title: 'Milk Rates',
       type: 'item',
-      url: 'milk-productions',
-      icon: icons.IconTypography,
-      breadcrumbs: false
-    },
-    {
-      id: 'milk_rate',
-      title: 'Milk Rate',
-      type: 'item',
-      url: 'milk-rate',
+      url: 'milk-rates',
       icon: icons.IconTypography,
       breadcrumbs: false
     },
     {
       id: 'cattle_food',
-      title: 'ખોરાક',
+      title: 'Food',
       type: 'item',
-      url: '/cattle-food',
+      url: '/cattle-foods',
       icon: icons.IconPalette,
       breadcrumbs: false
     },
-    {
-      id: 'expense',
-      title: 'ખર્ચ',
-      type: 'item',
-      url: '/expense',
-      icon: icons.IconPalette,
-      breadcrumbs: false
-    },
-    {
-      id: 'cattle_details',
-      title: 'ભેંસની વિગતો',
-      type: 'item',
-      url: '/cattle-details',
-      icon: icons.IconShadow,
-      breadcrumbs: false
-    },
-    {
-      id: 'add_details',
-      title: 'વિગતો',
-      type: 'item',
-      url: '/add-details',
-      icon: icons.IconShadow,
-      breadcrumbs: false
-    },
+    // {
+    //   id: 'add_details',
+    //   title: 'વિગતો',
+    //   type: 'item',
+    //   url: '/add-details',
+    //   icon: icons.IconShadow,
+    //   breadcrumbs: false
+    // },
     {
       id: 'report',
       title: 'Reports',
       type: 'item',
       url: '/reports',
+      icon: icons.IconShadow,
+      breadcrumbs: false
+    },
+    {
+      id: 'income',
+      title: 'Income',
+      type: 'item',
+      url: '/income-list',
+      icon: icons.IconShadow,
+      breadcrumbs: false
+    },
+    {
+      id: 'expense',
+      title: 'Expense',
+      type: 'item',
+      url: '/expense-list',
       icon: icons.IconShadow,
       breadcrumbs: false
     },
