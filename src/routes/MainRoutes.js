@@ -162,7 +162,7 @@ const MainRoutes = {
     { path: '/monthly-half-payment/:id/:customer_id', element: isAdminLogin ? <MonthlyHalfPayment /> : <Navigate to={'/add-details'} /> },
 
     { path: '/cattle-birth-time', element: isAdminLogin ? <CattleBirthTime /> : <Navigate to={'/add-details'} /> },
-    { path: '/bijdan-time', element: isAdminLogin ? <CattleInseminationTime /> : <Navigate to={'/add-details'} /> },
+    { path: '/insemination-time', element: isAdminLogin ? <CattleInseminationTime /> : <Navigate to={'/add-details'} /> },
     { path: '/pregnancy-time', element: isAdminLogin ? <CattlePregnancyTime /> : <Navigate to={'/add-details'} /> },
 
     { path: '/buy-cattles', element: isAdminLogin ? <BuyCattles /> : <Navigate to={'/add-details'} /> },

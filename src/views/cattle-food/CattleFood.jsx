@@ -126,7 +126,6 @@ const CattleFood = () => {
 
 	const submitForm = async () => {
 
-		console.table(formData)
 
 		showLoader()
 		let endPoint = `api/submit-food-details`;
@@ -145,6 +144,8 @@ const CattleFood = () => {
 			console.log(error);
 		}
 	}
+	
+	console.table(formData)
 
 	useEffect(() => {
 		const calculateTotalAmount = () => {

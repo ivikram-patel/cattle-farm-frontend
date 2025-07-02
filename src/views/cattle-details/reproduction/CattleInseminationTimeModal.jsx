@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import { BootstrapDialog } from 'styles/commonFunction';
-import { FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
+import { FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Tooltip } from '@mui/material';
 import axiosInstance from 'custom-axios';
 import 'dayjs/locale/en'; // Import the desired locale
 
@@ -21,6 +21,8 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { useEffect } from 'react';
+import InfoIcon from '@mui/icons-material/Info';
+
 dayjs.extend(utc);
 dayjs.extend(timezone);
 // Set the desired time zone (IST in this case)
@@ -122,9 +124,15 @@ const CattleInseminationTimeModal = (props) => {
                     <Grid container spacing={2}>
 
                         <Grid item xs={2} className='d-flex' style={{ alignItems: 'center' }}>
-                            <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }}>
+                            <Typography variant='subtitle1' className='text-capitalize' style={{ fontSize: 14 }} title='Tag no of cattle'>
                                 Tag
                             </Typography>
+
+                            <Tooltip title="Tag no of cattle" arrow>
+                                <InfoIcon
+                                    style={{ fontSize: 16, marginLeft: 4, color: '#6c757d', cursor: 'pointer' }}
+                                />
+                            </Tooltip>
                         </Grid>
 
                         <Grid item xs={10} className='text-start'>

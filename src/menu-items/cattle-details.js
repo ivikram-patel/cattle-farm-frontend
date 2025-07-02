@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { IconDetails, IconTypography, IconPalette, IconShadow, IconWindmill } from '@tabler/icons';
+import { IconDetails, IconPalette, IconShadow, IconTypography, IconWindmill } from '@tabler/icons';
 
 
 // constant
@@ -52,9 +52,9 @@ const cattle_details = {
 
                 {
                     id: 'insemination',
-                    title: 'બિજદાન',
+                    title: 'insemination (બિજદાન)',
                     type: 'item',
-                    url: '/bijdan-time',
+                    url: '/insemination-time',
                     icon: icons.IconPalette,
                     breadcrumbs: false
                 },

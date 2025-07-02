@@ -77,7 +77,13 @@ const Expense = () => {
         handleSubmit,
         formState: { errors }
     } = useForm({
-        resolver: yupResolver(validation)
+        resolver: yupResolver(validation),
+        defaultValues: {
+            amount: '',
+            expense_category: '',
+            expense_datetime: dayjs(),
+            description: '',
+        }
     });
 
 
@@ -113,8 +119,8 @@ const Expense = () => {
             })
 
 
-			setValue('expense_category', response.data.expense_category)
-			setValue('amount', response.data.amount)
+            setValue('expense_category', response.data.expense_category)
+            setValue('amount', response.data.amount)
 
         } catch (error) {
             toast.error(error.message);
@@ -122,7 +128,6 @@ const Expense = () => {
             hideLoader();
         }
     };
-
 
     const submitForm = async () => {
 
@@ -146,7 +151,7 @@ const Expense = () => {
             hideLoader()
         }
     };
-
+    console.log(formData)
     useEffect(() => {
         fetchExpenseList()
         if (id) { fetchList() }
