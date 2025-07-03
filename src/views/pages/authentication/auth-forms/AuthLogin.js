@@ -25,7 +25,7 @@ import * as Yup from 'yup';
 // import { Formik } from 'formik';
 
 // project imports
-import useScriptRef from 'hooks/useScriptRef';
+// import useScriptRef from 'hooks/useScriptRef';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 
 // assets
@@ -34,13 +34,18 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import axiosInstance from 'custom-axios';
+import { ToastContainer, toast } from 'react-toastify';
+import { useFullPageLoader } from 'hooks/useFullPageLoader';
+import 'react-toastify/dist/ReactToastify.css';
 
 const FirebaseLogin = () => {
     // const theme = useTheme();
-    const scriptedRef = useScriptRef();
+    // const scriptedRef = useScriptRef();
     const [checked, setChecked] = useState(true);
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
+    const [loader, showLoader, hideLoader] = useFullPageLoader();
 
     const schema = Yup.object().shape({
         email: Yup.string().email('Must be a valid email').max(255).required(),
@@ -58,15 +63,25 @@ const FirebaseLogin = () => {
 
     const onSubmit = async (data) => {
         try {
-            if (scriptedRef.current) {
+            showLoader()
+            let endPoint = `api/user-login`;
+            const apiResponse = await axiosInstance.post(endPoint, data);
+            console.log(apiResponse)
+
+            if (apiResponse.status === 'success') {
+                localStorage.setItem('adminLogin', 1)
+                toast.success(apiResponse.message);
                 navigate('/milk-productions');
-                console.log(data);
+            } else {
+                toast.error(apiResponse.message)
             }
+
         } catch (err) {
             console.error(err);
-            if (scriptedRef.current) {
-                setError('submit', { type: 'manual', message: err.message });
-            }
+            setError('submit', { type: 'manual', message: err.message });
+
+        } finally {
+            hideLoader()
         }
     };
 
@@ -172,6 +187,8 @@ const FirebaseLogin = () => {
                 </Grid>
             </Grid>
 
+            {loader}
+            <ToastContainer />
 
         </>
     );

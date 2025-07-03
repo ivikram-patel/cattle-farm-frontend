@@ -23,7 +23,6 @@ const Expense = Loadable(lazy(() => import('views/expense/Expense')));
 const Income = Loadable(lazy(() => import('views/income/Income')));
 const IncomeList = Loadable(lazy(() => import('views/income/IncomeList')));
 const Reports = Loadable(lazy(() => import('views/report/Reports')));
-const AddDetails = Loadable(lazy(() => import('views/add-details/AddDetails')));
 // const CustomersList = Loadable(lazy(() => import('views/list-details/CustomersList')));
 const Customers = Loadable(lazy(() => import('views/customer/Customers')));
 const Customer = Loadable(lazy(() => import('views/customer/Customer')));
@@ -67,132 +66,82 @@ const AddIncomeCategory = Loadable(lazy(() => import('views/income-expense-categ
 
 // ==============================|| MAIN ROUTING ||============================== //
 
-const isAdminLogin = true;
+const adminLogin = localStorage.getItem('adminLogin')
+const isAdminLogin = adminLogin == 1;
 
 const MainRoutes = {
   path: '/',
   element: <MainLayout />,
   children: [
-    {
-      path: '/dashboard',
-      element: <DashboardDefault />
-    },
-    {
-      path: 'dashboard',
-      children: [
-        {
-          path: 'default',
-          element: <DashboardDefault />
-        }
-      ]
-    },
-    {
-      path: '',
-      children: [
-        {
-          path: 'milk-productions',
-          element: <MilkProductions />
-        }
-      ]
-    },
-    {
-      path: '',
-      children: [
-        {
-          path: 'cattle-food',
-          element: <CattleFood />
-        }
-      ]
-    },
-    {
-      path: '',
-      children: [
-        {
-          path: 'cattle-foods',
-          element: <CattleFoods />
-        }
-      ]
-    },
-    {
-      path: '',
-      children: [{ path: 'add-details', element: <AddDetails /> }]
-    },
-    {
-      path: '',
-      children: [{ path: 'milk-production', element: <MilkProduction /> }]
-    },
-    {
-      path: '',
-      children: [{ path: 'reports', element: <Reports /> }]
-    },
-    { path: '/milk-transactions', element: isAdminLogin ? <Transactions /> : <Navigate to={'/add-details'} /> },
-    { path: '/milk-transaction', element: isAdminLogin ? <Transaction /> : <Navigate to={'/add-details'} /> },
+    { path: '/dashboard', element: isAdminLogin ? <DashboardDefault /> : <Navigate to={'/login'} /> },
+    { path: 'milk-productions', element: isAdminLogin ? <MilkProductions /> : <Navigate to={'/login'} /> },
+    { path: 'cattle-food', element: isAdminLogin ? <CattleFood /> : <Navigate to={'/login'} /> },
+    { path: 'cattle-foods', element: isAdminLogin ? <CattleFoods /> : <Navigate to={'/login'} /> },
+    { path: 'milk-production', element: isAdminLogin ? <MilkProduction /> : <Navigate to={'/login'} /> },
+    { path: 'reports', element: isAdminLogin ? <Reports /> : <Navigate to={'/login'} /> },
 
-    { path: '/details', element: isAdminLogin ? <AddDetails /> : <Navigate to={'/add-details'} /> },
-
-    { path: '/milk-rates', element: isAdminLogin ? <MilkRates /> : <Navigate to={'/add-details'} /> },
-    { path: '/milk-rate', element: isAdminLogin ? <MilkRate /> : <Navigate to={'/add-details'} /> },
-
-    { path: '/customers', element: isAdminLogin ? <Customers /> : <Navigate to={'/add-details'} /> },
-    { path: '/customer', element: isAdminLogin ? <Customer /> : <Navigate to={'/add-details'} /> },
-    { path: '/customer/:id', element: isAdminLogin ? <Customer /> : <Navigate to={'/add-details'} /> },
-
-    { path: '/doctors-list', element: isAdminLogin ? <DoctorsList /> : <Navigate to={'/add-details'} /> },
-    { path: '/doctor', element: isAdminLogin ? <Doctor /> : <Navigate to={'/add-details'} /> },
-    { path: '/doctor/:id', element: isAdminLogin ? <Doctor /> : <Navigate to={'/add-details'} /> },
-
-    { path: '/employee-list', element: isAdminLogin ? <EmployeeList /> : <Navigate to={'/add-details'} /> },
-    { path: '/employee', element: isAdminLogin ? <Employee /> : <Navigate to={'/add-details'} /> },
-    { path: '/employee/:id', element: isAdminLogin ? <Employee /> : <Navigate to={'/add-details'} /> },
-
-    { path: '/cattle-food/:id', element: isAdminLogin ? <CattleFood /> : <Navigate to={'/add-details'} /> },
+    // { path: '/can add route name like /admin OR /user OR /client', children: [{ path: 'login', element: isAdminLogin ? <MilkProduction /> : <Navigate to={'/login'} /> }] },
+    { path: '/milk-transactions', element: isAdminLogin ? <Transactions /> : <Navigate to={'/login'} /> },
+    { path: '/milk-transaction', element: isAdminLogin ? <Transaction /> : <Navigate to={'/login'} /> },
 
 
-    { path: '/milk-records', element: isAdminLogin ? <MilkRecords /> : <Navigate to={'/add-details'} /> },
-    { path: '/milk-record', element: isAdminLogin ? <MilkRecord /> : <Navigate to={'/add-details'} /> },
-    { path: '/milk-record/:id', element: isAdminLogin ? <MilkRecord /> : <Navigate to={'/add-details'} /> },
+    { path: '/milk-rates', element: isAdminLogin ? <MilkRates /> : <Navigate to={'/login'} /> },
+    { path: '/milk-rate', element: isAdminLogin ? <MilkRate /> : <Navigate to={'/login'} /> },
 
-    { path: '/single-payments', element: isAdminLogin ? <SinglePayments /> : <Navigate to={'/add-details'} /> },
-    { path: '/single-payment', element: isAdminLogin ? <SinglePayment /> : <Navigate to={'/add-details'} /> },
-    { path: '/single-payment/:id', element: isAdminLogin ? <SinglePayment /> : <Navigate to={'/add-details'} /> },
+    { path: '/customers', element: isAdminLogin ? <Customers /> : <Navigate to={'/login'} /> },
+    { path: '/customer', element: isAdminLogin ? <Customer /> : <Navigate to={'/login'} /> },
+    { path: '/customer/:id', element: isAdminLogin ? <Customer /> : <Navigate to={'/login'} /> },
 
-    { path: '/monthly-payments', element: isAdminLogin ? <MonthlyPayments /> : <Navigate to={'/add-details'} /> },
-    { path: '/monthly-payment', element: isAdminLogin ? <MonthlyPayment /> : <Navigate to={'/add-details'} /> },
-    { path: '/monthly-payment/:id', element: isAdminLogin ? <MonthlyPayment /> : <Navigate to={'/add-details'} /> },
-    { path: '/monthly-half-payment/:id/:customer_id', element: isAdminLogin ? <MonthlyHalfPayment /> : <Navigate to={'/add-details'} /> },
+    { path: '/doctors-list', element: isAdminLogin ? <DoctorsList /> : <Navigate to={'/login'} /> },
+    { path: '/doctor', element: isAdminLogin ? <Doctor /> : <Navigate to={'/login'} /> },
+    { path: '/doctor/:id', element: isAdminLogin ? <Doctor /> : <Navigate to={'/login'} /> },
 
-    { path: '/cattle-birth-time', element: isAdminLogin ? <CattleBirthTime /> : <Navigate to={'/add-details'} /> },
-    { path: '/insemination-time', element: isAdminLogin ? <CattleInseminationTime /> : <Navigate to={'/add-details'} /> },
-    { path: '/pregnancy-time', element: isAdminLogin ? <CattlePregnancyTime /> : <Navigate to={'/add-details'} /> },
+    { path: '/employee-list', element: isAdminLogin ? <EmployeeList /> : <Navigate to={'/login'} /> },
+    { path: '/employee', element: isAdminLogin ? <Employee /> : <Navigate to={'/login'} /> },
+    { path: '/employee/:id', element: isAdminLogin ? <Employee /> : <Navigate to={'/login'} /> },
 
-    { path: '/buy-cattles', element: isAdminLogin ? <BuyCattles /> : <Navigate to={'/add-details'} /> },
-    { path: '/buy-cattle', element: isAdminLogin ? <BuyCattle /> : <Navigate to={'/add-details'} /> },
-    { path: '/buy-cattle/:id', element: isAdminLogin ? <BuyCattle /> : <Navigate to={'/add-details'} /> },
+    { path: '/cattle-food/:id', element: isAdminLogin ? <CattleFood /> : <Navigate to={'/login'} /> },
 
-    { path: '/sell-cattles', element: isAdminLogin ? <SellCattles /> : <Navigate to={'/add-details'} /> },
-    { path: '/sell-cattle', element: isAdminLogin ? <SellCattle /> : <Navigate to={'/add-details'} /> },
-    { path: '/sell-cattle/:id', element: isAdminLogin ? <SellCattle /> : <Navigate to={'/add-details'} /> },
+    { path: '/milk-records', element: isAdminLogin ? <MilkRecords /> : <Navigate to={'/login'} /> },
+    { path: '/milk-record', element: isAdminLogin ? <MilkRecord /> : <Navigate to={'/login'} /> },
+    { path: '/milk-record/:id', element: isAdminLogin ? <MilkRecord /> : <Navigate to={'/login'} /> },
 
-    { path: '/add-expense', element: isAdminLogin ? <AddExpenseCategory /> : <Navigate to={'/add-details'} /> },
-    { path: '/add-expense/:id', element: isAdminLogin ? <AddExpenseCategory /> : <Navigate to={'/add-details'} /> },
-    { path: '/income-categories', element: isAdminLogin ? <IncomeCategories /> : <Navigate to={'/add-details'} /> },
+    { path: '/single-payments', element: isAdminLogin ? <SinglePayments /> : <Navigate to={'/login'} /> },
+    { path: '/single-payment', element: isAdminLogin ? <SinglePayment /> : <Navigate to={'/login'} /> },
+    { path: '/single-payment/:id', element: isAdminLogin ? <SinglePayment /> : <Navigate to={'/login'} /> },
 
-    { path: '/add-income', element: isAdminLogin ? <AddIncomeCategory /> : <Navigate to={'/add-details'} /> },
-    { path: '/add-income/:id', element: isAdminLogin ? <AddIncomeCategory /> : <Navigate to={'/add-details'} /> },
-    { path: '/expense-categories', element: isAdminLogin ? <ExpenseCategories /> : <Navigate to={'/add-details'} /> },
+    { path: '/monthly-payments', element: isAdminLogin ? <MonthlyPayments /> : <Navigate to={'/login'} /> },
+    { path: '/monthly-payment', element: isAdminLogin ? <MonthlyPayment /> : <Navigate to={'/login'} /> },
+    { path: '/monthly-payment/:id', element: isAdminLogin ? <MonthlyPayment /> : <Navigate to={'/login'} /> },
+    { path: '/monthly-half-payment/:id/:customer_id', element: isAdminLogin ? <MonthlyHalfPayment /> : <Navigate to={'/login'} /> },
 
-    { path: '/income', element: isAdminLogin ? <Income /> : <Navigate to={'/add-details'} /> },
-    { path: '/income/:id', element: isAdminLogin ? <Income /> : <Navigate to={'/add-details'} /> },
-    { path: '/income-list', element: isAdminLogin ? <IncomeList /> : <Navigate to={'/add-details'} /> },
+    { path: '/cattle-birth-time', element: isAdminLogin ? <CattleBirthTime /> : <Navigate to={'/login'} /> },
+    { path: '/insemination-time', element: isAdminLogin ? <CattleInseminationTime /> : <Navigate to={'/login'} /> },
+    { path: '/pregnancy-time', element: isAdminLogin ? <CattlePregnancyTime /> : <Navigate to={'/login'} /> },
 
-    { path: '/expense', element: isAdminLogin ? <Expense /> : <Navigate to={'/add-details'} /> },
-    { path: '/expense/:id', element: isAdminLogin ? <Expense /> : <Navigate to={'/add-details'} /> },
-    { path: '/expense-list', element: isAdminLogin ? <Expenses /> : <Navigate to={'/add-details'} /> },
+    { path: '/buy-cattles', element: isAdminLogin ? <BuyCattles /> : <Navigate to={'/login'} /> },
+    { path: '/buy-cattle', element: isAdminLogin ? <BuyCattle /> : <Navigate to={'/login'} /> },
+    { path: '/buy-cattle/:id', element: isAdminLogin ? <BuyCattle /> : <Navigate to={'/login'} /> },
 
-    {
-      path: 'sample-page',
-      element: <AddDetails />
-    }
+    { path: '/sell-cattles', element: isAdminLogin ? <SellCattles /> : <Navigate to={'/login'} /> },
+    { path: '/sell-cattle', element: isAdminLogin ? <SellCattle /> : <Navigate to={'/login'} /> },
+    { path: '/sell-cattle/:id', element: isAdminLogin ? <SellCattle /> : <Navigate to={'/login'} /> },
+
+    { path: '/add-expense', element: isAdminLogin ? <AddExpenseCategory /> : <Navigate to={'/login'} /> },
+    { path: '/add-expense/:id', element: isAdminLogin ? <AddExpenseCategory /> : <Navigate to={'/login'} /> },
+    { path: '/income-categories', element: isAdminLogin ? <IncomeCategories /> : <Navigate to={'/login'} /> },
+
+    { path: '/add-income', element: isAdminLogin ? <AddIncomeCategory /> : <Navigate to={'/login'} /> },
+    { path: '/add-income/:id', element: isAdminLogin ? <AddIncomeCategory /> : <Navigate to={'/login'} /> },
+    { path: '/expense-categories', element: isAdminLogin ? <ExpenseCategories /> : <Navigate to={'/login'} /> },
+
+    { path: '/income', element: isAdminLogin ? <Income /> : <Navigate to={'/login'} /> },
+    { path: '/income/:id', element: isAdminLogin ? <Income /> : <Navigate to={'/login'} /> },
+    { path: '/income-list', element: isAdminLogin ? <IncomeList /> : <Navigate to={'/login'} /> },
+
+    { path: '/expense', element: isAdminLogin ? <Expense /> : <Navigate to={'/login'} /> },
+    { path: '/expense/:id', element: isAdminLogin ? <Expense /> : <Navigate to={'/login'} /> },
+    { path: '/expense-list', element: isAdminLogin ? <Expenses /> : <Navigate to={'/login'} /> },
   ]
 };
 

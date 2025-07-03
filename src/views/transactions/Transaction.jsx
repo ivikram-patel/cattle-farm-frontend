@@ -67,8 +67,6 @@ const Transaction = () => {
         resolver: yupResolver(validation)
     });
 
-    console.log(errors)
-
     const handleChange = (e) => {
         const { name, value } = e.target
         setFormData({ ...formData, [name]: value })
