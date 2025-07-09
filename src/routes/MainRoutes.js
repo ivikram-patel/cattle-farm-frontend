@@ -71,7 +71,7 @@ const isAdminLogin = adminLogin == 1;
 
 const MainRoutes = {
   path: '/',
-  element: <MainLayout />,
+  element: isAdminLogin ? <MainLayout /> : <Navigate to={'/login'} />,
   children: [
     { path: '/dashboard', element: isAdminLogin ? <DashboardDefault /> : <Navigate to={'/login'} /> },
     { path: 'milk-productions', element: isAdminLogin ? <MilkProductions /> : <Navigate to={'/login'} /> },
